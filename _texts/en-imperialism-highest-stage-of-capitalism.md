@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 layout: text
 title: "Imperialism, the Highest Stage of Capitalism"
 author: "V. I. Lenin"

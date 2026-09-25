@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 layout: text
 title: "Theses on the Role of the Communist Party in the Proletarian Revolution (1920)"
 author: "Communist International (Comintern)"

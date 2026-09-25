@@ -124,6 +124,41 @@ def download_drive_file_public(file_id, destination_path):
                     return
         f.write(content)
 
+TAXONOMY_PATH = os.path.join(REPO_ROOT, "_data", "taxonomy.json")
+
+def load_taxonomy():
+    """Load taxonomy definitions if present."""
+    if os.path.exists(TAXONOMY_PATH):
+        try:
+            with open(TAXONOMY_PATH, 'r', encoding='utf-8') as f:
+                return json.load(f).get("sections", [])
+        except Exception:
+            pass
+    return []
+
+def resolve_section(raw_section, lang="en", taxonomy=None):
+    """Map a raw section string to a canonical section_id, section_title, and section_url."""
+    if not raw_section:
+        return None, None, None
+    raw = raw_section.strip().lower()
+    
+    if taxonomy:
+        for sec in taxonomy:
+            if raw == sec.get("id", "").lower() or raw == sec.get("slug", "").lower():
+                sec_id = sec.get("id")
+                sec_title = sec.get("title", {}).get(lang) or sec.get("title", {}).get("en") or sec_id
+                sec_url = f"sections/{lang}-{sec_id}.html"
+                return sec_id, sec_title, sec_url
+            for title_lang, title_val in sec.get("title", {}).items():
+                if raw in title_val.lower() or title_val.lower() in raw:
+                    sec_id = sec.get("id")
+                    sec_title = sec.get("title", {}).get(lang) or sec.get("title", {}).get("en") or sec_id
+                    sec_url = f"sections/{lang}-{sec_id}.html"
+                    return sec_id, sec_title, sec_url
+
+    clean_id = slugify(raw_section)
+    return clean_id, raw_section, f"sections/{lang}-{clean_id}.html"
+
 def parse_sheet_rows(rows):
     """Parse sheet rows (list of dicts) with flexible column header mapping."""
     parsed = []
@@ -134,6 +169,8 @@ def parse_sheet_rows(rows):
         description = ""
         drive_link = None
         section = ""
+        category = ""
+        subcategory = ""
 
         for key, val in row.items():
             if not key or not val:
@@ -152,11 +189,15 @@ def parse_sheet_rows(rows):
                 author = v
             elif any(l in k for l in ["language", "idioma", "lengua", "lang"]):
                 language = normalize_language(v)
-            elif any(d in k for d in ["desc", "resumo", "notes", "coment"]):
+            elif any(d in k for d in ["desc", "resumo", "notes", "coment", "synopsis"]):
                 description = v
             elif any(p in k for p in ["pdf", "file", "archivo", "arquivo", "upload", "drive"]):
                 drive_link = v
-            elif any(s in k for s in ["section", "sección", "seccion", "seção", "categoria"]):
+            elif any(sub in k for sub in ["subcat", "sub-cat", "subseção", "subseccion"]):
+                subcategory = v
+            elif any(cat in k for cat in ["category", "categoría", "categoria", "theme", "tema"]):
+                category = v
+            elif any(s in k for s in ["section", "sección", "seccion", "seção"]):
                 section = v
 
         if title and not (title.startswith("http://") or title.startswith("https://")):
@@ -166,7 +207,9 @@ def parse_sheet_rows(rows):
                 "language": language,
                 "description": description,
                 "drive_link": drive_link,
-                "section": section
+                "section": section,
+                "category": category,
+                "subcategory": subcategory
             })
     return parsed
 
@@ -265,6 +308,7 @@ def main():
         print("  2. Public CSV: Set GDRIVE_SHEET_CSV_URL")
         sys.exit(0)
 
+    taxonomy = load_taxonomy()
     items = parse_sheet_rows(raw_rows)
     print(f"[*] Found {len(items)} entries in Google Sheet.")
 
@@ -277,6 +321,11 @@ def main():
         language = item["language"]
         desc = item["description"]
         drive_link = item["drive_link"]
+        section_raw = item.get("section", "")
+        category = item.get("category", "")
+        subcategory = item.get("subcategory", "")
+
+        sec_id, sec_title, sec_url = resolve_section(section_raw, language, taxonomy)
 
         base_slug = slugify(f"{language}-{title}")
         md_filename = f"{base_slug}.md"
@@ -306,21 +355,53 @@ def main():
         elif os.path.exists(pdf_path):
             has_pdf = True
 
+        # Check if file already exists to preserve existing body or custom metadata
+        existing_body = ""
+        existing_fm = {}
+        if os.path.exists(md_path):
+            try:
+                with open(md_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    if content.startswith("---"):
+                        parts = content.split("---", 2)
+                        if len(parts) >= 3:
+                            fm_raw = parts[1]
+                            existing_body = parts[2].strip()
+                            for line in fm_raw.splitlines():
+                                if ":" in line:
+                                    k, v = line.split(":", 1)
+                                    existing_fm[k.strip()] = v.strip().strip('"\'')
+            except Exception:
+                pass
+
+        final_section_id = sec_id or existing_fm.get("section_id", "")
+        final_section_title = sec_title or existing_fm.get("section_title", "")
+        final_section_url = sec_url or existing_fm.get("section_url", "")
+        final_category = category or existing_fm.get("category", "")
+        final_subcategory = subcategory or existing_fm.get("subcategory", "")
+        final_body = existing_body if existing_body else desc
+
         # Generate markdown frontmatter and body
         safe_title = title.replace('"', '\\"')
         safe_author = author.replace('"', '\\"')
         safe_desc = desc.replace('"', '\\"')
 
-        pdf_frontmatter = f'pdf: "{pdf_filename}"\n' if has_pdf else ''
+        pdf_fm = f'pdf: "{pdf_filename}"\n' if has_pdf else ''
+        sec_id_fm = f'section_id: "{final_section_id}"\n' if final_section_id else ''
+        cat_fm = f'category: "{final_category.replace(chr(34), chr(92)+chr(34))}"\n' if final_category else ''
+        subcat_fm = f'subcategory: "{final_subcategory.replace(chr(34), chr(92)+chr(34))}"\n' if final_subcategory else ''
+        sec_title_fm = f'section_title: "{final_section_title.replace(chr(34), chr(92)+chr(34))}"\n' if final_section_title else ''
+        sec_url_fm = f'section_url: "{final_section_url}"\n' if final_section_url else ''
 
         md_content = f"""---
-layout: text
+{sec_id_fm}{cat_fm}{subcat_fm}layout: text
 title: "{safe_title}"
 author: "{safe_author}"
 language: "{language}"
-description: "{safe_desc}"
-{pdf_frontmatter}---
-{desc}
+{sec_title_fm}{sec_url_fm}description: "{safe_desc}"
+{pdf_fm}---
+
+{final_body}
 """
 
         # Only write if content is new or changed

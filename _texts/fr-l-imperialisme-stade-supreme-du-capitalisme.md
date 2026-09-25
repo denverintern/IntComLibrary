@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 layout: text
 title: "L'Impérialisme, Stade Suprême du Capitalisme"
 author: "V. I. Lénine"

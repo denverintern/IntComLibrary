@@ -1,0 +1,658 @@
+---
+layout: default
+title: Moderator Control Panel & Content Manager
+language: en
+---
+
+<div class="admin-wrapper" style="max-width: 1200px; margin: 0 auto; padding: 1rem 0;">
+  <!-- Header Bar -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h1 style="font-size: 2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem;">
+        <span>⚙️</span> Moderator Control Panel
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 750px;">
+        Easily add new books, edit existing pages, configure thematic sections & categories, or manage submissions synced with Google Sheets.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="{{ relative_prefix }}index.html" class="btn btn-secondary">
+        ← Back to Library
+      </a>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="admin-tabs" style="display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; overflow-x: auto;">
+    <button type="button" class="admin-tab-btn active" data-tab="tab-add-book">
+      ➕ Add New Book
+    </button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-edit-book">
+      ✏️ Edit Existing Book
+    </button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-taxonomy">
+      🗂️ Sections & Categories
+    </button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-sheets">
+      📊 Google Sheets Sync Hub
+    </button>
+  </div>
+
+  <!-- TAB 1: ADD NEW BOOK -->
+  <div id="tab-add-book" class="admin-tab-content active">
+    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; align-items: start;">
+      <!-- Form Panel -->
+      <div class="sidebar-widget" style="padding: 2rem;">
+        <h3 style="font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+          Book Entry Details
+        </h3>
+        
+        <form id="add-book-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label class="metadata-label" for="add-title">Title *</label>
+              <input type="text" id="add-title" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Value, Price and Profit" required>
+            </div>
+            <div>
+              <label class="metadata-label" for="add-author">Author *</label>
+              <input type="text" id="add-author" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Karl Marx" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label class="metadata-label" for="add-lang">Language *</label>
+              <select id="add-lang" class="search-input" style="padding-left: 1rem;">
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="pt">🇧🇷 Português</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="ar">🇦🇪 العربية</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="bn">🇧🇩 বাংলা</option>
+                <option value="id">🇮🇩 Bahasa Indonesia</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="nl">🇳🇱 Nederlands</option>
+              </select>
+            </div>
+            <div>
+              <label class="metadata-label" for="add-section">Thematic Section</label>
+              <select id="add-section" class="search-input" style="padding-left: 1rem;">
+                <option value="critique-political-economy" data-title="Critique of Political Economy">📈 Critique of Political Economy</option>
+                <option value="party-state-revolution" data-title="Party, State & Revolution">🚩 Party, State & Revolution</option>
+                <option value="historical-materialism" data-title="Historical Materialism & Method">⚡ Historical Materialism & Method</option>
+                <option value="history-communist-left" data-title="Tactics & History of Communist Left">⚔️ Tactics & History of Communist Left</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label class="metadata-label" for="add-category">Category</label>
+              <input type="text" id="add-category" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Value, Surplus Value & Capital">
+            </div>
+            <div>
+              <label class="metadata-label" for="add-subcategory">Subcategory</label>
+              <input type="text" id="add-subcategory" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Labour Theory of Value">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label class="metadata-label" for="add-pdf">PDF File Name (optional)</label>
+            <input type="text" id="add-pdf" class="search-input" style="padding-left: 1rem;" placeholder="e.g. wage-labour-and-capital.pdf">
+            <span style="font-size: 0.75rem; color: var(--text-dim);">Place the corresponding file into assets/uploads/ or leave blank.</span>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <label class="metadata-label" for="add-desc">Short Description / Summary *</label>
+            <textarea id="add-desc" class="search-input" style="padding: 0.75rem 1rem; height: 100px; resize: vertical;" placeholder="Brief summary of the work's historical and theoretical significance..." required></textarea>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <label class="metadata-label" for="add-content">Theoretical Overview / Commentary (Markdown)</label>
+            <textarea id="add-content" class="search-input" style="padding: 0.75rem 1rem; height: 130px; resize: vertical; font-family: monospace; font-size: 0.85rem;" placeholder="### Historical Overview&#10;&#10;Detailed theoretical exposition, context, or notes rendered below the reader..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button type="button" id="btn-download-book" class="btn btn-primary">
+              📥 Download .md File
+            </button>
+            <button type="button" id="btn-copy-book" class="btn btn-secondary">
+              📋 Copy Markdown
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Live Preview Panel -->
+      <div style="position: sticky; top: 2rem;">
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-gold); margin-bottom: 1rem;">
+          Live Card Preview
+        </h4>
+        <div id="live-card-container">
+          <!-- Live Preview Element -->
+          <article class="text-card" style="margin-bottom: 1.5rem;">
+            <div class="card-top-meta">
+              <span id="prev-section-badge" class="card-section-tag">📁 Critique of Political Economy</span>
+              <span id="prev-cat-badge" class="card-category-tag">🏷️ Category</span>
+            </div>
+            <div class="card-header">
+              <h3 class="card-title">
+                <a href="#" id="prev-title">Value, Price and Profit</a>
+              </h3>
+              <span class="card-author" id="prev-author">✍️ Karl Marx</span>
+            </div>
+            <p class="card-description" id="prev-desc">
+              Brief summary of the work's historical and theoretical significance...
+            </p>
+            <div class="card-footer">
+              <span class="card-meta-tag" id="prev-lang-tag">🇬🇧 English</span>
+              <span class="card-read-link">Read Text →</span>
+            </div>
+          </article>
+        </div>
+
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-gold); margin-bottom: 0.75rem;">
+          Generated Markdown Preview
+        </h4>
+        <pre id="code-preview" style="background: var(--bg-tertiary); padding: 1.25rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); font-size: 0.8rem; overflow-x: auto; color: var(--text-main); max-height: 250px;"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: EDIT EXISTING BOOK -->
+  <div id="tab-edit-book" class="admin-tab-content">
+    <div class="sidebar-widget" style="padding: 2rem; max-width: 900px; margin: 0 auto;">
+      <h3 style="font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 1.5rem;">
+        Select an Existing Work to Modify
+      </h3>
+      
+      <div style="margin-bottom: 2rem;">
+        <label class="metadata-label" for="select-edit-book">Choose Book to Edit</label>
+        <select id="select-edit-book" class="search-input" style="padding-left: 1rem;">
+          <option value="">-- Select a text from the archive --</option>
+          {% assign all_sorted_texts = site.texts | sort: "title" %}
+          {% for t in all_sorted_texts %}
+            <option value="{{ t.url }}" 
+              data-title="{{ t.title | escape }}" 
+              data-author="{{ t.author | escape }}" 
+              data-lang="{{ t.language }}" 
+              data-section="{{ t.section_id }}" 
+              data-section-title="{{ t.section_title | escape }}"
+              data-category="{{ t.category | escape }}" 
+              data-subcategory="{{ t.subcategory | escape }}" 
+              data-pdf="{{ t.pdf }}" 
+              data-desc="{{ t.description | escape }}">
+              [{{ t.language | upcase }}] {{ t.title }} — {{ t.author }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div id="edit-form-wrap" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label class="metadata-label" for="edit-title">Title</label>
+            <input type="text" id="edit-title" class="search-input" style="padding-left: 1rem;">
+          </div>
+          <div>
+            <label class="metadata-label" for="edit-author">Author</label>
+            <input type="text" id="edit-author" class="search-input" style="padding-left: 1rem;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label class="metadata-label" for="edit-category">Category</label>
+            <input type="text" id="edit-category" class="search-input" style="padding-left: 1rem;">
+          </div>
+          <div>
+            <label class="metadata-label" for="edit-subcategory">Subcategory</label>
+            <input type="text" id="edit-subcategory" class="search-input" style="padding-left: 1rem;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label class="metadata-label" for="edit-desc">Description</label>
+          <textarea id="edit-desc" class="search-input" style="padding: 0.75rem 1rem; height: 110px; resize: vertical;"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button type="button" id="btn-download-edited" class="btn btn-primary">
+            📥 Download Updated .md
+          </button>
+          <button type="button" id="btn-copy-edited" class="btn btn-secondary">
+            📋 Copy Updated Code
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: TAXONOMY (SECTIONS & CATEGORIES) -->
+  <div id="tab-taxonomy" class="admin-tab-content">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+      <div class="sidebar-widget" style="padding: 2rem;">
+        <h3 style="font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 1.5rem;">
+          Add New Section or Category
+        </h3>
+        <form id="taxonomy-form">
+          <div style="margin-bottom: 1rem;">
+            <label class="metadata-label" for="tax-type">Entry Type</label>
+            <select id="tax-type" class="search-input" style="padding-left: 1rem;">
+              <option value="section">New Thematic Section</option>
+              <option value="category">New Category under Section</option>
+              <option value="subcategory">New Subcategory under Category</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label class="metadata-label" for="tax-name">Section / Category Name</label>
+            <input type="text" id="tax-name" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Philosophical Foundations & Dialectics">
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label class="metadata-label" for="tax-icon">Icon (Emoji)</label>
+            <input type="text" id="tax-icon" class="search-input" style="padding-left: 1rem;" placeholder="e.g. ⚡, 🚩, 📈, ⚖️, 📖">
+          </div>
+          <div style="margin-bottom: 1.5rem;">
+            <label class="metadata-label" for="tax-parent">Parent Section (if adding Category)</label>
+            <select id="tax-parent" class="search-input" style="padding-left: 1rem;">
+              <option value="critique-political-economy">📈 Critique of Political Economy</option>
+              <option value="party-state-revolution">🚩 Party, State & Revolution</option>
+              <option value="historical-materialism">⚡ Historical Materialism & Method</option>
+              <option value="history-communist-left">⚔️ Tactics & History of Communist Left</option>
+            </select>
+          </div>
+          <button type="button" id="btn-add-taxonomy" class="btn btn-primary">
+            ➕ Register Entry in Taxonomy
+          </button>
+        </form>
+      </div>
+
+      <div class="sidebar-widget" style="padding: 2rem;">
+        <h3 style="font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 1.5rem;">
+          Current Taxonomy Data (_data/taxonomy.json)
+        </h3>
+        <pre id="taxonomy-json-display" style="background: var(--bg-tertiary); padding: 1.25rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); font-size: 0.8rem; overflow-x: auto; color: var(--text-main); max-height: 420px;"></pre>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <button type="button" id="btn-download-tax" class="btn btn-secondary">
+            📥 Download taxonomy.json
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: GOOGLE SHEETS SYNC HUB -->
+  <div id="tab-sheets" class="admin-tab-content">
+    <div class="sidebar-widget" style="padding: 2rem; max-width: 900px; margin: 0 auto;">
+      <h3 style="font-size: 1.3rem; color: var(--accent-gold); margin-bottom: 1rem;">
+        📊 Managing Library Entries via Google Sheets
+      </h3>
+      <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem;">
+        For moderators who prefer not to touch code, the library includes a built-in automated synchronizer (<code style="color: var(--accent-gold);">scripts/sync_gdrive.py</code>). Simply edit your spreadsheet or have comrades submit entries through a Google Form, and GitHub Actions automatically generates the book pages, links the PDFs, and updates the site every 6 hours!
+      </p>
+
+      <h4 style="font-size: 1.05rem; margin-bottom: 0.75rem; color: var(--text-main);">Required Column Structure in Your Google Sheet:</h4>
+      <div style="overflow-x: auto; margin-bottom: 2rem;">
+        <table class="catalog-table" style="font-size: 0.85rem;">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Language</th>
+              <th>Section</th>
+              <th>Category</th>
+              <th>Subcategory</th>
+              <th>Description</th>
+              <th>PDF Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Wage Labour and Capital</td>
+              <td>Karl Marx</td>
+              <td>en</td>
+              <td>Critique of Political Economy</td>
+              <td>Value, Surplus Value & Capital</td>
+              <td>Wages & Exploitation</td>
+              <td>Introductory lectures on wages...</td>
+              <td>https://drive.google.com/file/d/...</td>
+            </tr>
+            <tr>
+              <td>O Capital, Volume 1</td>
+              <td>Karl Marx</td>
+              <td>pt</td>
+              <td>Crítica Geral da Economia Política</td>
+              <td>Mais-Valia e Acumulação</td>
+              <td>Teoria do Valor</td>
+              <td>O processo de produção do capital...</td>
+              <td>https://drive.google.com/file/d/...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1.5rem; margin-bottom: 1.5rem;">
+        <h4 style="color: var(--accent-gold); margin-bottom: 0.5rem;">💡 How to Trigger an Immediate Sync:</h4>
+        <ol style="padding-left: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+          <li>Add or modify your book rows in the Google Sheet.</li>
+          <li>Go to your repository on GitHub → Click the <strong>Actions</strong> tab.</li>
+          <li>Click <strong>Sync from Google Drive</strong> on the left sidebar.</li>
+          <li>Click the <strong>Run workflow</strong> button. Within 1 minute, all new books are created and deployed to the site!</li>
+        </ol>
+      </div>
+
+      <button type="button" id="btn-download-csv-template" class="btn btn-primary">
+        📥 Download CSV Template for Google Sheets
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tab Navigation
+    const tabs = document.querySelectorAll('.admin-tab-btn');
+    const tabContents = document.querySelectorAll('.admin-tab-content');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        const target = document.getElementById(btn.getAttribute('data-tab'));
+        if (target) target.classList.add('active');
+      });
+    });
+
+    // 2. Add Book Form & Real-time Live Preview
+    const addTitle = document.getElementById('add-title');
+    const addAuthor = document.getElementById('add-author');
+    const addLang = document.getElementById('add-lang');
+    const addSection = document.getElementById('add-section');
+    const addCategory = document.getElementById('add-category');
+    const addSubcategory = document.getElementById('add-subcategory');
+    const addPdf = document.getElementById('add-pdf');
+    const addDesc = document.getElementById('add-desc');
+    const addContent = document.getElementById('add-content');
+
+    const prevTitle = document.getElementById('prev-title');
+    const prevAuthor = document.getElementById('prev-author');
+    const prevDesc = document.getElementById('prev-desc');
+    const prevSectionBadge = document.getElementById('prev-section-badge');
+    const prevCatBadge = document.getElementById('prev-cat-badge');
+    const prevLangTag = document.getElementById('prev-lang-tag');
+    const codePreview = document.getElementById('code-preview');
+
+    function slugify(text) {
+      return text.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/[-\s]+/g, '-');
+    }
+
+    function updateLivePreview() {
+      const title = addTitle.value.trim() || 'Untitled Book';
+      const author = addAuthor.value.trim() || 'Unknown Author';
+      const lang = addLang.value;
+      const secOpt = addSection.options[addSection.selectedIndex];
+      const secTitle = secOpt ? secOpt.getAttribute('data-title') : '';
+      const secId = addSection.value;
+      const cat = addCategory.value.trim();
+      const subcat = addSubcategory.value.trim();
+      const pdf = addPdf.value.trim();
+      const desc = addDesc.value.trim() || 'No description entered.';
+      const body = addContent.value.trim() || 'Theoretical overview content...';
+
+      prevTitle.textContent = title;
+      prevAuthor.textContent = '✍️ ' + author;
+      prevDesc.textContent = desc;
+      prevSectionBadge.textContent = '📁 ' + (secTitle || 'General');
+      prevCatBadge.textContent = '🏷️ ' + (cat || 'Category');
+      prevLangTag.textContent = addLang.options[addLang.selectedIndex].text;
+
+      // Generate Markdown
+      const safeTitle = title.replace(/"/g, '\\"');
+      const safeAuthor = author.replace(/"/g, '\\"');
+      const safeDesc = desc.replace(/"/g, '\\"');
+      const pdfLine = pdf ? `pdf: "${pdf}"\n` : '';
+      const catLine = cat ? `category: "${cat}"\n` : '';
+      const subcatLine = subcat ? `subcategory: "${subcat}"\n` : '';
+
+      const mdText = `---
+layout: text
+title: "${safeTitle}"
+author: "${safeAuthor}"
+language: "${lang}"
+section_id: "${secId}"
+section_title: "${secTitle}"
+${catLine}${subcatLine}description: "${safeDesc}"
+${pdfLine}---
+
+${body}
+`;
+      codePreview.textContent = mdText;
+      return { title, lang, mdText };
+    }
+
+    [addTitle, addAuthor, addLang, addSection, addCategory, addSubcategory, addPdf, addDesc, addContent].forEach(el => {
+      el.addEventListener('input', updateLivePreview);
+      el.addEventListener('change', updateLivePreview);
+    });
+
+    updateLivePreview();
+
+    // Download .md File
+    document.getElementById('btn-download-book').addEventListener('click', () => {
+      const data = updateLivePreview();
+      const filename = `${data.lang}-${slugify(data.title)}.md`;
+      const blob = new Blob([data.mdText], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    });
+
+    // Copy Markdown
+    document.getElementById('btn-copy-book').addEventListener('click', () => {
+      const data = updateLivePreview();
+      navigator.clipboard.writeText(data.mdText).then(() => {
+        alert('Markdown frontmatter and content copied to clipboard!');
+      });
+    });
+
+    // 3. Edit Existing Book
+    const selectEditBook = document.getElementById('select-edit-book');
+    const editFormWrap = document.getElementById('edit-form-wrap');
+    const editTitle = document.getElementById('edit-title');
+    const editAuthor = document.getElementById('edit-author');
+    const editCategory = document.getElementById('edit-category');
+    const editSubcategory = document.getElementById('edit-subcategory');
+    const editDesc = document.getElementById('edit-desc');
+
+    let currentEditData = {};
+
+    selectEditBook.addEventListener('change', () => {
+      const opt = selectEditBook.options[selectEditBook.selectedIndex];
+      if (!opt.value) {
+        editFormWrap.style.display = 'none';
+        return;
+      }
+      currentEditData = {
+        title: opt.getAttribute('data-title'),
+        author: opt.getAttribute('data-author'),
+        lang: opt.getAttribute('data-lang'),
+        section_id: opt.getAttribute('data-section'),
+        section_title: opt.getAttribute('data-section-title'),
+        category: opt.getAttribute('data-category'),
+        subcategory: opt.getAttribute('data-subcategory'),
+        pdf: opt.getAttribute('data-pdf'),
+        desc: opt.getAttribute('data-desc')
+      };
+
+      editTitle.value = currentEditData.title || '';
+      editAuthor.value = currentEditData.author || '';
+      editCategory.value = currentEditData.category || '';
+      editSubcategory.value = currentEditData.subcategory || '';
+      editDesc.value = currentEditData.desc || '';
+      editFormWrap.style.display = 'block';
+    });
+
+    function getEditedMarkdown() {
+      const title = editTitle.value.trim();
+      const author = editAuthor.value.trim();
+      const cat = editCategory.value.trim();
+      const subcat = editSubcategory.value.trim();
+      const desc = editDesc.value.trim();
+      const pdfLine = currentEditData.pdf ? `pdf: "${currentEditData.pdf}"\n` : '';
+
+      return `---
+layout: text
+title: "${title.replace(/"/g, '\\"')}"
+author: "${author.replace(/"/g, '\\"')}"
+language: "${currentEditData.lang}"
+section_id: "${currentEditData.section_id}"
+section_title: "${currentEditData.section_title}"
+category: "${cat}"
+subcategory: "${subcat}"
+description: "${desc.replace(/"/g, '\\"')}"
+${pdfLine}---
+
+### Theoretical Overview
+`;
+    }
+
+    document.getElementById('btn-download-edited').addEventListener('click', () => {
+      const md = getEditedMarkdown();
+      const filename = `${currentEditData.lang}-${slugify(editTitle.value)}.md`;
+      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    });
+
+    document.getElementById('btn-copy-edited').addEventListener('click', () => {
+      const md = getEditedMarkdown();
+      navigator.clipboard.writeText(md).then(() => {
+        alert('Updated book markdown copied to clipboard!');
+      });
+    });
+
+    // 4. Taxonomy Display
+    let currentTaxonomy = {
+      "sections": [
+        {
+          "id": "critique-political-economy",
+          "slug": "critique-political-economy",
+          "icon": "📈",
+          "title": "Critique of Political Economy",
+          "categories": [
+            { "name": "Value, Surplus Value & Capital", "subcategories": ["Labour Theory of Value", "Wages & Exploitation", "Capital Accumulation"] },
+            { "name": "Imperialism & Monopoly Capitalism", "subcategories": ["Finance Capital", "Inter-Imperialist War"] }
+          ]
+        },
+        {
+          "id": "party-state-revolution",
+          "slug": "party-state-revolution",
+          "icon": "🚩",
+          "title": "Party, State & Revolution",
+          "categories": [
+            { "name": "State & Proletarian Dictatorship", "subcategories": ["Smashing Bourgeois State", "Commune & Soviet State"] },
+            { "name": "Vanguard Party & Organic Centralism", "subcategories": ["Party & Class", "Critique of Democracy"] }
+          ]
+        },
+        {
+          "id": "historical-materialism",
+          "slug": "historical-materialism",
+          "icon": "⚡",
+          "title": "Historical Materialism & Method",
+          "categories": [
+            { "name": "Marxist Epistemology", "subcategories": ["Materialist Conception of History", "Dialectics"] }
+          ]
+        },
+        {
+          "id": "history-communist-left",
+          "slug": "history-communist-left",
+          "icon": "⚔️",
+          "title": "Tactics & History of Communist Left",
+          "categories": [
+            { "name": "Struggle Against Degeneration", "subcategories": ["Lyon Theses (1926)", "Critique of Popular Fronts"] }
+          ]
+        }
+      ]
+    };
+
+    const taxDisplay = document.getElementById('taxonomy-json-display');
+    function renderTaxJson() {
+      taxDisplay.textContent = JSON.stringify(currentTaxonomy, null, 2);
+    }
+    renderTaxJson();
+
+    document.getElementById('btn-add-taxonomy').addEventListener('click', () => {
+      const type = document.getElementById('tax-type').value;
+      const name = document.getElementById('tax-name').value.trim();
+      const icon = document.getElementById('tax-icon').value.trim() || '📁';
+      const parent = document.getElementById('tax-parent').value;
+
+      if (!name) {
+        alert('Please enter a name.');
+        return;
+      }
+
+      if (type === 'section') {
+        currentTaxonomy.sections.push({
+          id: slugify(name),
+          slug: slugify(name),
+          icon: icon,
+          title: name,
+          categories: []
+        });
+      } else {
+        const sec = currentTaxonomy.sections.find(s => s.id === parent);
+        if (sec) {
+          if (type === 'category') {
+            sec.categories.push({ name: name, subcategories: [] });
+          } else {
+            if (sec.categories.length === 0) sec.categories.push({ name: "General", subcategories: [] });
+            sec.categories[0].subcategories.push(name);
+          }
+        }
+      }
+
+      renderTaxJson();
+      alert(`Added ${name} to taxonomy! You can download the updated taxonomy.json file below.`);
+      document.getElementById('tax-name').value = '';
+    });
+
+    document.getElementById('btn-download-tax').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(currentTaxonomy, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'taxonomy.json';
+      a.click();
+    });
+
+    // 5. Download CSV Template
+    document.getElementById('btn-download-csv-template').addEventListener('click', () => {
+      const csvContent = `Title,Author,Language,Section,Category,Subcategory,Description,PDF_Link
+Wage Labour and Capital,Karl Marx,en,Critique of Political Economy,Value Surplus Value & Capital,Wages & Exploitation,"Introductory lectures explaining labour-power as a commodity.",https://drive.google.com/file/d/sample
+The State and Revolution,V. I. Lenin,en,Party State & Revolution,State & Proletarian Dictatorship,Smashing Bourgeois State,"Restoring revolutionary Marxist doctrine of the state.",https://drive.google.com/file/d/sample
+`;
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'library_moderator_template.csv';
+      a.click();
+    });
+  });
+</script>

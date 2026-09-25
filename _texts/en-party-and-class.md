@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 layout: text
 title: "Party and Class (1921)"
 author: "Amadeo Bordiga"

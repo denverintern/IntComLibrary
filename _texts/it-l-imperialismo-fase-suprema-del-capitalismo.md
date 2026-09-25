@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 layout: text
 title: "L'Imperialismo, Fase Suprema del Capitalismo"
 author: "V. I. Lenin"

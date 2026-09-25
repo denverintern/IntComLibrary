@@ -247,16 +247,42 @@
           
           {% if sorted_sections.size > 0 %}
             <div class="sidebar-title" style="margin-top: 1.5rem">{{ sidebar_title }}</div>
-            {% for s in sorted_sections %}
-              {% assign is_active = false %}
-              {% if page.url == s.url %}
-                {% assign is_active = true %}
-              {% endif %}
-              <a href="{{ relative_prefix }}{{ s.url | remove_first: '/' }}" class="sidebar-link {% if is_active %}active{% endif %}">
-                {{ s.title }}
-              </a>
-            {% endfor %}
+            <div class="sidebar-nav">
+              {% for s in sorted_sections %}
+                {% assign is_active = false %}
+                {% if page.url == s.url %}
+                  {% assign is_active = true %}
+                {% endif %}
+
+                {% assign s_count = 0 %}
+                {% for t in site.texts %}
+                  {% if t.language == current_lang and t.section_id == s.slug %}
+                    {% assign s_count = s_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+
+                {% assign s_icon = "📁" %}
+                {% if s.slug contains "critique" or s.slug contains "politische" or s.slug contains "economia" %}
+                  {% assign s_icon = "📈" %}
+                {% elsif s.slug contains "party" or s.slug contains "state" or s.slug contains "revolution" or s.slug contains "partido" %}
+                  {% assign s_icon = "🚩" %}
+                {% endif %}
+
+                <a href="{{ relative_prefix }}{{ s.url | remove_first: '/' }}" class="sidebar-link {% if is_active %}active{% endif %}" data-sidebar-filter="{{ s.slug }}">
+                  <span class="sidebar-link-title">{{ s_icon }} {{ s.title }}</span>
+                  {% if s_count > 0 %}
+                    <span class="sidebar-count-badge">{{ s_count }}</span>
+                  {% endif %}
+                </a>
+              {% endfor %}
+            </div>
           {% endif %}
+          
+          <div style="margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <a href="{{ relative_prefix }}manage/index.html" class="sidebar-link moderator-link" title="Open Moderator Control Panel">
+              <span class="sidebar-link-title">⚙️ Moderator Panel</span>
+            </a>
+          </div>
         </div>
       </nav>
     </aside>
@@ -266,8 +292,13 @@
     </main>
   </div>
 
-  <footer style="margin-top: auto; padding: 3rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
+  <footer style="margin-top: auto; padding: 2.5rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
     <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">{{ unite_text }}</p>
+    <div style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center; gap: 1rem; font-size: 0.8rem;">
+      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">Library Home</a>
+      <span style="color: var(--border-color);">•</span>
+      <a href="{{ relative_prefix }}manage/index.html" style="color: var(--accent-gold); text-decoration: none; font-weight: 500;">⚙️ Moderator Control Panel</a>
+    </div>
   </footer>
 
   <script>
@@ -295,18 +326,29 @@
       }
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
-      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
+      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl.includes("/index.html");
 
-      function filterCards(query) {
+      let currentSectionFilter = 'all';
+      let currentSearchQuery = '';
+
+      function applyFilters() {
         const cards = document.querySelectorAll('.text-card');
-        const grid = document.getElementById('cards-grid');
+        const rows = document.querySelectorAll('.catalog-row');
+        const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
+        const totalCount = cards.length;
 
         cards.forEach(card => {
+          const sec = card.getAttribute('data-section') || '';
           const title = card.getAttribute('data-title') || '';
           const author = card.getAttribute('data-author') || '';
           const desc = card.getAttribute('data-desc') || '';
-          if (title.includes(query) || author.includes(query) || desc.includes(query)) {
+          const cat = card.getAttribute('data-category') || '';
+
+          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
+          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+
+          if (matchesSection && matchesQuery) {
             card.style.display = 'flex';
             visibleCount++;
           } else {
@@ -314,16 +356,40 @@
           }
         });
 
+        // Also filter catalog table rows
+        rows.forEach(row => {
+          const sec = row.getAttribute('data-section') || '';
+          const title = row.getAttribute('data-title') || '';
+          const author = row.getAttribute('data-author') || '';
+          const desc = row.getAttribute('data-desc') || '';
+          const cat = row.getAttribute('data-category') || '';
+
+          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
+          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+
+          row.style.display = (matchesSection && matchesQuery) ? '' : 'none';
+        });
+
+        if (resultsBadge) {
+          if (currentSearchQuery || currentSectionFilter !== 'all') {
+            resultsBadge.textContent = `Showing ${visibleCount} of ${totalCount} texts`;
+          } else {
+            resultsBadge.textContent = `${totalCount} texts available`;
+          }
+        }
+
+        // Show/hide no-match alert
         let noMatch = document.getElementById('no-match-alert');
-        if (query && visibleCount === 0 && cards.length > 0) {
+        const grid = document.getElementById('cards-grid');
+        if (visibleCount === 0 && totalCount > 0) {
           if (!noMatch && grid) {
             noMatch = document.createElement('div');
             noMatch.id = 'no-match-alert';
-            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 2.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
+            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
             grid.appendChild(noMatch);
           }
           if (noMatch) {
-            noMatch.textContent = 'No matching texts found for "' + query + '".';
+            noMatch.innerHTML = '<p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent-gold);">No matching texts found.</p><p style="font-size: 0.9rem;">Try selecting "All Works" or clearing your search query.</p>';
             noMatch.style.display = 'block';
           }
         } else if (noMatch) {
@@ -331,20 +397,74 @@
         }
       }
 
+      // 1. Category Filter Pills
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentSectionFilter = pill.getAttribute('data-filter') || 'all';
+          applyFilters();
+        });
+      });
+
+      // 2. Card Section Tag click filter
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-filter-click]');
+        if (target) {
+          const filterSlug = target.getAttribute('data-filter-click');
+          const matchingPill = document.querySelector(`.cat-pill[data-filter="${filterSlug}"]`);
+          if (matchingPill) {
+            matchingPill.click();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }
+      });
+
+      // 3. View Switcher (Grid vs List)
+      const gridBtn = document.getElementById('grid-view-btn');
+      const listBtn = document.getElementById('list-view-btn');
+      const gridView = document.getElementById('cards-grid');
+      const listView = document.getElementById('catalog-list');
+
+      function setView(mode) {
+        if (!gridView || !listView) return;
+        if (mode === 'list') {
+          gridView.style.display = 'none';
+          listView.style.display = 'block';
+          if (listBtn) listBtn.classList.add('active');
+          if (gridBtn) gridBtn.classList.remove('active');
+        } else {
+          gridView.style.display = 'grid';
+          listView.style.display = 'none';
+          if (gridBtn) gridBtn.classList.add('active');
+          if (listBtn) listBtn.classList.remove('active');
+        }
+        try { localStorage.setItem('library-view', mode); } catch (e) {}
+      }
+
+      if (gridBtn && listBtn) {
+        gridBtn.addEventListener('click', () => setView('grid'));
+        listBtn.addEventListener('click', () => setView('list'));
+
+        const savedView = localStorage.getItem('library-view') || 'grid';
+        setView(savedView);
+      }
+
+      // 4. Live Search
       if (searchInput) {
         const urlParams = new URLSearchParams(window.location.search);
         const queryParam = urlParams.get('q');
         if (queryParam) {
           searchInput.value = queryParam;
-          if (isHomepage) {
-            filterCards(queryParam.toLowerCase().trim());
-          }
+          currentSearchQuery = queryParam.toLowerCase().trim();
+          if (isHomepage) applyFilters();
         }
 
         searchInput.addEventListener('input', (e) => {
-          const query = e.target.value;
+          currentSearchQuery = e.target.value.toLowerCase().trim();
           if (isHomepage) {
-            filterCards(query.toLowerCase().trim());
+            applyFilters();
           }
         });
 

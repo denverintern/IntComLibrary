@@ -27,7 +27,7 @@
 
   <!-- Inline compiled stylesheet for fail-safe rendering and offline file:// support -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
 
 /* Color Variables & Theme System */
 :root {
@@ -35,15 +35,15 @@
   --bg-secondary: #12141a;
   --bg-tertiary: #191c24;
   --bg-hover: #1f232d;
-  --accent-red: #e63939;
-  --accent-red-hover: #ff4d4d;
+  --accent-red: #d63031;
+  --accent-red-hover: #ff4757;
   --accent-gold: #e5c158;
   --accent-gold-hover: #f1d77a;
   --text-main: #f1f5f9;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-color-focus: rgba(230, 57, 57, 0.4);
+  --border-color-focus: rgba(214, 48, 49, 0.4);
   --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.5);
   --font-display: 'Cinzel', serif;
@@ -120,9 +120,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto 1.25rem auto;
   position: relative;
+  padding: 0 1rem;
 }
 
 .header-spacer {
@@ -155,15 +156,15 @@ body {
 }
 
 .logo-img {
-  height: 40px;
-  width: 40px;
+  height: 42px;
+  width: 42px;
   flex-shrink: 0;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 /* Theme Toggle Button */
@@ -211,7 +212,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.35rem 0.5rem;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -246,12 +247,12 @@ body {
   user-select: none;
 }
 
-/* Main Layout Grid */
+/* Wide, Balanced Layout Grid */
 .container {
-  max-width: 1040px;
+  max-width: 1400px;
   width: 100%;
-  margin: 2.5rem auto;
-  padding: 0 1.5rem;
+  margin: 2rem auto;
+  padding: 0 2rem;
   flex: 1;
 }
 
@@ -261,6 +262,26 @@ h1, h2, h3 {
   color: var(--accent-red);
   font-weight: 700;
   letter-spacing: 0.03em;
+}
+
+/* Main 2-column Layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 0.5rem;
 }
 
 /* Search Bar */
@@ -276,7 +297,7 @@ h1, h2, h3 {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   color: var(--text-main);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-family: var(--font-sans);
   transition: var(--transition);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
@@ -298,10 +319,206 @@ h1, h2, h3 {
   font-size: 0.95rem;
 }
 
-/* Text Cards Grid */
+.sidebar-title {
+  font-family: var(--font-display);
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border-left: 2px solid transparent;
+}
+
+.sidebar-link:hover {
+  color: var(--accent-red);
+  background: var(--bg-tertiary);
+  border-left-color: var(--accent-red);
+}
+
+.sidebar-link.active {
+  color: var(--accent-gold);
+  font-weight: 600;
+  background: var(--bg-tertiary);
+  border-left-color: var(--accent-gold);
+}
+
+.sidebar-link-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sidebar-count-badge {
+  font-size: 0.72rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-dim);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.moderator-link {
+  color: var(--accent-gold) !important;
+  font-weight: 600;
+}
+
+/* Archive Header & Interactive Toolbar */
+.archive-header {
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+}
+
+.archive-headline {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.archive-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 850px;
+}
+
+.archive-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Category Filter Pills */
+.category-pills-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cat-pill:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-main);
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+}
+
+.cat-pill.active {
+  background: var(--bg-tertiary);
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(229, 193, 88, 0.15);
+}
+
+.pill-count {
+  font-size: 0.72rem;
+  background: var(--border-color);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.cat-pill.active .pill-count {
+  background: var(--accent-gold);
+  color: #0a0b0e;
+}
+
+.archive-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.results-badge {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+/* View Mode Switcher */
+.view-switch-group {
+  display: flex;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.view-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition);
+}
+
+.view-toggle-btn:hover {
+  color: var(--text-main);
+}
+
+.view-toggle-btn.active {
+  background: var(--bg-tertiary);
+  color: var(--accent-gold);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Cards Grid (Refined Typography) */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
 }
 
@@ -309,7 +526,7 @@ h1, h2, h3 {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 1.5rem;
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -343,11 +560,51 @@ h1, h2, h3 {
   box-shadow: var(--card-shadow-hover);
 }
 
+.card-top-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.card-section-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  background: rgba(229, 193, 88, 0.08);
+  border: 1px solid rgba(229, 193, 88, 0.2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.card-section-tag:hover {
+  background: var(--accent-gold);
+  color: #0a0b0e;
+}
+
+.card-category-tag {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Elegant, natural-case serif titles */
 .card-title {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .card-title a {
@@ -361,11 +618,12 @@ h1, h2, h3 {
 }
 
 .card-author {
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent-gold);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .card-description {
@@ -397,7 +655,7 @@ h1, h2, h3 {
   font-weight: 500;
 }
 
-.card-footer a {
+.card-read-link {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--accent-red);
@@ -406,37 +664,114 @@ h1, h2, h3 {
   letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.3rem;
   transition: var(--transition);
 }
 
-.card-footer a:hover {
+.card-read-link:hover {
   color: var(--accent-red-hover);
-  transform: translateX(3px);
 }
 
-[dir="rtl"] .card-footer a:hover {
-  transform: translateX(-3px);
+.card-read-link:hover .arrow-icon {
+  transform: translateX(4px);
 }
 
-/* Reading content font overrides for scholarly presentation */
-#text-content,
-.reader-main .sidebar-widget div,
-.markdown-body,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body li,
-#section-content {
-  font-family: var(--font-serif) !important;
-  font-size: 1.05rem;
-  line-height: 1.8;
+.arrow-icon {
+  transition: transform var(--transition);
+}
+
+[dir="rtl"] .card-read-link:hover .arrow-icon {
+  transform: translateX(-4px);
+}
+
+/* Compact Catalog Table View */
+.catalog-table-wrap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow-x: auto;
+  box-shadow: var(--card-shadow);
+}
+
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.catalog-table th {
+  background: var(--bg-tertiary);
+  padding: 0.9rem 1.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.catalog-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+
+.catalog-row:hover {
+  background: var(--bg-hover);
+}
+
+.table-title-link {
+  font-family: var(--font-serif);
+  font-weight: 600;
   color: var(--text-main);
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.table-title-link:hover {
+  color: var(--accent-red);
+}
+
+.table-subcat-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.15rem;
+}
+
+.col-author {
+  font-weight: 500;
+  color: var(--accent-gold);
+}
+
+.table-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-right: 0.3rem;
+  margin-bottom: 0.2rem;
+}
+
+.section-badge {
+  background: rgba(229, 193, 88, 0.08);
+  border: 1px solid rgba(229, 193, 88, 0.2);
+  color: var(--accent-gold);
+}
+
+.cat-badge {
+  background: var(--bg-tertiary);
+  color: var(--text-dim);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
 }
 
 /* Scholarly Text Reader Layout */
 .reader-container {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
 }
 
@@ -449,7 +784,7 @@ h1, h2, h3 {
 }
 
 .reader-sidebar {
-  width: 280px;
+  width: 300px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -532,6 +867,7 @@ h1, h2, h3 {
 }
 .btn-primary:hover {
   background: var(--accent-red-hover);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -542,11 +878,44 @@ h1, h2, h3 {
 .btn-secondary:hover {
   background: var(--bg-hover);
   border-color: var(--accent-gold);
+  transform: translateY(-1px);
 }
 
 .btn-block {
   display: flex;
   width: 100%;
+}
+
+/* Admin Tabs */
+.admin-tab-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.6rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-tab-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-main);
+}
+
+.admin-tab-btn.active {
+  background: var(--accent-red);
+  color: #ffffff;
+  border-color: var(--accent-red);
+}
+
+.admin-tab-content {
+  display: none;
+}
+
+.admin-tab-content.active {
+  display: block;
 }
 
 /* RTL Layout Support (Arabic) */
@@ -589,69 +958,14 @@ h1, h2, h3 {
   right: 0;
 }
 
-/* Main 2-column Layout */
-.main-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 2.5rem;
-  align-items: start;
-}
-
-/* Sidebar Styles */
-.sidebar {
-  position: sticky;
-  top: 2rem;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-right: 0.5rem;
-}
-
-.sidebar-title {
-  font-family: var(--font-display);
-  color: var(--accent-gold);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.4rem;
-  font-weight: 700;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.sidebar-link {
-  display: block;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 0.45rem 0.8rem;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-  border-left: 2px solid transparent;
-}
-
-.sidebar-link:hover {
-  color: var(--accent-red);
-  background: var(--bg-tertiary);
-  border-left-color: var(--accent-red);
-}
-
-.sidebar-link.active {
-  color: var(--accent-gold);
-  font-weight: 600;
-  background: var(--bg-tertiary);
-  border-left-color: var(--accent-gold);
-}
-
 /* Responsive Styles & Mobile Polish */
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .reader-container {
     flex-direction: column-reverse;
@@ -669,11 +983,6 @@ h1, h2, h3 {
   
   .header-spacer {
     display: none;
-  }
-
-  .header-controls {
-    position: static;
-    transform: none;
   }
 
   .main-layout {
@@ -916,33 +1225,94 @@ h1, h2, h3 {
           
           
           
+          
+          <div style="margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <a href="../manage/index.html" class="sidebar-link moderator-link" title="Open Moderator Control Panel">
+              <span class="sidebar-link-title">⚙️ Moderator Panel</span>
+            </a>
+          </div>
         </div>
       </nav>
     </aside>
 
     <main class="main-content">
-      <div style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem">
-  <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem">☭ 理论档案</h2>
-  <p style="color: var(--text-muted); font-size: 1rem">
-    获取左翼共产主义、国际主义及工会/委员会传统的关键理论文献、提纲与历史宣言。
-  </p>
+      
+
+
+
+
+<div class="archive-header">
+  <div class="archive-title-wrap">
+    <h2 class="archive-headline">☭ 理论档案</h2>
+    <p class="archive-subtitle">阅读共产主义左翼与国际主义传统的重要理论文献、纲领与历史宣言。</p>
+  </div>
 </div>
 
-<!-- Texts Grid -->
+<!-- Dynamic Thematic Filter Toolbar -->
+<div class="archive-toolbar">
+  <div class="category-pills-bar" id="category-pills" role="tablist">
+    <button type="button" class="cat-pill active" data-filter="all" role="tab" aria-selected="true">
+      <span>全部文献</span>
+      <span class="pill-count">0</span>
+    </button>
+    
+    <!-- Extract unique sections -->
+    
+    
+
+    
+  </div>
+
+  <div class="archive-actions-bar">
+    <span class="results-badge" id="results-count">0 篇文献可用</span>
+    <div class="view-switch-group">
+      <button type="button" id="grid-view-btn" class="view-toggle-btn active" title="Grid View" aria-label="Grid View">
+        <span aria-hidden="true">⊞</span> Grid
+      </button>
+      <button type="button" id="list-view-btn" class="view-toggle-btn" title="Compact Catalog View" aria-label="Compact Catalog View">
+        <span aria-hidden="true">☰</span> List
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Texts Grid View -->
 <div class="cards-grid" id="cards-grid">
   
-  
-    <div style="grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center">
-      <p style="color: var(--text-muted)">目前暂无中文文献。</p>
+    <div class="empty-state-box">
+      <p>此语言下暂无文献。</p>
     </div>
   
 </div>
 
+<!-- Compact Catalog List View -->
+<div class="catalog-table-wrap" id="catalog-list" style="display: none;">
+  <table class="catalog-table">
+    <thead>
+      <tr>
+        <th>Work Title</th>
+        <th>Author</th>
+        <th>Thematic Section / Category</th>
+        <th style="text-align: right;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+</div>
+
+
     </main>
   </div>
 
-  <footer style="margin-top: auto; padding: 3rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
+  <footer style="margin-top: auto; padding: 2.5rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
     <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">全世界无产者，联合起来！</p>
+    <div style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center; gap: 1rem; font-size: 0.8rem;">
+      <a href="../zh/index.html" style="color: var(--text-dim); text-decoration: none;">Library Home</a>
+      <span style="color: var(--border-color);">•</span>
+      <a href="../manage/index.html" style="color: var(--accent-gold); text-decoration: none; font-weight: 500;">⚙️ Moderator Control Panel</a>
+    </div>
   </footer>
 
   <script>
@@ -970,18 +1340,29 @@ h1, h2, h3 {
       }
       const searchInput = document.getElementById('global-search');
       const pageUrl = "/zh/";
-      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
+      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl.includes("/index.html");
 
-      function filterCards(query) {
+      let currentSectionFilter = 'all';
+      let currentSearchQuery = '';
+
+      function applyFilters() {
         const cards = document.querySelectorAll('.text-card');
-        const grid = document.getElementById('cards-grid');
+        const rows = document.querySelectorAll('.catalog-row');
+        const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
+        const totalCount = cards.length;
 
         cards.forEach(card => {
+          const sec = card.getAttribute('data-section') || '';
           const title = card.getAttribute('data-title') || '';
           const author = card.getAttribute('data-author') || '';
           const desc = card.getAttribute('data-desc') || '';
-          if (title.includes(query) || author.includes(query) || desc.includes(query)) {
+          const cat = card.getAttribute('data-category') || '';
+
+          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
+          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+
+          if (matchesSection && matchesQuery) {
             card.style.display = 'flex';
             visibleCount++;
           } else {
@@ -989,16 +1370,40 @@ h1, h2, h3 {
           }
         });
 
+        // Also filter catalog table rows
+        rows.forEach(row => {
+          const sec = row.getAttribute('data-section') || '';
+          const title = row.getAttribute('data-title') || '';
+          const author = row.getAttribute('data-author') || '';
+          const desc = row.getAttribute('data-desc') || '';
+          const cat = row.getAttribute('data-category') || '';
+
+          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
+          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+
+          row.style.display = (matchesSection && matchesQuery) ? '' : 'none';
+        });
+
+        if (resultsBadge) {
+          if (currentSearchQuery || currentSectionFilter !== 'all') {
+            resultsBadge.textContent = `Showing ${visibleCount} of ${totalCount} texts`;
+          } else {
+            resultsBadge.textContent = `${totalCount} texts available`;
+          }
+        }
+
+        // Show/hide no-match alert
         let noMatch = document.getElementById('no-match-alert');
-        if (query && visibleCount === 0 && cards.length > 0) {
+        const grid = document.getElementById('cards-grid');
+        if (visibleCount === 0 && totalCount > 0) {
           if (!noMatch && grid) {
             noMatch = document.createElement('div');
             noMatch.id = 'no-match-alert';
-            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 2.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
+            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
             grid.appendChild(noMatch);
           }
           if (noMatch) {
-            noMatch.textContent = 'No matching texts found for "' + query + '".';
+            noMatch.innerHTML = '<p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent-gold);">No matching texts found.</p><p style="font-size: 0.9rem;">Try selecting "All Works" or clearing your search query.</p>';
             noMatch.style.display = 'block';
           }
         } else if (noMatch) {
@@ -1006,20 +1411,74 @@ h1, h2, h3 {
         }
       }
 
+      // 1. Category Filter Pills
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentSectionFilter = pill.getAttribute('data-filter') || 'all';
+          applyFilters();
+        });
+      });
+
+      // 2. Card Section Tag click filter
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-filter-click]');
+        if (target) {
+          const filterSlug = target.getAttribute('data-filter-click');
+          const matchingPill = document.querySelector(`.cat-pill[data-filter="${filterSlug}"]`);
+          if (matchingPill) {
+            matchingPill.click();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }
+      });
+
+      // 3. View Switcher (Grid vs List)
+      const gridBtn = document.getElementById('grid-view-btn');
+      const listBtn = document.getElementById('list-view-btn');
+      const gridView = document.getElementById('cards-grid');
+      const listView = document.getElementById('catalog-list');
+
+      function setView(mode) {
+        if (!gridView || !listView) return;
+        if (mode === 'list') {
+          gridView.style.display = 'none';
+          listView.style.display = 'block';
+          if (listBtn) listBtn.classList.add('active');
+          if (gridBtn) gridBtn.classList.remove('active');
+        } else {
+          gridView.style.display = 'grid';
+          listView.style.display = 'none';
+          if (gridBtn) gridBtn.classList.add('active');
+          if (listBtn) listBtn.classList.remove('active');
+        }
+        try { localStorage.setItem('library-view', mode); } catch (e) {}
+      }
+
+      if (gridBtn && listBtn) {
+        gridBtn.addEventListener('click', () => setView('grid'));
+        listBtn.addEventListener('click', () => setView('list'));
+
+        const savedView = localStorage.getItem('library-view') || 'grid';
+        setView(savedView);
+      }
+
+      // 4. Live Search
       if (searchInput) {
         const urlParams = new URLSearchParams(window.location.search);
         const queryParam = urlParams.get('q');
         if (queryParam) {
           searchInput.value = queryParam;
-          if (isHomepage) {
-            filterCards(queryParam.toLowerCase().trim());
-          }
+          currentSearchQuery = queryParam.toLowerCase().trim();
+          if (isHomepage) applyFilters();
         }
 
         searchInput.addEventListener('input', (e) => {
-          const query = e.target.value;
+          currentSearchQuery = e.target.value.toLowerCase().trim();
           if (isHomepage) {
-            filterCards(query.toLowerCase().trim());
+            applyFilters();
           }
         });
 

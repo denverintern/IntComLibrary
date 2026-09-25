@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 layout: text
 title: "Wage Labour and Capital"
 author: "Karl Marx"

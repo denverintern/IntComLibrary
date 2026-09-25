@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 layout: text
 title: "Das Kapital, Band 1"
 author: "Karl Marx"

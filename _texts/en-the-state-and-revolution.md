@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "State & Proletarian Dictatorship"
+subcategory: "Party & Class"
 layout: text
 title: "The State and Revolution"
 author: "V. I. Lenin"

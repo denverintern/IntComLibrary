@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 layout: text
 title: "Il Capitale, Libro I"
 author: "Karl Marx"

@@ -1,0 +1,102 @@
+{
+  "sections": [
+    {
+      "id": "critique-political-economy",
+      "slug": "critique-political-economy",
+      "icon": "📈",
+      "order": 1,
+      "title": {
+        "en": "Critique of Political Economy",
+        "es": "Crítica General de la Economía Política",
+        "pt": "Crítica Geral da Economia Política",
+        "fr": "Critique de l'Économie Politique",
+        "it": "Critica dell'Economia Politica",
+        "de": "Kritik der politischen Ökonomie",
+        "ru": "Критика Политической Экономии"
+      },
+      "categories": [
+        {
+          "id": "value-surplus",
+          "name": "Value, Surplus Value & Capital",
+          "subcategories": ["Labour Theory of Value", "Wages & Exploitation", "Capital Accumulation"]
+        },
+        {
+          "id": "imperialism-finance",
+          "name": "Imperialism & Monopoly Capitalism",
+          "subcategories": ["Finance Capital", "Inter-Imperialist War", "Global Cartels"]
+        }
+      ]
+    },
+    {
+      "id": "party-state-revolution",
+      "slug": "party-state-revolution",
+      "icon": "🚩",
+      "order": 2,
+      "title": {
+        "en": "Party, State & Revolution",
+        "es": "Partido, Estado y Revolución",
+        "pt": "Partido, Estado e Revolução",
+        "fr": "Parti, État et Révolution",
+        "it": "Partito, Stato e Rivoluzione",
+        "de": "Partei, Staat und Revolution",
+        "ru": "Партия, Государство и Революция"
+      },
+      "categories": [
+        {
+          "id": "dictatorship-proletariat",
+          "name": "State & Proletarian Dictatorship",
+          "subcategories": ["Smashing the Bourgeois State", "Withering Away of State", "Commune & Soviet State"]
+        },
+        {
+          "id": "vanguard-party",
+          "name": "Vanguard Party & Organic Centralism",
+          "subcategories": ["Party & Class", "Critique of Democratic Principle", "Programmatic Invariance"]
+        }
+      ]
+    },
+    {
+      "id": "historical-materialism",
+      "slug": "historical-materialism",
+      "icon": "⚡",
+      "order": 3,
+      "title": {
+        "en": "Historical Materialism & Method",
+        "es": "Materialismo Histórico y Método",
+        "pt": "Materialismo Histórico e Método",
+        "fr": "Matérialisme Historique et Méthode",
+        "it": "Materialismo Storico e Metodo",
+        "de": "Historischer Materialismus und Methode",
+        "ru": "Исторический Материализм и Метод"
+      },
+      "categories": [
+        {
+          "id": "dialectical-materialism",
+          "name": "Marxist Epistemology & Dialectics",
+          "subcategories": ["Materialist Method", "Ideology Critique"]
+        }
+      ]
+    },
+    {
+      "id": "history-communist-left",
+      "slug": "history-communist-left",
+      "icon": "⚔️",
+      "order": 4,
+      "title": {
+        "en": "Tactics & History of Communist Left",
+        "es": "Tácticas e Historia de la Izquierda Comunista",
+        "pt": "Táticas e História da Esquerda Comunista",
+        "fr": "Tactiques et Histoire de la Gauche Communiste",
+        "it": "Tattica e Storia della Sinistra Comunista",
+        "de": "Taktik und Geschichte der Kommunistischen Linken",
+        "ru": "Тактика и История Коммунистического Левого Крыла"
+      },
+      "categories": [
+        {
+          "id": "anti-opportunism",
+          "name": "Struggle Against Degeneration",
+          "subcategories": ["Lyon Theses (1926)", "Critique of Popular Fronts", "Internationalist Stand"]
+        }
+      ]
+    }
+  ]
+}

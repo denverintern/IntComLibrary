@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 layout: text
 title: "The Democratic Principle (1922)"
 author: "Amadeo Bordiga"

@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 layout: text
 title: "Der Imperialismus als höchstes Stadium des Kapitalismus"
 author: "W. I. Lenin"

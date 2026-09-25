@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Labour Theory of Value"
 layout: text
 title: "Заработная плата, цена и прибыль"
 author: "Карл Маркс"

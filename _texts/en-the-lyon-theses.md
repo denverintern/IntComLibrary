@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 layout: text
 title: "The Lyon Theses (1926)"
 author: "Left Faction of the Communist Party of Italy"

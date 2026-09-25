@@ -1,4 +1,7 @@
 ---
+section_id: "party-state-revolution"
+category: "State & Proletarian Dictatorship"
+subcategory: "Transition Period"
 layout: text
 title: "Crítica del Programa de Gotha"
 author: "Karl Marx"

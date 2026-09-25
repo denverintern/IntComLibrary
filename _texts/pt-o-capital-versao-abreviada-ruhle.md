@@ -1,4 +1,7 @@
 ---
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 layout: text
 title: "O Capital vol. 1: Uma Versão Abreviada"
 author: "Otto Rühle"
