@@ -5,11 +5,11 @@
 
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internationalist Communist Library • Internationalist Communist Library</title>
+  <title>Критика Политической Экономии • Internationalist Communist Library</title>
   
   <link rel="icon" type="image/png" href="../favicon.png">
 
@@ -720,13 +720,13 @@ h1, h2, h3 {
   <span class="lang-sep">|</span>
   <a href="../fr/index.html" class="lang-link ">Français</a>
   <span class="lang-sep">|</span>
-  <a href="../it/index.html" class="lang-link active">Italiano</a>
+  <a href="../it/index.html" class="lang-link ">Italiano</a>
   <span class="lang-sep">|</span>
   <a href="../de/index.html" class="lang-link ">Deutsch</a>
   <span class="lang-sep">|</span>
   <a href="../nl/index.html" class="lang-link ">Nederlands</a>
   <span class="lang-sep">|</span>
-  <a href="../ru/index.html" class="lang-link ">Русский</a>
+  <a href="../ru/index.html" class="lang-link active">Русский</a>
   <span class="lang-sep">|</span>
   <a href="../zh/index.html" class="lang-link ">中文</a>
   <span class="lang-sep">|</span>
@@ -756,11 +756,11 @@ h1, h2, h3 {
     <aside class="sidebar">
       <div class="search-container">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="global-search" placeholder="Cerca nell’archivio...">
+        <input type="text" class="search-input" id="global-search" placeholder="Поиск по архиву...">
       </div>
       <nav class="sidebar-nav">
-        <a href="../it/index.html" class="sidebar-link ">
-          📚 Tutti i Testi
+        <a href="../ru/index.html" class="sidebar-link ">
+          📚 Все Тексты
         </a>
         
         <div id="sidebar-sections-container">
@@ -770,12 +770,12 @@ h1, h2, h3 {
           
           
           
-            <div class="sidebar-title" style="margin-top: 1.5rem">Sezioni Tematiche</div>
+            <div class="sidebar-title" style="margin-top: 1.5rem">Тематические Разделы</div>
             
               
               
-              <a href="../sections/it-critica-economia-politica.html" class="sidebar-link ">
-                Critica dell'Economia Politica
+              <a href="../sections/ru-kritika-politicheskoy-ekonomii.html" class="sidebar-link active">
+                Критика Политической Экономии
               </a>
             
           
@@ -784,34 +784,32 @@ h1, h2, h3 {
     </aside>
 
     <main class="main-content">
-      <div style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem">
-  <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem">☭ Archivio Teorico</h2>
-  <p style="color: var(--text-muted); font-size: 1rem">
-    Accedi ai testi teorici chiave, alle tesi e ai manifesti storici della sinistra comunista, delle tradizioni internazionaliste e consiliari.
-  </p>
-</div>
+      <div class="section-container" style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem">
+  <header style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem">
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem; font-family: var(--font-display); color: var(--accent-red)">Критика Политической Экономии</h2>
+  </header>
+  <div class="markdown-body">
+    <ul>
+  <li>Наемный труд и капитал - Карл Маркс</li>
+  <li>Заработная плата, цена и прибыль - Карл Маркс</li>
+  <li>Капитал, Том 1 - Карл Маркс</li>
+  <li>Империализм как высшая стадия капитализма - В. И. Ленин</li>
+</ul>
 
-<!-- Texts Grid -->
-<div class="cards-grid" id="cards-grid">
-  
-  
-    <div style="grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center">
-      <p style="color: var(--text-muted)">Nessun testo disponibile in italiano ancora.</p>
-    </div>
-  
+  </div>
 </div>
 
     </main>
   </div>
 
   <footer style="margin-top: auto; padding: 3rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
-    <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">Proletari di tutti i paesi, unitevi!</p>
+    <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">Пролетарии всех стран, соединяйтесь!</p>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('global-search');
-      const pageUrl = "/it/";
+      const pageUrl = "/sections/ru-kritika-politicheskoy-ekonomii.html";
       const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
 
       function filterCards(query) {
@@ -849,7 +847,7 @@ h1, h2, h3 {
           if (e.key === 'Enter') {
             const query = e.target.value.trim();
             if (!isHomepage) {
-              const homeUrl = "../it/index.html?q=" + encodeURIComponent(query);
+              const homeUrl = "../ru/index.html?q=" + encodeURIComponent(query);
               window.location.href = homeUrl;
             }
           }
