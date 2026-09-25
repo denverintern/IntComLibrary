@@ -1,3 +1,12 @@
+{% assign relative_prefix = "" %}
+{% if page.url != "/" and page.url != "/index.html" %}
+  {% assign relative_prefix = "../" %}
+  {% assign url_parts = page.url | split: '/' %}
+  {% if url_parts.size > 3 %}
+    {% assign relative_prefix = "../../" %}
+  {% endif %}
+{% endif %}
+
 {% case page.language %}
   {% when 'pt' %}
     {% assign archive_title = 'Arquivo Teórico' %}

@@ -2,11 +2,13 @@
 layout: default
 ---
 
-{% assign url_parts = page.url | split: '/' %}
 {% assign relative_prefix = "" %}
-{% assign first_segment = url_parts[1] %}
-{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "zh" or first_segment == "ja" or first_segment == "ko" or first_segment == "ar" or first_segment == "hi" or first_segment == "bn" or first_segment == "id" or first_segment == "texts" or first_segment == "sections" %}
+{% if page.url != "/" and page.url != "/index.html" %}
   {% assign relative_prefix = "../" %}
+  {% assign url_parts = page.url | split: '/' %}
+  {% if url_parts.size > 3 %}
+    {% assign relative_prefix = "../../" %}
+  {% endif %}
 {% endif %}
 
 <div class="chapter-container">

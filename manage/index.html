@@ -4,6 +4,15 @@ title: Editorial & Archives Management Desk
 language: en
 ---
 
+{% assign relative_prefix = "" %}
+{% if page.url != "/" and page.url != "/index.html" %}
+  {% assign relative_prefix = "../" %}
+  {% assign url_parts = page.url | split: '/' %}
+  {% if url_parts.size > 3 %}
+    {% assign relative_prefix = "../../" %}
+  {% endif %}
+{% endif %}
+
 <!-- Authentication Gate Modal (Displayed when locked) -->
 <div id="auth-gate-modal" class="auth-gate-backdrop" style="display: flex;">
   <div class="auth-gate-box">
