@@ -1,19 +1,19 @@
 ---
 layout: default
 title: Internationalist Communist Library
-language: it
+language: pl
 ---
 
 <div style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem">
-  <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem">☭ Archivio Teorico</h2>
+  <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem">☭ Archiwum Teoretyczne</h2>
   <p style="color: var(--text-muted); font-size: 1rem">
-    Accedi ai testi teorici chiave, alle tesi e ai manifesti storici della sinistra comunista, delle tradizioni internazionaliste e consiliari.
+    Dostęp do kluczowych tekstów teoretycznych, tez i historycznych manifestów lewicy komunistycznej, tradycji internacjonalistycznych i radzieckich.
   </p>
 </div>
 
 <!-- Texts Grid -->
 <div class="cards-grid" id="cards-grid">
-  {% assign lang_texts = site.texts | where: "language", "it" | sort: "title" %}
+  {% assign lang_texts = site.texts | where: "language", "pl" | sort: "title" %}
   {% for text in lang_texts %}
     <div class="text-card" data-title="{{ text.title | downcase }}" data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
       <div class="card-header">
@@ -31,15 +31,15 @@ language: it
       {% endif %}
       
       <div class="card-footer">
-        <span class="card-meta-tag">🇮🇹 Italiano</span>
+        <span class="card-meta-tag">🇵🇱 Polski</span>
         <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" style="font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.25rem">
-          LEGGI IL TESTO <span style="font-size: 1.1rem; line-height: 1">→</span>
+          CZYTAJ TEKST <span style="font-size: 1.1rem; line-height: 1">→</span>
         </a>
       </div>
     </div>
   {% else %}
     <div style="grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center">
-      <p style="color: var(--text-muted)">Nessun testo disponibile in italiano ancora.</p>
+      <p style="color: var(--text-muted)">Brak jeszcze tekstów w języku polskim.</p>
     </div>
   {% endfor %}
 </div>

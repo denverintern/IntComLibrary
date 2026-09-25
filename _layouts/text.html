@@ -5,7 +5,7 @@ layout: default
 {% assign url_parts = page.url | split: '/' %}
 {% assign relative_prefix = "" %}
 {% assign first_segment = url_parts[1] %}
-{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "texts" or first_segment == "sections" or first_segment == "admin" %}
+{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "texts" or first_segment == "sections" %}
   {% assign relative_prefix = "../" %}
 {% endif %}
 
@@ -36,6 +36,19 @@ layout: default
     {% assign description_label = 'Acerca de este Texto' %}
     {% assign no_pdf_text = 'No hay ningún archivo PDF adjunto a esta entrada.' %}
     {% assign lang_name = 'Español' %}
+  {% when 'fr' %}
+    {% assign back_text = '← Retour à la Bibliothèque' %}
+    {% assign back_url = 'fr/index.html' %}
+    {% assign doc_info_title = 'Détails du Texte' %}
+    {% assign title_label = 'Titre' %}
+    {% assign author_label = 'Auteur' %}
+    {% assign lang_label = 'Langue' %}
+    {% assign format_label = 'Format' %}
+    {% assign download_text = 'Télécharger le PDF' %}
+    {% assign view_full_text = 'Plein Écran' %}
+    {% assign description_label = 'À propos de ce Texte' %}
+    {% assign no_pdf_text = 'Aucun fichier PDF joint à cette entrée.' %}
+    {% assign lang_name = 'Français' %}
   {% when 'it' %}
     {% assign back_text = '← Torna alla Biblioteca' %}
     {% assign back_url = 'it/index.html' %}
@@ -75,6 +88,45 @@ layout: default
     {% assign description_label = 'Über diesen Text' %}
     {% assign no_pdf_text = 'Diesem Eintrag ist keine PDF-Datei beigefügt.' %}
     {% assign lang_name = 'Deutsch' %}
+  {% when 'ru' %}
+    {% assign back_text = '← Вернуться в Библиотеку' %}
+    {% assign back_url = 'ru/index.html' %}
+    {% assign doc_info_title = 'Сведения о Тексте' %}
+    {% assign title_label = 'Название' %}
+    {% assign author_label = 'Автор' %}
+    {% assign lang_label = 'Язык' %}
+    {% assign format_label = 'Формат' %}
+    {% assign download_text = 'Скачать PDF' %}
+    {% assign view_full_text = 'Во весь экран' %}
+    {% assign description_label = 'Об этом Тексте' %}
+    {% assign no_pdf_text = 'К этой записи не прикреплен PDF-файл.' %}
+    {% assign lang_name = 'Русский' %}
+  {% when 'tr' %}
+    {% assign back_text = '← Kütüphaneye Dön' %}
+    {% assign back_url = 'tr/index.html' %}
+    {% assign doc_info_title = 'Metin Ayrıntıları' %}
+    {% assign title_label = 'Başlık' %}
+    {% assign author_label = 'Yazar' %}
+    {% assign lang_label = 'Dil' %}
+    {% assign format_label = 'Biçim' %}
+    {% assign download_text = 'PDF İndir' %}
+    {% assign view_full_text = 'Tam Ekran' %}
+    {% assign description_label = 'Bu Metin Hakkında' %}
+    {% assign no_pdf_text = 'Bu girişe eklenmiş PDF dosyası yok.' %}
+    {% assign lang_name = 'Türkçe' %}
+  {% when 'pl' %}
+    {% assign back_text = '← Wróć do Biblioteki' %}
+    {% assign back_url = 'pl/index.html' %}
+    {% assign doc_info_title = 'Szczegóły Tekstu' %}
+    {% assign title_label = 'Tytuł' %}
+    {% assign author_label = 'Autor' %}
+    {% assign lang_label = 'Język' %}
+    {% assign format_label = 'Format' %}
+    {% assign download_text = 'Pobierz PDF' %}
+    {% assign view_full_text = 'Pełny Ekran' %}
+    {% assign description_label = 'O tym Tekście' %}
+    {% assign no_pdf_text = 'Brak pliku PDF dołączonego do tego wpisu.' %}
+    {% assign lang_name = 'Polski' %}
   {% when 'el' %}
     {% assign back_text = '← Επιστροφή στη Βιβλιοθήκη' %}
     {% assign back_url = 'el/index.html' %}
@@ -141,7 +193,7 @@ layout: default
       <h2 style="font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-gold); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem">
         {{ description_label }}
       </h2>
-      <div style=" font-size: 1.05rem; line-height: 1.8; color: var(--text-main)">
+      <div style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main)">
         {{ content }}
       </div>
     </section>
@@ -168,7 +220,7 @@ layout: default
           <span class="metadata-label">{{ lang_label }}</span>
           <span class="metadata-value" style="display: flex; align-items: center; gap: 0.4rem">
             {% case page.language %}
-              {% when 'pt' %}🇧🇷{% when 'es' %}🇪🇸{% when 'it' %}🇮🇹{% when 'nl' %}🇳🇱{% when 'de' %}🇩🇪{% when 'el' %}🇬🇷{% else %}🇬🇧{% endcase %} {{ lang_name }}
+              {% when 'pt' %}🇧🇷{% when 'es' %}🇪🇸{% when 'fr' %}🇫🇷{% when 'it' %}🇮🇹{% when 'nl' %}🇳🇱{% when 'de' %}🇩🇪{% when 'ru' %}🇷🇺{% when 'tr' %}🇹🇷{% when 'pl' %}🇵🇱{% when 'el' %}🇬🇷{% else %}🇬🇧{% endcase %} {{ lang_name }}
           </span>
         </div>
 

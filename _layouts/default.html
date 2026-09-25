@@ -1,7 +1,7 @@
 {% assign url_parts = page.url | split: '/' %}
 {% assign relative_prefix = "" %}
 {% assign first_segment = url_parts[1] %}
-{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "texts" or first_segment == "sections" or first_segment == "admin" %}
+{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "texts" or first_segment == "sections" %}
   {% assign relative_prefix = "../" %}
 {% endif %}
 
@@ -10,49 +10,66 @@
     {% assign sidebar_title = 'Seções Temáticas' %}
     {% assign all_texts_text = '📚 Todos os Textos' %}
     {% assign home_path = 'pt/index.html' %}
-    {% assign admin_text = '⚙️ Painel de Manutenção' %}
     {% assign search_placeholder = 'Pesquisar acervo...' %}
     {% assign unite_text = 'Proletários de todos os países, uni-vos!' %}
   {% when 'es' %}
     {% assign sidebar_title = 'Secciones Temáticas' %}
     {% assign all_texts_text = '📚 Todos los Textos' %}
     {% assign home_path = 'es/index.html' %}
-    {% assign admin_text = '⚙️ Panel de Mantenimiento' %}
     {% assign search_placeholder = 'Buscar archivo...' %}
     {% assign unite_text = '¡Proletarios de todos los países, uníos!' %}
+  {% when 'fr' %}
+    {% assign sidebar_title = 'Sections Thématiques' %}
+    {% assign all_texts_text = '📚 Tous les Textes' %}
+    {% assign home_path = 'fr/index.html' %}
+    {% assign search_placeholder = 'Rechercher dans les archives...' %}
+    {% assign unite_text = 'Prolétaires de tous les pays, unissez-vous !' %}
   {% when 'it' %}
     {% assign sidebar_title = 'Sezioni Tematiche' %}
     {% assign all_texts_text = '📚 Tutti i Testi' %}
     {% assign home_path = 'it/index.html' %}
-    {% assign admin_text = '⚙️ Pannello di Manutenzione' %}
     {% assign search_placeholder = 'Cerca nell’archivio...' %}
     {% assign unite_text = 'Proletari di tutti i paesi, unitevi!' %}
   {% when 'nl' %}
     {% assign sidebar_title = 'Thematische Secties' %}
     {% assign all_texts_text = '📚 Alle Teksten' %}
     {% assign home_path = 'nl/index.html' %}
-    {% assign admin_text = '⚙️ Onderhoudspaneel' %}
     {% assign search_placeholder = 'Zoek in archief...' %}
     {% assign unite_text = 'Proletariërs aller landen, verenigt u!' %}
   {% when 'de' %}
     {% assign sidebar_title = 'Thematische Bereiche' %}
     {% assign all_texts_text = '📚 Alle Texte' %}
     {% assign home_path = 'de/index.html' %}
-    {% assign admin_text = '⚙️ Wartungspanel' %}
     {% assign search_placeholder = 'Archiv durchsuchen...' %}
     {% assign unite_text = 'Proletarier aller Länder, vereinigt euch!' %}
+  {% when 'ru' %}
+    {% assign sidebar_title = 'Тематические Разделы' %}
+    {% assign all_texts_text = '📚 Все Тексты' %}
+    {% assign home_path = 'ru/index.html' %}
+    {% assign search_placeholder = 'Поиск по архиву...' %}
+    {% assign unite_text = 'Пролетарии всех стран, соединяйтесь!' %}
+  {% when 'tr' %}
+    {% assign sidebar_title = 'Tematik Bölümler' %}
+    {% assign all_texts_text = '📚 Tüm Metinler' %}
+    {% assign home_path = 'tr/index.html' %}
+    {% assign search_placeholder = 'Arşivde ara...' %}
+    {% assign unite_text = 'Bütün ülkelerin proleterleri, birleşin!' %}
+  {% when 'pl' %}
+    {% assign sidebar_title = 'Sekcje Tematyczne' %}
+    {% assign all_texts_text = '📚 Wszystkie Teksty' %}
+    {% assign home_path = 'pl/index.html' %}
+    {% assign search_placeholder = 'Szukaj w archiwum...' %}
+    {% assign unite_text = 'Proletariusze wszystkich krajów, łączcie się!' %}
   {% when 'el' %}
     {% assign sidebar_title = 'Θεματικές Ενότητες' %}
     {% assign all_texts_text = '📚 Όλα τα Κείμενα' %}
     {% assign home_path = 'el/index.html' %}
-    {% assign admin_text = '⚙️ Πίνακας Συντήρησης' %}
     {% assign search_placeholder = 'Αναζήτηση αρχείου...' %}
     {% assign unite_text = 'Προλετάριοι όλων των χωρών, ενωθείτε!' %}
   {% else %}
     {% assign sidebar_title = 'Thematic Sections' %}
     {% assign all_texts_text = '📚 All Texts' %}
     {% assign home_path = 'index.html' %}
-    {% assign admin_text = '⚙️ Maintenance Panel' %}
     {% assign search_placeholder = 'Search archive by title, author...' %}
     {% assign unite_text = 'Proletarians of all countries, unite!' %}
 {% endcase %}
@@ -61,7 +78,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title | default: site.title }} • Red Alcoholic Archive</title>
+  <title>{{ page.title | default: site.title }} • Internationalist Communist Library</title>
   
   <link rel="icon" type="image/png" href="{{ relative_prefix }}favicon.png">
 
@@ -69,7 +86,6 @@
   <style>
     {% include style.css %}
   </style>
-
 
 </head>
 <body>
@@ -122,7 +138,7 @@
             <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
           </g>
         </svg>
-        <span>Red Alcoholic Archive</span>
+        <span>Internationalist Communist Library</span>
       </a>
     </div>
     <div class="nav-container">
@@ -137,7 +153,7 @@
         <input type="text" class="search-input" id="global-search" placeholder="{{ search_placeholder }}">
       </div>
       <nav class="sidebar-nav">
-        <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/el/index.html' %}active{% endif %}">
+        <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
           {{ all_texts_text }}
         </a>
         
@@ -180,7 +196,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
-      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/el/index.html";
+      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
 
       function filterCards(query) {
         const cards = document.querySelectorAll('.text-card');

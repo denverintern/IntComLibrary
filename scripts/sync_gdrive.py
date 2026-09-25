@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sync Google Drive / Google Form responses to the Red Archive Jekyll site.
+Sync Google Drive / Google Form responses to the Internationalist Communist Library Jekyll site.
 
 Supports two modes of fetching the Google Sheet:
 1. Google Service Account (Recommended for private Sheets/Drive):
@@ -47,7 +47,11 @@ LANG_MAP = {
     "it": "it", "italian": "it", "italiano": "it",
     "nl": "nl", "dutch": "nl", "nederlands": "nl",
     "de": "de", "german": "de", "deutsch": "de",
-    "el": "el", "greek": "el", "ελληνικά": "el", "ellinika": "el"
+    "el": "el", "greek": "el", "ελληνικά": "el", "ellinika": "el",
+    "fr": "fr", "french": "fr", "français": "fr", "francais": "fr",
+    "ru": "ru", "russian": "ru", "русский": "ru", "russkiy": "ru",
+    "tr": "tr", "turkish": "tr", "türkçe": "tr", "turkce": "tr",
+    "pl": "pl", "polish": "pl", "polski": "pl"
 }
 
 def slugify(text):
@@ -216,7 +220,7 @@ def get_rows_from_csv_url(csv_url):
 
 def main():
     print("=" * 60)
-    print("  Red Archive - Google Drive & Sheet Synchronizer")
+    print("  Internationalist Communist Library - Google Drive & Sheet Synchronizer")
     print("=" * 60)
 
     os.makedirs(TEXTS_DIR, exist_ok=True)
