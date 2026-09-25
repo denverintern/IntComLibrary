@@ -237,11 +237,11 @@
   </div>
   <div class="archive-views-control">
     <span class="view-label">{{ view_label_text }}</span>
-    <button type="button" class="view-btn active" id="view-btn-index" title="Dense Party Organ Column">Index</button>
+    <button type="button" class="view-btn active" id="view-btn-index" title="Dense Party Organ Column">{{ t.view_index_label | default: 'Index' }}</button>
     <span class="view-sep">·</span>
-    <button type="button" class="view-btn" id="view-btn-catalog" title="Catalog Reading Room Spread">Catalog</button>
+    <button type="button" class="view-btn" id="view-btn-catalog" title="Catalog Reading Room Spread">{{ t.view_catalog_label | default: 'Catalog' }}</button>
     <span class="view-sep">·</span>
-    <button type="button" class="view-btn" id="view-btn-shelf" title="Single-column Bulletin List">Bulletin</button>
+    <button type="button" class="view-btn" id="view-btn-shelf" title="Single-column Bulletin List">{{ t.view_bulletin_label | default: 'Bulletin' }}</button>
   </div>
 </div>
 

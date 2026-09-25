@@ -1,47 +1,5 @@
-{% case page.language %}
-  {% when 'pt' %}
-    {% assign brand_title = 'Biblioteca Comunista Internacionalista' %}
-    {% assign motto_text = 'Arquivo Teórico da Esquerda Comunista' %}
-    {% assign all_texts_text = 'Todas as Obras' %}
-    {% assign library_index_text = 'Índice da Biblioteca' %}
-    {% assign unite_text = 'PROLETÁRIOS DE TODOS OS PAÍSES, UNI-VOS!' %}
-  {% when 'es' %}
-    {% assign brand_title = 'Biblioteca Comunista Internacionalista' %}
-    {% assign motto_text = 'Archivo Teórico de la Izquierda Comunista' %}
-    {% assign all_texts_text = 'Todas las Obras' %}
-    {% assign library_index_text = 'Índice de la Biblioteca' %}
-    {% assign unite_text = '¡PROLETARIOS DE TODOS LOS PAÍSES, UNÍOS!' %}
-  {% when 'fr' %}
-    {% assign brand_title = 'Bibliothèque Communiste Internationaliste' %}
-    {% assign motto_text = 'Archives Théoriques de la Gauche Communiste' %}
-    {% assign all_texts_text = 'Toutes les Œuvres' %}
-    {% assign library_index_text = 'Index de la Bibliothèque' %}
-    {% assign unite_text = 'PROLÉTAIRES DE TOUS LES PAYS, UNISSEZ-VOUS !' %}
-  {% when 'it' %}
-    {% assign brand_title = 'Biblioteca Comunista Internazionalista' %}
-    {% assign motto_text = 'Archivio Teorico della Sinistra Comunista' %}
-    {% assign all_texts_text = 'Tutte le Opere' %}
-    {% assign library_index_text = 'Indice della Biblioteca' %}
-    {% assign unite_text = 'PROLETARI DI TUTTI I PAESI, UNITEVI!' %}
-  {% when 'de' %}
-    {% assign brand_title = 'Internationalistische Kommunistische Bibliothek' %}
-    {% assign motto_text = 'Theoretisches Archiv der Kommunistischen Linken' %}
-    {% assign all_texts_text = 'Alle Werke' %}
-    {% assign library_index_text = 'Bibliotheksindex' %}
-    {% assign unite_text = 'PROLETARIER ALLER LÄNDER, VEREINIGT EUCH!' %}
-  {% when 'ru' %}
-    {% assign brand_title = 'Интернационалистическая Коммунистическая Библиотека' %}
-    {% assign motto_text = 'Теоретический Архив Коммунистической Левой' %}
-    {% assign all_texts_text = 'Все работы' %}
-    {% assign library_index_text = 'Индекс библиотеки' %}
-    {% assign unite_text = 'ПРОЛЕТАРИИ ВСЕХ СТРАН, СОЕДИНЯЙТЕСЬ!' %}
-  {% else %}
-    {% assign brand_title = 'Internationalist Communist Library' %}
-    {% assign motto_text = 'Theoretical Archive of the Communist Left' %}
-    {% assign all_texts_text = 'All Works' %}
-    {% assign library_index_text = 'Library Index' %}
-    {% assign unite_text = 'PROLETARIANS OF ALL COUNTRIES, UNITE!' %}
-{% endcase %}
+{% assign lang = page.language | default: 'en' %}
+{% assign t = site.data.locales[lang] | default: site.data.locales['en'] %}
 
 {% assign relative_prefix = "" %}
 {% if page.url != "/" and page.url != "/index.html" %}
@@ -194,11 +152,11 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title | default: site.title }} • {{ brand_title }}</title>
+  <title>{{ page.title | default: site.title }} • {{ t.brand_title }}</title>
 <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
 <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="{{ brand_title }}">
+<meta property="og:site_name" content="{{ t.brand_title }}">
 
   
   <link rel="icon" type="image/png" href="{{ relative_prefix }}favicon.png">
@@ -259,9 +217,9 @@
             <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
           </g>
         </svg>
-        <span>{{ brand_title }}</span>
+        <span>{{ t.brand_title }}</span>
       </a>
-      <p class="header-motto">{{ motto_text }}</p>
+      <p class="header-motto">{{ t.motto_text }}</p>
     </div>
     {% include nav.html %}
   </header>
@@ -278,7 +236,7 @@
         {% endfor %}
 
         <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/zh/index.html' or page.url == '/ja/index.html' or page.url == '/ko/index.html' or page.url == '/ar/index.html' or page.url == '/hi/index.html' or page.url == '/bn/index.html' or page.url == '/id/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
-          <span>{{ all_texts_text }}</span>
+          <span>{{ t.all_texts_text }}</span>
           {% if all_count > 0 %}
             <span class="sidebar-count">({{ all_count }})</span>
           {% endif %}
@@ -328,12 +286,12 @@
   </div>
 
   <footer style="margin-top: auto; padding: 2.5rem 1.5rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
-    <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">{{ unite_text }}</p>
-    <p style="margin-bottom: 0.6rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">{{ brand_title }} &middot; Updated {{ site.time | date: "%Y-%m-%d" }}</p>
+    <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">{{ t.unite_text }}</p>
+    <p style="margin-bottom: 0.6rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">{{ t.brand_title }} &middot; Updated {{ site.time | date: "%Y-%m-%d" }}</p>
     <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: var(--font-sans);">
-      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">{{ library_index_text }}</a>
+      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">{{ t.library_index_text }}</a>
       <span style="color: var(--border-color);">·</span>
-      <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">Repository</a>
+      <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">{{ t.repository_text }}</a>
       <span style="color: var(--border-color);">·</span>
       <a href="{{ relative_prefix }}manage/index.html" style="color: var(--text-dim); text-decoration: none;">Editorial &amp; Moderator Desk</a>
     </div>

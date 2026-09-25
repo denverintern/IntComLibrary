@@ -11,7 +11,7 @@
   <span class="utility-sep">&middot;</span>
   
   <div style="position: relative; display: inline-block;" class="more-lang-dropdown">
-    <button type="button" class="utility-quick-lang" style="background:none; border:none; padding: 1px 3px; cursor:pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">MORE ▾</button>
+    <button type="button" class="utility-quick-lang" style="background:none; border:none; padding: 1px 3px; cursor:pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">{{ t.more_langs_label | default: 'MORE' }} ▾</button>
     <div style="display: none; position: absolute; top: 100%; left: 0; background: var(--bg-primary); border: 1px solid var(--border-color); padding: 0.5rem; z-index: 100; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
         <a href="{{ relative_prefix }}fr/index.html" class="utility-quick-lang {% if page.language == 'fr' %}active{% endif %}">FR</a>
@@ -36,16 +36,16 @@
     <span class="utility-divider">|</span>
     
     <span class="theme-text-control">
-      <button type="button" class="theme-btn" id="theme-btn-paper" title="Switch to paper ground">Paper</button>
+      <button type="button" class="theme-btn" id="theme-btn-paper" title="Switch to paper ground">{{ t.paper_label | default: 'Paper' }}</button>
       <span class="theme-btn-sep">/</span>
-      <button type="button" class="theme-btn" id="theme-btn-night" title="Switch to night ground">Night</button>
+      <button type="button" class="theme-btn" id="theme-btn-night" title="Switch to night ground">{{ t.night_label | default: 'Night' }}</button>
     </span>
   </div>
 
   <div class="utility-right">
     <div class="header-search-wrap">
-      <label for="global-search" class="search-text-label">Search:</label>
-      <input type="text" id="global-search" class="search-input-clean" placeholder="Title, author, term...">
+      <label for="global-search" class="search-text-label">{{ t.search_label | default: "Search" }}:</label>
+      <input type="text" id="global-search" class="search-input-clean" placeholder="{{ t.search_placeholder | default: 'Title, author, term...' }}">
     </div>
   </div>
 </div>
