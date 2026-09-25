@@ -12,48 +12,56 @@
     {% assign home_path = 'pt/index.html' %}
     {% assign search_placeholder = 'Pesquisar acervo...' %}
     {% assign unite_text = 'Proletários de todos os países, uni-vos!' %}
+    {% assign theme_title = 'Alternar Tema' %}
   {% when 'es' %}
     {% assign sidebar_title = 'Secciones Temáticas' %}
     {% assign all_texts_text = '📚 Todos los Textos' %}
     {% assign home_path = 'es/index.html' %}
     {% assign search_placeholder = 'Buscar archivo...' %}
-    {% assign unite_text = '¡Proletarios de todos los países, uníos!' %}
+    {% assign unite_text = '¡Proletarios de todos os países, uníos!' %}
+    {% assign theme_title = 'Cambiar Tema' %}
   {% when 'fr' %}
     {% assign sidebar_title = 'Sections Thématiques' %}
     {% assign all_texts_text = '📚 Tous les Textes' %}
     {% assign home_path = 'fr/index.html' %}
     {% assign search_placeholder = 'Rechercher dans les archives...' %}
     {% assign unite_text = 'Prolétaires de tous les pays, unissez-vous !' %}
+    {% assign theme_title = 'Changer de Thème' %}
   {% when 'it' %}
     {% assign sidebar_title = 'Sezioni Tematiche' %}
     {% assign all_texts_text = '📚 Tutti i Testi' %}
     {% assign home_path = 'it/index.html' %}
     {% assign search_placeholder = 'Cerca nell’archivio...' %}
     {% assign unite_text = 'Proletari di tutti i paesi, unitevi!' %}
+    {% assign theme_title = 'Cambia Tema' %}
   {% when 'nl' %}
     {% assign sidebar_title = 'Thematische Secties' %}
     {% assign all_texts_text = '📚 Alle Teksten' %}
     {% assign home_path = 'nl/index.html' %}
     {% assign search_placeholder = 'Zoek in archief...' %}
     {% assign unite_text = 'Proletariërs aller landen, verenigt u!' %}
+    {% assign theme_title = 'Thema Wisselen' %}
   {% when 'de' %}
     {% assign sidebar_title = 'Thematische Bereiche' %}
     {% assign all_texts_text = '📚 Alle Texte' %}
     {% assign home_path = 'de/index.html' %}
     {% assign search_placeholder = 'Archiv durchsuchen...' %}
     {% assign unite_text = 'Proletarier aller Länder, vereinigt euch!' %}
+    {% assign theme_title = 'Farbschema Wechseln' %}
   {% when 'ru' %}
     {% assign sidebar_title = 'Тематические Разделы' %}
     {% assign all_texts_text = '📚 Все Тексты' %}
     {% assign home_path = 'ru/index.html' %}
     {% assign search_placeholder = 'Поиск по архиву...' %}
     {% assign unite_text = 'Пролетарии всех стран, соединяйтесь!' %}
+    {% assign theme_title = 'Сменить Тему' %}
   {% when 'zh' %}
     {% assign sidebar_title = '专题板块' %}
     {% assign all_texts_text = '📚 所有文献' %}
     {% assign home_path = 'zh/index.html' %}
     {% assign search_placeholder = '在档案库中搜索文献、作者...' %}
     {% assign unite_text = '全世界无产者，联合起来！' %}
+    {% assign theme_title = '切换主题' %}
   {% when 'ja' %}
     {% assign sidebar_title = 'テーマ別セクション' %}
     {% assign all_texts_text = '📚 すべての文献' %}
@@ -66,18 +74,21 @@
     {% assign home_path = 'ko/index.html' %}
     {% assign search_placeholder = '제목, 저자로 아카이브 검색...' %}
     {% assign unite_text = '만국의 노동자여, 단결하라!' %}
+    {% assign theme_title = '테마 전환' %}
   {% when 'ar' %}
     {% assign sidebar_title = 'الأقسام الموضوعية' %}
     {% assign all_texts_text = '📚 جميع النصوص' %}
     {% assign home_path = 'ar/index.html' %}
     {% assign search_placeholder = 'ابحث في الأرشيف بالعنوان، المؤلف...' %}
     {% assign unite_text = 'يا عمال العالم، اتحدوا!' %}
+    {% assign theme_title = 'تبديل المظهر' %}
   {% when 'hi' %}
     {% assign sidebar_title = 'विषयगत अनुभाग' %}
     {% assign all_texts_text = '📚 सभी ग्रंथ' %}
     {% assign home_path = 'hi/index.html' %}
     {% assign search_placeholder = 'शीर्षक, लेखक द्वारा खोजें...' %}
     {% assign unite_text = 'दुनिया के मज़दूरों, एक हो जाओ!' %}
+    {% assign theme_title = 'थीम बदलें' %}
   {% when 'bn' %}
     {% assign sidebar_title = 'বিষয়ভিত্তিক বিভাগ' %}
     {% assign all_texts_text = '📚 সমস্ত লেখা' %}
@@ -90,6 +101,7 @@
     {% assign home_path = 'id/index.html' %}
     {% assign search_placeholder = 'Cari arsip berdasarkan judul, penulis...' %}
     {% assign unite_text = 'Kaum buruh sedunia, bersatulah!' %}
+    {% assign theme_title = 'Ganti Tema' %}
   {% when 'tr' %}
     {% assign sidebar_title = 'Tematik Bölümler' %}
     {% assign all_texts_text = '📚 Tüm Metinler' %}
@@ -102,22 +114,37 @@
     {% assign home_path = 'pl/index.html' %}
     {% assign search_placeholder = 'Szukaj w archiwum...' %}
     {% assign unite_text = 'Proletariusze wszystkich krajów, łączcie się!' %}
+    {% assign theme_title = 'Zmień Motyw' %}
   {% when 'el' %}
     {% assign sidebar_title = 'Θεματικές Ενότητες' %}
     {% assign all_texts_text = '📚 Όλα τα Κείμενα' %}
     {% assign home_path = 'el/index.html' %}
     {% assign search_placeholder = 'Αναζήτηση αρχείου...' %}
     {% assign unite_text = 'Προλετάριοι όλων των χωρών, ενωθείτε!' %}
+    {% assign theme_title = 'Αλλαγή Θέματος' %}
   {% else %}
     {% assign sidebar_title = 'Thematic Sections' %}
     {% assign all_texts_text = '📚 All Texts' %}
     {% assign home_path = 'index.html' %}
     {% assign search_placeholder = 'Search archive by title, author...' %}
     {% assign unite_text = 'Proletarians of all countries, unite!' %}
+    {% assign theme_title = 'Toggle Theme' %}
 {% endcase %}
 <!DOCTYPE html>
 <html lang="{{ page.language | default: 'en' }}" {% if page.language == 'ar' %}dir="rtl"{% endif %}>
 <head>
+  <!-- Inline early script to avoid theme flash (FOUC) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title | default: site.title }} • Internationalist Communist Library</title>
@@ -132,56 +159,65 @@
 </head>
 <body>
   <header class="header">
-    <div class="logo">
-      <a href="{{ relative_prefix }}index.html" class="logo-link">
-        <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Defs for reuse -->
-          <defs>
-            <g id="grain">
-              <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
-              <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
-            </g>
-            <g id="wheat-pair">
-              <use href="#grain" transform="rotate(-28) scale(0.95)" />
-              <use href="#grain" transform="rotate(28) scale(0.95)" />
-              <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
-            </g>
-            <g id="wreath-half">
-              <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
-              <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
-              <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
-              <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
-              <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
-              <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
-              <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
-              <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
-              <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
-              <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
-            </g>
-          </defs>
+    <div class="header-inner">
+      <div class="header-spacer" aria-hidden="true"></div>
+      <div class="logo">
+        <a href="{{ relative_prefix }}{{ home_path }}" class="logo-link">
+          <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Defs for reuse -->
+            <defs>
+              <g id="grain">
+                <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
+                <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
+              </g>
+              <g id="wheat-pair">
+                <use href="#grain" transform="rotate(-28) scale(0.95)" />
+                <use href="#grain" transform="rotate(28) scale(0.95)" />
+                <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
+              </g>
+              <g id="wreath-half">
+                <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
+                <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
+                <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
+                <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
+                <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
+                <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
+                <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
+                <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
+                <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
+                <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
+              </g>
+            </defs>
 
-          <use href="#wreath-half" />
-          <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
+            <use href="#wreath-half" />
+            <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
 
-          <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
-            <circle cx="0" cy="0" r="3" />
-            <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
-            <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
-            <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-          </g>
+            <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
+              <circle cx="0" cy="0" r="3" />
+              <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
+              <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
+              <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
 
-          <g transform="translate(50, 48) scale(0.68)">
-            <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
-          </g>
-        </svg>
-        <span>Internationalist Communist Library</span>
-      </a>
+            <g transform="translate(50, 48) scale(0.68)">
+              <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+            </g>
+          </svg>
+          <span>Internationalist Communist Library</span>
+        </a>
+      </div>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="{{ theme_title }}" title="{{ theme_title }}">
+          <span class="theme-icon icon-moon" aria-hidden="true">🌙</span>
+          <span class="theme-icon icon-sun" aria-hidden="true">☀️</span>
+        </button>
+      </div>
     </div>
     <div class="nav-container">
       {% include nav.html %}
@@ -236,6 +272,27 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Theme Toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          try {
+            localStorage.setItem('theme', newTheme);
+          } catch (e) {}
+        });
+      }
+
+      // Sync with system preference if user hasn't explicitly set a preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+          }
+        });
+      }
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
       const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";

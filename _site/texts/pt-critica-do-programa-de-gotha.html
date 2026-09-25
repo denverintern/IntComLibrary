@@ -7,6 +7,18 @@
 <!DOCTYPE html>
 <html lang="pt" >
 <head>
+  <!-- Inline early script to avoid theme flash (FOUC) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crítica do Programa de Gotha • Internationalist Communist Library</title>
@@ -15,25 +27,50 @@
 
   <!-- Inline compiled stylesheet for fail-safe rendering and offline file:// support -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
+/* Color Variables & Theme System */
 :root {
-  --bg-primary: #0a0b0d;
-  --bg-secondary: #111317;
-  --bg-tertiary: #171a21;
+  --bg-primary: #0a0b0e;
+  --bg-secondary: #12141a;
+  --bg-tertiary: #191c24;
+  --bg-hover: #1f232d;
   --accent-red: #e63939;
   --accent-red-hover: #ff4d4d;
   --accent-gold: #e5c158;
-  --text-main: #e2e8f0;
+  --accent-gold-hover: #f1d77a;
+  --text-main: #f1f5f9;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
-  --border-color: rgba(255, 255, 255, 0.05);
-  --border-color-focus: rgba(230, 57, 57, 0.3);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-focus: rgba(230, 57, 57, 0.4);
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.5);
   --font-display: 'Cinzel', serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Lora', serif;
-  --border-radius: 6px;
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+  --border-radius: 8px;
+  --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f7f5ef;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #ede8dc;
+  --bg-hover: #e4decfa8;
+  --accent-red: #b82424;
+  --accent-red-hover: #9c1b1b;
+  --accent-gold: #966c14;
+  --accent-gold-hover: #78540c;
+  --text-main: #18191c;
+  --text-muted: #4a5568;
+  --text-dim: #718096;
+  --border-color: rgba(0, 0, 0, 0.09);
+  --border-color-focus: rgba(184, 36, 36, 0.35);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --card-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.04);
+  color-scheme: light;
 }
 
 /* Global Reset & Base Styles */
@@ -51,19 +88,20 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color var(--transition), color var(--transition);
 }
 
 /* Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--bg-tertiary);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-red);
@@ -71,18 +109,31 @@ body {
 
 /* Header Component */
 .header {
-  background: #14161c;
-  padding: 1.5rem 1rem;
-  text-align: center;
+  background: var(--bg-secondary);
+  padding: 1.25rem 1rem 1rem 1rem;
   border-bottom: 2px solid var(--accent-red);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto 1.25rem auto;
+  position: relative;
+}
+
+.header-spacer {
+  width: 42px;
+  flex-shrink: 0;
 }
 
 .logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .logo-link {
@@ -91,11 +142,12 @@ body {
   gap: 12px;
   color: var(--accent-red);
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-decoration: none;
   transition: var(--transition);
+  text-align: center;
 }
 
 .logo-link:hover {
@@ -103,9 +155,54 @@ body {
 }
 
 .logo-img {
-  height: 38px;
-  width: 38px;
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
 }
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1.15rem;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-gold);
+  background: var(--bg-hover);
+  transform: scale(1.08);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-icon {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="dark"] .icon-moon { display: flex; }
+[data-theme="dark"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: flex; }
 
 /* Language Navigation */
 .lang-nav {
@@ -113,41 +210,45 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem 0.75rem;
-  max-width: 800px;
+  gap: 0.35rem 0.5rem;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .lang-link {
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
   transition: var(--transition);
 }
 
 .lang-link:hover {
-  color: var(--accent-red-hover);
-  background: rgba(255, 255, 255, 0.03);
+  color: var(--accent-red);
+  background: var(--bg-tertiary);
 }
 
 .lang-link.active {
   color: var(--accent-gold);
   font-weight: 700;
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
 }
 
 .lang-sep {
-  color: rgba(255, 255, 255, 0.08);
-  font-size: 0.85rem;
+  color: var(--border-color);
+  font-size: 0.75rem;
+  user-select: none;
 }
 
 /* Main Layout Grid */
 .container {
-  max-width: 1000px;
+  max-width: 1040px;
   width: 100%;
   margin: 2.5rem auto;
   padding: 0 1.5rem;
@@ -170,7 +271,7 @@ h1, h2, h3 {
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1.2rem 0.8rem 2.8rem;
+  padding: 0.8rem 1.25rem 0.8rem 2.8rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -178,12 +279,13 @@ h1, h2, h3 {
   font-size: 0.95rem;
   font-family: var(--font-sans);
   transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .search-input:focus {
   outline: none;
-  border-color: var(--border-color-focus);
-  box-shadow: 0 0 0 3px rgba(230, 57, 57, 0.08);
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 3px var(--border-color-focus);
 }
 
 .search-icon {
@@ -199,7 +301,7 @@ h1, h2, h3 {
 /* Text Cards Grid */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 1.5rem;
 }
 
@@ -210,9 +312,11 @@ h1, h2, h3 {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.85rem;
   position: relative;
+  box-shadow: var(--card-shadow);
   transition: var(--transition);
+  overflow: hidden;
 }
 
 .text-card::before {
@@ -220,22 +324,29 @@ h1, h2, h3 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 3px;
+  width: 4px;
   height: 100%;
   background: var(--accent-red);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
+  transition: background var(--transition);
+}
+
+[dir="rtl"] .text-card::before {
+  left: auto;
+  right: 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 .text-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: var(--border-color-focus);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  line-height: 1.4;
+  font-size: 1.15rem;
+  line-height: 1.35;
   font-weight: 700;
 }
 
@@ -245,7 +356,7 @@ h1, h2, h3 {
   transition: var(--transition);
 }
 
-.card-title a:hover {
+.text-card:hover .card-title a {
   color: var(--accent-red);
 }
 
@@ -254,18 +365,18 @@ h1, h2, h3 {
   font-weight: 600;
   color: var(--accent-gold);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .card-description {
   font-family: var(--font-serif);
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .card-footer {
@@ -273,29 +384,39 @@ h1, h2, h3 {
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border-color);
 }
 
 .card-meta-tag {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.02);
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: var(--bg-tertiary);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .card-footer a {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--accent-red);
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: var(--transition);
 }
 
 .card-footer a:hover {
   color: var(--accent-red-hover);
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .card-footer a:hover {
+  transform: translateX(-3px);
 }
 
 /* Reading content font overrides for scholarly presentation */
@@ -339,23 +460,25 @@ h1, h2, h3 {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
 }
 
 .sidebar-widget-title {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   color: var(--accent-gold);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.05em;
 }
 
 .metadata-list {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.85rem;
 }
 
 .metadata-item {
@@ -365,23 +488,25 @@ h1, h2, h3 {
 }
 
 .metadata-label {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   color: var(--text-dim);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 .metadata-value {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-main);
 }
 
 .pdf-viewer-frame {
   width: 100%;
-  height: 70vh;
+  height: 72vh;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  background: #14161a;
+  background: var(--bg-primary);
+  box-shadow: var(--card-shadow);
 }
 
 /* Buttons */
@@ -390,8 +515,8 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.85rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.88rem;
   font-weight: 600;
   border-radius: var(--border-radius);
   border: none;
@@ -415,7 +540,8 @@ h1, h2, h3 {
   border: 1px solid var(--border-color);
 }
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-hover);
+  border-color: var(--accent-gold);
 }
 
 .btn-block {
@@ -506,22 +632,22 @@ h1, h2, h3 {
   color: var(--text-muted);
   text-decoration: none;
   font-size: 0.9rem;
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.8rem;
   border-radius: var(--border-radius);
   transition: var(--transition);
   border-left: 2px solid transparent;
 }
 
 .sidebar-link:hover {
-  color: var(--accent-red-hover);
-  background: rgba(255, 255, 255, 0.02);
+  color: var(--accent-red);
+  background: var(--bg-tertiary);
   border-left-color: var(--accent-red);
 }
 
 .sidebar-link.active {
   color: var(--accent-gold);
   font-weight: 600;
-  background: rgba(229, 193, 88, 0.04);
+  background: var(--bg-tertiary);
   border-left-color: var(--accent-gold);
 }
 
@@ -536,6 +662,20 @@ h1, h2, h3 {
 }
 
 @media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  
+  .header-spacer {
+    display: none;
+  }
+
+  .header-controls {
+    position: static;
+    transform: none;
+  }
+
   .main-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -555,22 +695,22 @@ h1, h2, h3 {
   }
 
   .logo-link {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     gap: 8px;
   }
 
   .logo-img {
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
   }
 
   .lang-nav {
-    gap: 0.3rem 0.5rem;
+    gap: 0.25rem 0.4rem;
   }
 
   .lang-link {
     font-size: 0.75rem;
-    padding: 1px 4px;
+    padding: 2px 6px;
   }
 
   .container {
@@ -656,56 +796,65 @@ h1, h2, h3 {
 </head>
 <body>
   <header class="header">
-    <div class="logo">
-      <a href="../index.html" class="logo-link">
-        <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Defs for reuse -->
-          <defs>
-            <g id="grain">
-              <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
-              <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
-            </g>
-            <g id="wheat-pair">
-              <use href="#grain" transform="rotate(-28) scale(0.95)" />
-              <use href="#grain" transform="rotate(28) scale(0.95)" />
-              <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
-            </g>
-            <g id="wreath-half">
-              <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
-              <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
-              <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
-              <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
-              <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
-              <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
-              <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
-              <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
-              <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
-              <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
-            </g>
-          </defs>
+    <div class="header-inner">
+      <div class="header-spacer" aria-hidden="true"></div>
+      <div class="logo">
+        <a href="../pt/index.html" class="logo-link">
+          <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Defs for reuse -->
+            <defs>
+              <g id="grain">
+                <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
+                <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
+              </g>
+              <g id="wheat-pair">
+                <use href="#grain" transform="rotate(-28) scale(0.95)" />
+                <use href="#grain" transform="rotate(28) scale(0.95)" />
+                <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
+              </g>
+              <g id="wreath-half">
+                <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
+                <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
+                <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
+                <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
+                <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
+                <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
+                <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
+                <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
+                <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
+                <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
+              </g>
+            </defs>
 
-          <use href="#wreath-half" />
-          <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
+            <use href="#wreath-half" />
+            <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
 
-          <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
-            <circle cx="0" cy="0" r="3" />
-            <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
-            <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
-            <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-          </g>
+            <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
+              <circle cx="0" cy="0" r="3" />
+              <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
+              <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
+              <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
 
-          <g transform="translate(50, 48) scale(0.68)">
-            <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-            <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
-          </g>
-        </svg>
-        <span>Internationalist Communist Library</span>
-      </a>
+            <g transform="translate(50, 48) scale(0.68)">
+              <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+              <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+            </g>
+          </svg>
+          <span>Internationalist Communist Library</span>
+        </a>
+      </div>
+      <div class="header-controls">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Alternar Tema" title="Alternar Tema">
+          <span class="theme-icon icon-moon" aria-hidden="true">🌙</span>
+          <span class="theme-icon icon-sun" aria-hidden="true">☀️</span>
+        </button>
+      </div>
     </div>
     <div class="nav-container">
       <nav class="lang-nav" aria-label="Language selector">
@@ -888,6 +1037,27 @@ h1, h2, h3 {
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Theme Toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          try {
+            localStorage.setItem('theme', newTheme);
+          } catch (e) {}
+        });
+      }
+
+      // Sync with system preference if user hasn't explicitly set a preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+          }
+        });
+      }
       const searchInput = document.getElementById('global-search');
       const pageUrl = "/texts/pt-critica-do-programa-de-gotha.html";
       const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
