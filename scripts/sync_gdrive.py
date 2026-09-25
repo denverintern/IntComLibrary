@@ -51,7 +51,14 @@ LANG_MAP = {
     "fr": "fr", "french": "fr", "français": "fr", "francais": "fr",
     "ru": "ru", "russian": "ru", "русский": "ru", "russkiy": "ru",
     "tr": "tr", "turkish": "tr", "türkçe": "tr", "turkce": "tr",
-    "pl": "pl", "polish": "pl", "polski": "pl"
+    "pl": "pl", "polish": "pl", "polski": "pl",
+    "zh": "zh", "chinese": "zh", "mandarin": "zh", "中文": "zh", "zhongwen": "zh",
+    "ja": "ja", "japanese": "ja", "日本語": "ja", "nihongo": "ja",
+    "ko": "ko", "korean": "ko", "한국어": "ko", "hanguk": "ko",
+    "ar": "ar", "arabic": "ar", "العربية": "ar", "arab": "ar",
+    "hi": "hi", "hindi": "hi", "हिन्दी": "hi",
+    "bn": "bn", "bangla": "bn", "bengali": "bn", "বাংলা": "bn",
+    "id": "id", "indonesian": "id", "bahasa": "id", "bahasa indonesia": "id"
 }
 
 def slugify(text):

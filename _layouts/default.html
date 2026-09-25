@@ -1,7 +1,7 @@
 {% assign url_parts = page.url | split: '/' %}
 {% assign relative_prefix = "" %}
 {% assign first_segment = url_parts[1] %}
-{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "texts" or first_segment == "sections" %}
+{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "zh" or first_segment == "ja" or first_segment == "ko" or first_segment == "ar" or first_segment == "hi" or first_segment == "bn" or first_segment == "id" or first_segment == "texts" or first_segment == "sections" %}
   {% assign relative_prefix = "../" %}
 {% endif %}
 
@@ -48,6 +48,48 @@
     {% assign home_path = 'ru/index.html' %}
     {% assign search_placeholder = 'Поиск по архиву...' %}
     {% assign unite_text = 'Пролетарии всех стран, соединяйтесь!' %}
+  {% when 'zh' %}
+    {% assign sidebar_title = '专题板块' %}
+    {% assign all_texts_text = '📚 所有文献' %}
+    {% assign home_path = 'zh/index.html' %}
+    {% assign search_placeholder = '在档案库中搜索文献、作者...' %}
+    {% assign unite_text = '全世界无产者，联合起来！' %}
+  {% when 'ja' %}
+    {% assign sidebar_title = 'テーマ別セクション' %}
+    {% assign all_texts_text = '📚 すべての文献' %}
+    {% assign home_path = 'ja/index.html' %}
+    {% assign search_placeholder = 'タイトル、著者でアーカイブを検索...' %}
+    {% assign unite_text = '万国の労働者よ、団結せよ！' %}
+  {% when 'ko' %}
+    {% assign sidebar_title = '주제별 섹션' %}
+    {% assign all_texts_text = '📚 모든 문서' %}
+    {% assign home_path = 'ko/index.html' %}
+    {% assign search_placeholder = '제목, 저자로 아카이브 검색...' %}
+    {% assign unite_text = '만국의 노동자여, 단결하라!' %}
+  {% when 'ar' %}
+    {% assign sidebar_title = 'الأقسام الموضوعية' %}
+    {% assign all_texts_text = '📚 جميع النصوص' %}
+    {% assign home_path = 'ar/index.html' %}
+    {% assign search_placeholder = 'ابحث في الأرشيف بالعنوان، المؤلف...' %}
+    {% assign unite_text = 'يا عمال العالم، اتحدوا!' %}
+  {% when 'hi' %}
+    {% assign sidebar_title = 'विषयगत अनुभाग' %}
+    {% assign all_texts_text = '📚 सभी ग्रंथ' %}
+    {% assign home_path = 'hi/index.html' %}
+    {% assign search_placeholder = 'शीर्षक, लेखक द्वारा खोजें...' %}
+    {% assign unite_text = 'दुनिया के मज़दूरों, एक हो जाओ!' %}
+  {% when 'bn' %}
+    {% assign sidebar_title = 'বিষয়ভিত্তিক বিভাগ' %}
+    {% assign all_texts_text = '📚 সমস্ত লেখা' %}
+    {% assign home_path = 'bn/index.html' %}
+    {% assign search_placeholder = 'শিরোনাম, লেখক দিয়ে অনুসন্ধান করুন...' %}
+    {% assign unite_text = 'দুনিয়ার মজদুর, এক হও!' %}
+  {% when 'id' %}
+    {% assign sidebar_title = 'Bagian Tematik' %}
+    {% assign all_texts_text = '📚 Semua Teks' %}
+    {% assign home_path = 'id/index.html' %}
+    {% assign search_placeholder = 'Cari arsip berdasarkan judul, penulis...' %}
+    {% assign unite_text = 'Kaum buruh sedunia, bersatulah!' %}
   {% when 'tr' %}
     {% assign sidebar_title = 'Tematik Bölümler' %}
     {% assign all_texts_text = '📚 Tüm Metinler' %}
@@ -153,7 +195,7 @@
         <input type="text" class="search-input" id="global-search" placeholder="{{ search_placeholder }}">
       </div>
       <nav class="sidebar-nav">
-        <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
+        <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/zh/index.html' or page.url == '/ja/index.html' or page.url == '/ko/index.html' or page.url == '/ar/index.html' or page.url == '/hi/index.html' or page.url == '/bn/index.html' or page.url == '/id/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
           {{ all_texts_text }}
         </a>
         
@@ -196,7 +238,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
-      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
+      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl === "/pt/index.html" || pageUrl === "/es/index.html" || pageUrl === "/fr/index.html" || pageUrl === "/it/index.html" || pageUrl === "/nl/index.html" || pageUrl === "/de/index.html" || pageUrl === "/ru/index.html" || pageUrl === "/zh/index.html" || pageUrl === "/ja/index.html" || pageUrl === "/ko/index.html" || pageUrl === "/ar/index.html" || pageUrl === "/hi/index.html" || pageUrl === "/bn/index.html" || pageUrl === "/id/index.html" || pageUrl === "/tr/index.html" || pageUrl === "/pl/index.html" || pageUrl === "/el/index.html";
 
       function filterCards(query) {
         const cards = document.querySelectorAll('.text-card');

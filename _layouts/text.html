@@ -5,7 +5,7 @@ layout: default
 {% assign url_parts = page.url | split: '/' %}
 {% assign relative_prefix = "" %}
 {% assign first_segment = url_parts[1] %}
-{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "texts" or first_segment == "sections" %}
+{% if first_segment == "pt" or first_segment == "es" or first_segment == "it" or first_segment == "nl" or first_segment == "de" or first_segment == "el" or first_segment == "fr" or first_segment == "ru" or first_segment == "tr" or first_segment == "pl" or first_segment == "zh" or first_segment == "ja" or first_segment == "ko" or first_segment == "ar" or first_segment == "hi" or first_segment == "bn" or first_segment == "id" or first_segment == "texts" or first_segment == "sections" %}
   {% assign relative_prefix = "../" %}
 {% endif %}
 
@@ -101,6 +101,97 @@ layout: default
     {% assign description_label = 'Об этом Тексте' %}
     {% assign no_pdf_text = 'К этой записи не прикреплен PDF-файл.' %}
     {% assign lang_name = 'Русский' %}
+  {% when 'zh' %}
+    {% assign back_text = '← 返回图书馆' %}
+    {% assign back_url = 'zh/index.html' %}
+    {% assign doc_info_title = '文献详情' %}
+    {% assign title_label = '标题' %}
+    {% assign author_label = '作者' %}
+    {% assign lang_label = '语言' %}
+    {% assign format_label = '格式' %}
+    {% assign download_text = '下载 PDF' %}
+    {% assign view_full_text = '全屏阅读' %}
+    {% assign description_label = '关于本文献' %}
+    {% assign no_pdf_text = '此条目尚未上传 PDF 文件。' %}
+    {% assign lang_name = '中文' %}
+  {% when 'ja' %}
+    {% assign back_text = '← 図書館へ戻る' %}
+    {% assign back_url = 'ja/index.html' %}
+    {% assign doc_info_title = '文献詳細' %}
+    {% assign title_label = 'タイトル' %}
+    {% assign author_label = '著者' %}
+    {% assign lang_label = '言語' %}
+    {% assign format_label = 'フォーマット' %}
+    {% assign download_text = 'PDFをダウンロード' %}
+    {% assign view_full_text = '全画面表示' %}
+    {% assign description_label = 'この文献について' %}
+    {% assign no_pdf_text = 'この項目にはPDFファイルが添付されていません。' %}
+    {% assign lang_name = '日本語' %}
+  {% when 'ko' %}
+    {% assign back_text = '← 도서관으로 돌아가기' %}
+    {% assign back_url = 'ko/index.html' %}
+    {% assign doc_info_title = '문서 상세 정보' %}
+    {% assign title_label = '제목' %}
+    {% assign author_label = '저자' %}
+    {% assign lang_label = '언어' %}
+    {% assign format_label = '형식' %}
+    {% assign download_text = 'PDF 다운로드' %}
+    {% assign view_full_text = '전체 화면' %}
+    {% assign description_label = '이 문서에 대하여' %}
+    {% assign no_pdf_text = '이 항목에 첨부된 PDF 파일이 없습니다.' %}
+    {% assign lang_name = '한국어' %}
+  {% when 'ar' %}
+    {% assign back_text = 'العودة إلى المكتبة →' %}
+    {% assign back_url = 'ar/index.html' %}
+    {% assign doc_info_title = 'تفاصيل النص' %}
+    {% assign title_label = 'العنوان' %}
+    {% assign author_label = 'المؤلف' %}
+    {% assign lang_label = 'اللغة' %}
+    {% assign format_label = 'الصيغة' %}
+    {% assign download_text = 'تحميل PDF' %}
+    {% assign view_full_text = 'ملء الشاشة' %}
+    {% assign description_label = 'حول هذا النص' %}
+    {% assign no_pdf_text = 'لا يوجد ملف PDF مرفق بهذا النص.' %}
+    {% assign lang_name = 'العربية' %}
+  {% when 'hi' %}
+    {% assign back_text = '← पुस्तकालय पर वापस जाएं' %}
+    {% assign back_url = 'hi/index.html' %}
+    {% assign doc_info_title = 'ग्रंथ का विवरण' %}
+    {% assign title_label = 'शीर्षक' %}
+    {% assign author_label = 'लेखक' %}
+    {% assign lang_label = 'भाषा' %}
+    {% assign format_label = 'प्रारूप' %}
+    {% assign download_text = 'PDF डाउनलोड करें' %}
+    {% assign view_full_text = 'पूर्ण स्क्रीन' %}
+    {% assign description_label = 'इस ग्रंथ के बारे में' %}
+    {% assign no_pdf_text = 'इस प्रविष्टि से कोई PDF फ़ाइल संलग्न नहीं है।' %}
+    {% assign lang_name = 'हिन्दी' %}
+  {% when 'bn' %}
+    {% assign back_text = '← লাইব্রেরিতে ফিরে যান' %}
+    {% assign back_url = 'bn/index.html' %}
+    {% assign doc_info_title = 'লেখার বিবরণ' %}
+    {% assign title_label = 'শিরোনাম' %}
+    {% assign author_label = 'লেখক' %}
+    {% assign lang_label = 'ভাষা' %}
+    {% assign format_label = 'ফরম্যাট' %}
+    {% assign download_text = 'PDF ডাউনলোড করুন' %}
+    {% assign view_full_text = 'পূর্ণ পর্দা' %}
+    {% assign description_label = 'এই লেখা সম্পর্কে' %}
+    {% assign no_pdf_text = 'এই লেখার সাথে কোনো PDF ফাইল সংযুক্ত নেই।' %}
+    {% assign lang_name = 'বাংলা' %}
+  {% when 'id' %}
+    {% assign back_text = '← Kembali ke Perpustakaan' %}
+    {% assign back_url = 'id/index.html' %}
+    {% assign doc_info_title = 'Detail Teks' %}
+    {% assign title_label = 'Judul' %}
+    {% assign author_label = 'Penulis' %}
+    {% assign lang_label = 'Bahasa' %}
+    {% assign format_label = 'Format' %}
+    {% assign download_text = 'Unduh PDF' %}
+    {% assign view_full_text = 'Layar Penuh' %}
+    {% assign description_label = 'Tentang Teks Ini' %}
+    {% assign no_pdf_text = 'Tidak ada berkas PDF yang dilampirkan pada entri ini.' %}
+    {% assign lang_name = 'Bahasa Indonesia' %}
   {% when 'tr' %}
     {% assign back_text = '← Kütüphaneye Dön' %}
     {% assign back_url = 'tr/index.html' %}
@@ -220,7 +311,7 @@ layout: default
           <span class="metadata-label">{{ lang_label }}</span>
           <span class="metadata-value" style="display: flex; align-items: center; gap: 0.4rem">
             {% case page.language %}
-              {% when 'pt' %}🇧🇷{% when 'es' %}🇪🇸{% when 'fr' %}🇫🇷{% when 'it' %}🇮🇹{% when 'nl' %}🇳🇱{% when 'de' %}🇩🇪{% when 'ru' %}🇷🇺{% when 'tr' %}🇹🇷{% when 'pl' %}🇵🇱{% when 'el' %}🇬🇷{% else %}🇬🇧{% endcase %} {{ lang_name }}
+              {% when 'pt' %}🇧🇷{% when 'es' %}🇪🇸{% when 'fr' %}🇫🇷{% when 'it' %}🇮🇹{% when 'nl' %}🇳🇱{% when 'de' %}🇩🇪{% when 'ru' %}🇷🇺{% when 'zh' %}🇨🇳{% when 'ja' %}🇯🇵{% when 'ko' %}🇰🇷{% when 'ar' %}🇦🇪{% when 'hi' %}🇮🇳{% when 'bn' %}🇧🇩{% when 'id' %}🇮🇩{% when 'tr' %}🇹🇷{% when 'pl' %}🇵🇱{% when 'el' %}🇬🇷{% else %}🇬🇧{% endcase %} {{ lang_name }}
           </span>
         </div>
 
