@@ -188,7 +188,7 @@ layout: default
     </div>
   {% endif %}
   <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; font-style: italic;">
-    Source: 
+    {{ source_label }} 
     {% if page.source_name %}
       {{ page.source_name }}
     {% elsif page.source_url contains 'marxists.org' %}
@@ -199,7 +199,7 @@ layout: default
       Original Archive
     {% endif %}
     {% if page.edition %} &middot; {{ page.edition }}{% endif %}
-    {% if pdf_url %} &middot; PDF (local){% elsif page.source_url %} &middot; HTML (external){% endif %}
+    {% if pdf_url %} &middot; {{ pdf_local_label }}{% elsif page.source_url %} &middot; {{ html_external_label }}{% endif %}
   </div>
 </header>
 
@@ -209,7 +209,7 @@ layout: default
   {% if pdf_url %}
     <a href="{{ pdf_url }}" download>{{ download_text }}</a>
     <span class="sep">·</span>
-    <a href="{{ pdf_url }}" target="_blank" rel="noopener">Open PDF</a>
+    <a href="{{ pdf_url }}" target="_blank" rel="noopener">{{ open_pdf_label }}</a>
     <span class="sep">·</span>
   {% endif %}
   {% if page.source_url %}
@@ -236,9 +236,9 @@ layout: default
 {% else %}
   {% if content == nil or content == "" or content contains "Historical Significance" or content contains "Concise summary" %}
     <p style="padding: 2rem 1rem; text-align: center; color: var(--text-dim); font-style: italic; border: 1px solid var(--border-color); margin-bottom: 2rem;">
-      No local PDF attached.
+      {{ no_pdf_label }}
       {% if page.source_url %}
-        <a href="{{ page.source_url }}" target="_blank" rel="noopener">Read on the source site</a>.
+        <a href="{{ page.source_url }}" target="_blank" rel="noopener">{{ read_source_label }}</a>.
       {% endif %}
     </p>
   {% endif %}

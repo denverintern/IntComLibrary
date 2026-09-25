@@ -266,9 +266,11 @@
         {% assign s_title = s_texts[0].section_title %}
         <section class="index-section-group">
           <h3 class="index-section-title">
-            <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
-            {{ s_title }}
-          </h3>
+  <a href="{{ relative_prefix }}{% if s_texts[0].section_url %}{{ s_texts[0].section_url }}{% else %}sections/{{ s_texts[0].language }}-{{ s_texts[0].section_id }}.html{% endif %}" style="color: inherit; text-decoration: none;">
+    <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
+    {{ s_title }}
+  </a>
+</h3>
           <ul class="index-list">
             {% for text in s_texts %}
               <li class="index-item" 

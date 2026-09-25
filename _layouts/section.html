@@ -11,15 +11,46 @@ layout: default
   {% endif %}
 {% endif %}
 
+{% case page.language %}
+  {% when 'pt' %}
+    {% assign library_label = 'Biblioteca' %}
+    {% assign section_label = 'Secção' %}
+    {% assign preparing_label = 'As obras fundamentais para esta secção estão atualmente a ser transcritas e preparadas para o catálogo.' %}
+  {% when 'es' %}
+    {% assign library_label = 'Biblioteca' %}
+    {% assign section_label = 'Sección' %}
+    {% assign preparing_label = 'Las obras fundamentales para esta sección se están transcribiendo y preparando para el catálogo.' %}
+  {% when 'fr' %}
+    {% assign library_label = 'Bibliothèque' %}
+    {% assign section_label = 'Section' %}
+    {% assign preparing_label = 'Les œuvres fondamentales de cette section sont actuellement transcrites et préparées pour le catalogue.' %}
+  {% when 'it' %}
+    {% assign library_label = 'Biblioteca' %}
+    {% assign section_label = 'Sezione' %}
+    {% assign preparing_label = 'Le opere fondamentali per questa sezione sono attualmente in fase di trascrizione e preparazione per il catalogo.' %}
+  {% when 'de' %}
+    {% assign library_label = 'Bibliothek' %}
+    {% assign section_label = 'Abschnitt' %}
+    {% assign preparing_label = 'Grundlegende Werke für diesen Abschnitt werden derzeit transkribiert und für den Katalog vorbereitet.' %}
+  {% when 'ru' %}
+    {% assign library_label = 'Библиотека' %}
+    {% assign section_label = 'Раздел' %}
+    {% assign preparing_label = 'Фундаментальные работы для этого раздела в настоящее время транскрибируются и готовятся для каталога.' %}
+  {% else %}
+    {% assign library_label = 'Library' %}
+    {% assign section_label = 'Section' %}
+    {% assign preparing_label = '{{ preparing_label }}' %}
+{% endcase %}
+
 <div class="chapter-container">
   <nav class="reader-breadcrumb">
-    <a href="{{ relative_prefix }}{% if page.language == 'en' %}index.html{% else %}{{ page.language }}/index.html{% endif %}">Library</a>
+    <a href="{{ relative_prefix }}{% if page.language == 'en' %}index.html{% else %}{{ page.language }}/index.html{% endif %}">{{ library_label }}</a>
     <span class="sep">/</span>
     <span class="current">{{ page.numeral }}. {{ page.title }}</span>
   </nav>
 
   <header class="chapter-header">
-    <span class="chapter-roman">Section {{ page.numeral }}</span>
+    <span class="chapter-roman">{{ section_label }} {{ page.numeral }}</span>
     <h1 class="chapter-title">{{ page.title }}</h1>
     {% if page.scope %}
       <p class="chapter-scope">{{ page.scope }}</p>
