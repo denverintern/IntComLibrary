@@ -12,4 +12,3 @@ slug: critica-economia-politica
 - O Capital, Volume 1 - Marx + Audiobook
 - O Capital vol. 1: Uma Versão Abreviada - Rühle (com introdução de Trotsky)
 - Salário, Preço e Lucro - Marx + Audiobook
-- ... (add the rest of your list here)

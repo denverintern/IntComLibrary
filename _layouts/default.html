@@ -116,7 +116,7 @@
     {% assign unite_text = 'Proletarians of all countries, unite!' %}
 {% endcase %}
 <!DOCTYPE html>
-<html lang="{{ page.language | default: 'en' }}">
+<html lang="{{ page.language | default: 'en' }}" {% if page.language == 'ar' %}dir="rtl"{% endif %}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -242,16 +242,36 @@
 
       function filterCards(query) {
         const cards = document.querySelectorAll('.text-card');
+        const grid = document.getElementById('cards-grid');
+        let visibleCount = 0;
+
         cards.forEach(card => {
           const title = card.getAttribute('data-title') || '';
           const author = card.getAttribute('data-author') || '';
           const desc = card.getAttribute('data-desc') || '';
           if (title.includes(query) || author.includes(query) || desc.includes(query)) {
             card.style.display = 'flex';
+            visibleCount++;
           } else {
             card.style.display = 'none';
           }
         });
+
+        let noMatch = document.getElementById('no-match-alert');
+        if (query && visibleCount === 0 && cards.length > 0) {
+          if (!noMatch && grid) {
+            noMatch = document.createElement('div');
+            noMatch.id = 'no-match-alert';
+            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 2.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
+            grid.appendChild(noMatch);
+          }
+          if (noMatch) {
+            noMatch.textContent = 'No matching texts found for "' + query + '".';
+            noMatch.style.display = 'block';
+          }
+        } else if (noMatch) {
+          noMatch.style.display = 'none';
+        }
       }
 
       if (searchInput) {

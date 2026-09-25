@@ -10,4 +10,3 @@ slug: critica-economia-politica
 - El Imperialismo, Fase Superior del Capitalismo - Lenin + Audiobook
 - Crítica del Programa de Gotha - Marx + Audiobook
 - El Capital, Tomo 1 - Marx + Audiobook
-- ...

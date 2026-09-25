@@ -265,10 +265,10 @@ layout: default
     </header>
 
     {% if page.pdf %}
-      <!-- Mozilla PDF.js Embedded Web Viewer -->
+      <!-- Embedded PDF Viewer -->
       <div style="position: relative">
         <iframe 
-          src="https://mozilla.github.io/pdf.js/web/viewer.html?file={{ site.url | append: site.baseurl | append: '/assets/uploads/' | append: page.pdf | url_encode }}" 
+          src="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" 
           class="pdf-viewer-frame"
           allowfullscreen>
         </iframe>
