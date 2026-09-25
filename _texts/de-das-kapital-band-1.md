@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Das Kapital, Band 1"
 author: "Karl Marx"
+year: 1867
 language: "de"
 section_title: "Kritik der politischen Ökonomie"
 section_url: "sections/de-kritik-politische-oekonomie.html"

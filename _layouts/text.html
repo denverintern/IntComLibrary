@@ -11,358 +11,219 @@ layout: default
 
 {% case page.language %}
   {% when 'pt' %}
-    {% assign back_text = '← Voltar para a Biblioteca' %}
     {% assign back_url = 'pt/index.html' %}
-    {% assign doc_info_title = 'Detalhes do Texto' %}
-    {% assign title_label = 'Título' %}
-    {% assign author_label = 'Autor' %}
-    {% assign lang_label = 'Idioma' %}
-    {% assign format_label = 'Formato' %}
+    {% assign library_label = 'Biblioteca' %}
     {% assign download_text = 'Baixar PDF' %}
-    {% assign view_full_text = 'Tela Cheia' %}
-    {% assign description_label = 'Sobre este Texto' %}
-    {% assign no_pdf_text = 'Nenhum arquivo PDF anexado a esta entrada.' %}
-    {% assign section_label = 'Seção' %}
-    {% assign lang_name = 'Português (BR)' %}
+    {% assign transcription_label = 'Texto Transcrito' %}
+    {% assign print_label = 'Imprimir' %}
+    {% assign in_this_section_label = 'Nesta Seção' %}
   {% when 'es' %}
-    {% assign back_text = '← Volver a la Biblioteca' %}
     {% assign back_url = 'es/index.html' %}
-    {% assign doc_info_title = 'Detalles del Texto' %}
-    {% assign title_label = 'Título' %}
-    {% assign author_label = 'Autor' %}
-    {% assign lang_label = 'Idioma' %}
-    {% assign format_label = 'Formato' %}
+    {% assign library_label = 'Biblioteca' %}
     {% assign download_text = 'Descargar PDF' %}
-    {% assign view_full_text = 'Pantalla Completa' %}
-    {% assign description_label = 'Acerca de este Texto' %}
-    {% assign no_pdf_text = 'No hay ningún archivo PDF adjunto a esta entrada.' %}
-    {% assign section_label = 'Sección' %}
-    {% assign lang_name = 'Español' %}
+    {% assign transcription_label = 'Texto Transcrito' %}
+    {% assign print_label = 'Imprimir' %}
+    {% assign in_this_section_label = 'En esta Sección' %}
   {% when 'fr' %}
-    {% assign back_text = '← Retour à la Bibliothèque' %}
     {% assign back_url = 'fr/index.html' %}
-    {% assign doc_info_title = 'Détails du Texte' %}
-    {% assign title_label = 'Titre' %}
-    {% assign author_label = 'Auteur' %}
-    {% assign lang_label = 'Langue' %}
-    {% assign format_label = 'Format' %}
+    {% assign library_label = 'Bibliothèque' %}
     {% assign download_text = 'Télécharger le PDF' %}
-    {% assign view_full_text = 'Plein Écran' %}
-    {% assign description_label = 'À propos de ce Texte' %}
-    {% assign no_pdf_text = 'Aucun fichier PDF joint à cette entrée.' %}
-    {% assign section_label = 'Section' %}
-    {% assign lang_name = 'Français' %}
+    {% assign transcription_label = 'Texte Transcrit' %}
+    {% assign print_label = 'Imprimer' %}
+    {% assign in_this_section_label = 'Dans cette Section' %}
   {% when 'it' %}
-    {% assign back_text = '← Torna alla Biblioteca' %}
     {% assign back_url = 'it/index.html' %}
-    {% assign doc_info_title = 'Dettagli del Testo' %}
-    {% assign title_label = 'Titolo' %}
-    {% assign author_label = 'Autore' %}
-    {% assign lang_label = 'Lingua' %}
-    {% assign format_label = 'Formato' %}
-    {% assign download_text = 'Scarica il PDF' %}
-    {% assign view_full_text = 'Schermo Intero' %}
-    {% assign description_label = 'Informazioni su questo Testo' %}
-    {% assign no_pdf_text = 'Nessun file PDF allegato a questa voce.' %}
-    {% assign section_label = 'Sezione' %}
-    {% assign lang_name = 'Italiano' %}
-  {% when 'nl' %}
-    {% assign back_text = '← Terug naar de Bibliotheek' %}
-    {% assign back_url = 'nl/index.html' %}
-    {% assign doc_info_title = 'Document Details' %}
-    {% assign title_label = 'Titel' %}
-    {% assign author_label = 'Auteur' %}
-    {% assign lang_label = 'Taal' %}
-    {% assign format_label = 'Formaat' %}
-    {% assign download_text = 'PDF downloaden' %}
-    {% assign view_full_text = 'Volledig Scherm' %}
-    {% assign description_label = 'Over deze Tekst' %}
-    {% assign no_pdf_text = 'Geen PDF-bestand gekoppeld aan dit item.' %}
-    {% assign section_label = 'Sectie' %}
-    {% assign lang_name = 'Nederlands' %}
+    {% assign library_label = 'Biblioteca' %}
+    {% assign download_text = 'Scarica PDF' %}
+    {% assign transcription_label = 'Testo Trascritto' %}
+    {% assign print_label = 'Stampa' %}
+    {% assign in_this_section_label = 'In questa Sezione' %}
   {% when 'de' %}
-    {% assign back_text = '← Zurück zur Bibliothek' %}
     {% assign back_url = 'de/index.html' %}
-    {% assign doc_info_title = 'Textdetails' %}
-    {% assign title_label = 'Titel' %}
-    {% assign author_label = 'Autor' %}
-    {% assign lang_label = 'Sprache' %}
-    {% assign format_label = 'Format' %}
-    {% assign download_text = 'PDF herunterladen' %}
-    {% assign view_full_text = 'Vollbild' %}
-    {% assign description_label = 'Über diesen Text' %}
-    {% assign no_pdf_text = 'Diesem Eintrag ist keine PDF-Datei beigefügt.' %}
-    {% assign section_label = 'Bereich' %}
-    {% assign lang_name = 'Deutsch' %}
+    {% assign library_label = 'Bibliothek' %}
+    {% assign download_text = 'PDF Herunterladen' %}
+    {% assign transcription_label = 'Transkribierter Text' %}
+    {% assign print_label = 'Drucken' %}
+    {% assign in_this_section_label = 'In diesem Bereich' %}
+  {% when 'nl' %}
+    {% assign back_url = 'nl/index.html' %}
+    {% assign library_label = 'Bibliotheek' %}
+    {% assign download_text = 'PDF Downloaden' %}
+    {% assign transcription_label = 'Getranscribeerde Tekst' %}
+    {% assign print_label = 'Afdrukken' %}
+    {% assign in_this_section_label = 'In deze Sectie' %}
   {% when 'ru' %}
-    {% assign back_text = '← Вернуться в Библиотеку' %}
     {% assign back_url = 'ru/index.html' %}
-    {% assign doc_info_title = 'Сведения о Тексте' %}
-    {% assign title_label = 'Название' %}
-    {% assign author_label = 'Автор' %}
-    {% assign lang_label = 'Язык' %}
-    {% assign format_label = 'Формат' %}
+    {% assign library_label = 'Библиотека' %}
     {% assign download_text = 'Скачать PDF' %}
-    {% assign view_full_text = 'Во весь экран' %}
-    {% assign description_label = 'Об этом Тексте' %}
-    {% assign no_pdf_text = 'К этой записи не прикреплен PDF-файл.' %}
-    {% assign section_label = 'Раздел' %}
-    {% assign lang_name = 'Русский' %}
+    {% assign transcription_label = 'Текст Документа' %}
+    {% assign print_label = 'Печать' %}
+    {% assign in_this_section_label = 'В этом Разделе' %}
   {% when 'zh' %}
-    {% assign back_text = '← 返回图书馆' %}
     {% assign back_url = 'zh/index.html' %}
-    {% assign doc_info_title = '文献详情' %}
-    {% assign title_label = '标题' %}
-    {% assign author_label = '作者' %}
-    {% assign lang_label = '语言' %}
-    {% assign format_label = '格式' %}
+    {% assign library_label = '图书馆' %}
     {% assign download_text = '下载 PDF' %}
-    {% assign view_full_text = '全屏阅读' %}
-    {% assign description_label = '关于本文献' %}
-    {% assign no_pdf_text = '此条目尚未上传 PDF 文件。' %}
-    {% assign section_label = '板块' %}
-    {% assign lang_name = '中文' %}
+    {% assign transcription_label = '文献正文' %}
+    {% assign print_label = '打印' %}
+    {% assign in_this_section_label = '本专题文献' %}
   {% when 'ja' %}
-    {% assign back_text = '← 図書館へ戻る' %}
     {% assign back_url = 'ja/index.html' %}
-    {% assign doc_info_title = '文献詳細' %}
-    {% assign title_label = 'タイトル' %}
-    {% assign author_label = '著者' %}
-    {% assign lang_label = '言語' %}
-    {% assign format_label = 'フォーマット' %}
+    {% assign library_label = '図書館' %}
     {% assign download_text = 'PDFをダウンロード' %}
-    {% assign view_full_text = '全画面表示' %}
-    {% assign description_label = 'この文献について' %}
-    {% assign no_pdf_text = 'この項目にはPDFファイルが添付されていません。' %}
-    {% assign section_label = 'セクション' %}
-    {% assign lang_name = '日本語' %}
+    {% assign transcription_label = '翻刻テキスト' %}
+    {% assign print_label = '印刷' %}
+    {% assign in_this_section_label = 'このセクションの文献' %}
   {% when 'ko' %}
-    {% assign back_text = '← 도서관으로 돌아가기' %}
     {% assign back_url = 'ko/index.html' %}
-    {% assign doc_info_title = '문서 상세 정보' %}
-    {% assign title_label = '제목' %}
-    {% assign author_label = '저자' %}
-    {% assign lang_label = '언어' %}
-    {% assign format_label = '형식' %}
+    {% assign library_label = '도서관' %}
     {% assign download_text = 'PDF 다운로드' %}
-    {% assign view_full_text = '전체 화면' %}
-    {% assign description_label = '이 문서에 대하여' %}
-    {% assign no_pdf_text = '이 항목에 첨부된 PDF 파일이 없습니다.' %}
-    {% assign section_label = '섹션' %}
-    {% assign lang_name = '한국어' %}
+    {% assign transcription_label = '전문 텍스트' %}
+    {% assign print_label = '인쇄' %}
+    {% assign in_this_section_label = '이 섹션의 다른 문서' %}
   {% when 'ar' %}
-    {% assign back_text = 'العودة إلى المكتبة →' %}
     {% assign back_url = 'ar/index.html' %}
-    {% assign doc_info_title = 'تفاصيل النص' %}
-    {% assign title_label = 'العنوان' %}
-    {% assign author_label = 'المؤلف' %}
-    {% assign lang_label = 'اللغة' %}
-    {% assign format_label = 'الصيغة' %}
+    {% assign library_label = 'المكتبة' %}
     {% assign download_text = 'تحميل PDF' %}
-    {% assign view_full_text = 'ملء الشاشة' %}
-    {% assign description_label = 'حول هذا النص' %}
-    {% assign no_pdf_text = 'لا يوجد ملف PDF مرفق بهذا النص.' %}
-    {% assign section_label = 'القسم' %}
-    {% assign lang_name = 'العربية' %}
+    {% assign transcription_label = 'النص المكتوب' %}
+    {% assign print_label = 'طباعة' %}
+    {% assign in_this_section_label = 'في هذا القسم' %}
   {% when 'hi' %}
-    {% assign back_text = '← पुस्तकालय पर वापस जाएं' %}
     {% assign back_url = 'hi/index.html' %}
-    {% assign doc_info_title = 'ग्रंथ का विवरण' %}
-    {% assign title_label = 'शीर्षक' %}
-    {% assign author_label = 'लेखक' %}
-    {% assign lang_label = 'भाषा' %}
-    {% assign format_label = 'प्रारूप' %}
+    {% assign library_label = 'पुस्तकालय' %}
     {% assign download_text = 'PDF डाउनलोड करें' %}
-    {% assign view_full_text = 'पूर्ण स्क्रीन' %}
-    {% assign description_label = 'इस ग्रंथ के बारे में' %}
-    {% assign no_pdf_text = 'इस प्रविष्टि से कोई PDF फ़ाइल संलग्न नहीं है।' %}
-    {% assign section_label = 'अनुभाग' %}
-    {% assign lang_name = 'हिन्दी' %}
+    {% assign transcription_label = 'प्रतिलिपि पाठ' %}
+    {% assign print_label = 'प्रिंट' %}
+    {% assign in_this_section_label = 'इस अनुभाग में' %}
   {% when 'bn' %}
-    {% assign back_text = '← লাইব্রেরিতে ফিরে যান' %}
     {% assign back_url = 'bn/index.html' %}
-    {% assign doc_info_title = 'লেখার বিবরণ' %}
-    {% assign title_label = 'শিরোনাম' %}
-    {% assign author_label = 'লেখক' %}
-    {% assign lang_label = 'ভাষা' %}
-    {% assign format_label = 'ফরম্যাট' %}
+    {% assign library_label = 'লাইব্রেরি' %}
     {% assign download_text = 'PDF ডাউনলোড করুন' %}
-    {% assign view_full_text = 'পূর্ণ পর্দা' %}
-    {% assign description_label = 'এই লেখা সম্পর্কে' %}
-    {% assign no_pdf_text = 'এই লেখার সাথে কোনো PDF ফাইল সংযুক্ত নেই।' %}
-    {% assign section_label = 'বিভাগ' %}
-    {% assign lang_name = 'বাংলা' %}
+    {% assign transcription_label = 'অনুলিপিকৃত পাঠ' %}
+    {% assign print_label = 'প্রিন্ট' %}
+    {% assign in_this_section_label = 'এই বিভাগে' %}
   {% when 'id' %}
-    {% assign back_text = '← Kembali ke Perpustakaan' %}
     {% assign back_url = 'id/index.html' %}
-    {% assign doc_info_title = 'Detail Teks' %}
-    {% assign title_label = 'Judul' %}
-    {% assign author_label = 'Penulis' %}
-    {% assign lang_label = 'Bahasa' %}
-    {% assign format_label = 'Format' %}
+    {% assign library_label = 'Perpustakaan' %}
     {% assign download_text = 'Unduh PDF' %}
-    {% assign view_full_text = 'Layar Penuh' %}
-    {% assign description_label = 'Tentang Teks Ini' %}
-    {% assign no_pdf_text = 'Tidak ada berkas PDF yang dilampirkan pada entri ini.' %}
-    {% assign section_label = 'Bagian' %}
-    {% assign lang_name = 'Bahasa Indonesia' %}
+    {% assign transcription_label = 'Teks Transkripsi' %}
+    {% assign print_label = 'Cetak' %}
+    {% assign in_this_section_label = 'Di Bagian Ini' %}
   {% when 'tr' %}
-    {% assign back_text = '← Kütüphaneye Dön' %}
     {% assign back_url = 'tr/index.html' %}
-    {% assign doc_info_title = 'Metin Ayrıntıları' %}
-    {% assign title_label = 'Başlık' %}
-    {% assign author_label = 'Yazar' %}
-    {% assign lang_label = 'Dil' %}
-    {% assign format_label = 'Biçim' %}
+    {% assign library_label = 'Kütüphane' %}
     {% assign download_text = 'PDF İndir' %}
-    {% assign view_full_text = 'Tam Ekran' %}
-    {% assign description_label = 'Bu Metin Hakkında' %}
-    {% assign no_pdf_text = 'Bu girişe eklenmiş PDF dosyası yok.' %}
-    {% assign section_label = 'Bölüm' %}
-    {% assign lang_name = 'Türkçe' %}
+    {% assign transcription_label = 'Metin' %}
+    {% assign print_label = 'Yazdır' %}
+    {% assign in_this_section_label = 'Bu Bölümde' %}
   {% when 'pl' %}
-    {% assign back_text = '← Wróć do Biblioteki' %}
     {% assign back_url = 'pl/index.html' %}
-    {% assign doc_info_title = 'Szczegóły Tekstu' %}
-    {% assign title_label = 'Tytuł' %}
-    {% assign author_label = 'Autor' %}
-    {% assign lang_label = 'Język' %}
-    {% assign format_label = 'Format' %}
+    {% assign library_label = 'Biblioteka' %}
     {% assign download_text = 'Pobierz PDF' %}
-    {% assign view_full_text = 'Pełny Ekran' %}
-    {% assign description_label = 'O tym Tekście' %}
-    {% assign no_pdf_text = 'Brak pliku PDF dołączonego do tego wpisu.' %}
-    {% assign section_label = 'Sekcja' %}
-    {% assign lang_name = 'Polski' %}
+    {% assign transcription_label = 'Tekst Dzieła' %}
+    {% assign print_label = 'Drukuj' %}
+    {% assign in_this_section_label = 'W tej Sekcji' %}
   {% when 'el' %}
-    {% assign back_text = '← Επιστροφή στη Βιβλιοθήκη' %}
     {% assign back_url = 'el/index.html' %}
-    {% assign doc_info_title = 'Λεπτομέρειες Κειμένου' %}
-    {% assign title_label = 'Τίτλος' %}
-    {% assign author_label = 'Συγγραφέας' %}
-    {% assign lang_label = 'Γλώσσα' %}
-    {% assign format_label = 'Μορφή' %}
+    {% assign library_label = 'Βιβλιοθήκη' %}
     {% assign download_text = 'Λήψη PDF' %}
-    {% assign view_full_text = 'Πλήρης Οθόνη' %}
-    {% assign description_label = 'Σχετικά με το Κείμενο' %}
-    {% assign no_pdf_text = 'Δεν υπάρχει αρχείο PDF συνδεδεμένο με αυτήν την καταχώρηση.' %}
-    {% assign section_label = 'Ενότητα' %}
-    {% assign lang_name = 'Ελληνικά' %}
+    {% assign transcription_label = 'Κείμενο' %}
+    {% assign print_label = 'Εκτύπωση' %}
+    {% assign in_this_section_label = 'Σε αυτήν την Ενότητα' %}
   {% else %}
-    {% assign back_text = '← Back to Library' %}
     {% assign back_url = 'index.html' %}
-    {% assign doc_info_title = 'Document Details' %}
-    {% assign title_label = 'Title' %}
-    {% assign author_label = 'Author' %}
-    {% assign lang_label = 'Language' %}
-    {% assign format_label = 'Format' %}
+    {% assign library_label = 'Library' %}
     {% assign download_text = 'Download PDF' %}
-    {% assign view_full_text = 'Full Screen' %}
-    {% assign description_label = 'About this Text' %}
-    {% assign no_pdf_text = 'No PDF file attached to this entry.' %}
-    {% assign section_label = 'Section' %}
-    {% assign lang_name = 'English' %}
+    {% assign transcription_label = 'Transcribed Text' %}
+    {% assign print_label = 'Print' %}
+    {% assign in_this_section_label = 'In this section' %}
 {% endcase %}
 
-<div class="reader-container">
-  <!-- Main content area (Viewer + Info) -->
-  <div class="reader-main">
-    <nav class="language-nav" style="justify-content: flex-start; margin-bottom: 1rem">
-      <a href="{{ relative_prefix }}{{ back_url }}" style="font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem">
-        {{ back_text }}
-      </a>
-    </nav>
+{% case page.section_id %}
+  {% when 'critique-political-economy' %}{% assign sec_roman = 'I.' %}
+  {% when 'party-state-revolution' %}{% assign sec_roman = 'II.' %}
+  {% when 'historical-materialism' %}{% assign sec_roman = 'III.' %}
+  {% when 'history-communist-left' %}{% assign sec_roman = 'IV.' %}
+  {% else %}{% assign sec_roman = '' %}
+{% endcase %}
 
-    <header style="margin-bottom: 2rem">
-      <h1 style="font-size: 2.2rem; line-height: 1.2; margin-bottom: 0.5rem">{{ page.title }}</h1>
-      {% if page.author %}
-        <p style="font-family: var(--font-display); color: var(--accent-gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em">
-          {{ page.author }}
-        </p>
+<article class="reader-frame">
+  <!-- Archival Breadcrumb -->
+  <nav class="reader-breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ relative_prefix }}{{ back_url }}">{{ library_label }}</a>
+    {% if page.section_title %}
+      <span class="sep">/</span>
+      {% if page.section_url %}
+        {% assign target_sec_url = page.section_url %}
+        {% assign first_char = target_sec_url | slice: 0, 1 %}
+        {% if first_char == "/" %}
+          {% assign target_sec_url = target_sec_url | remove_first: "/" %}
+        {% endif %}
+        <a href="{{ relative_prefix }}{{ target_sec_url }}">{{ sec_roman }} {{ page.section_title }}</a>
+      {% else %}
+        <span>{{ sec_roman }} {{ page.section_title }}</span>
       {% endif %}
-    </header>
+    {% endif %}
+    <span class="sep">/</span>
+    <span class="current">{{ page.title }}</span>
+  </nav>
 
-    {% if page.pdf %}
-      <!-- Embedded PDF Viewer -->
-      <div style="position: relative">
-        <iframe 
-          src="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" 
-          class="pdf-viewer-frame"
-          allowfullscreen>
-        </iframe>
-      </div>
-    {% else %}
-      <div style="padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center">
-        <p style="color: var(--accent-red); font-size: 1.1rem; font-weight: 500">{{ no_pdf_text }}</p>
+  <!-- Running Header -->
+  <header class="reader-header">
+    <h1 class="reader-title">{{ page.title }}</h1>
+    {% if page.author %}
+      <div class="reader-author">
+        {{ page.author }}{% if page.year %}, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">{{ page.year }}</span>{% endif %}
       </div>
     {% endif %}
+  </header>
 
-    <!-- Text Description / Commentary (Rendered underneath PDF) -->
-    <section class="sidebar-widget" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2rem; margin-top: 1.5rem">
-      <h2 style="font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-gold); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem">
-        {{ description_label }}
-      </h2>
-      <div style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main)">
-        {{ content }}
-      </div>
-    </section>
+  <!-- Text Actions (Dignified print links, no icon soup) -->
+  <div class="reader-actions">
+    {% if page.pdf %}
+      <a href="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" download>{{ download_text }}</a>
+      <span class="sep">·</span>
+    {% endif %}
+    <a href="#transcription">{{ transcription_label }}</a>
+    <span class="sep">·</span>
+    <button type="button" onclick="window.print()">{{ print_label }}</button>
   </div>
 
-  <!-- Sidebar widget area (Metadata + Download Actions) -->
-  <aside class="reader-sidebar">
-    <div class="sidebar-widget">
-      <h3 class="sidebar-widget-title">{{ doc_info_title }}</h3>
-      <div class="metadata-list">
-        <div class="metadata-item">
-          <span class="metadata-label">{{ title_label }}</span>
-          <span class="metadata-value" style="font-weight: 600">{{ page.title }}</span>
-        </div>
-        
-        {% if page.author %}
-          <div class="metadata-item">
-            <span class="metadata-label">{{ author_label }}</span>
-            <span class="metadata-value">{{ page.author }}</span>
-          </div>
-        {% endif %}
+  <!-- Embedded PDF Document Viewer (if attached) -->
+  {% if page.pdf %}
+    <iframe 
+      src="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" 
+      class="reader-pdf-frame" 
+      title="{{ page.title }} PDF"
+      allowfullscreen>
+    </iframe>
+  {% endif %}
 
-        <div class="metadata-item">
-          <span class="metadata-label">{{ lang_label }}</span>
-          <span class="metadata-value" style="display: flex; align-items: center; gap: 0.4rem">
-            {% case page.language %}
-              {% when 'pt' %}🇧🇷{% when 'es' %}🇪🇸{% when 'fr' %}🇫🇷{% when 'it' %}🇮🇹{% when 'nl' %}🇳🇱{% when 'de' %}🇩🇪{% when 'ru' %}🇷🇺{% when 'zh' %}🇨🇳{% when 'ja' %}🇯🇵{% when 'ko' %}🇰🇷{% when 'ar' %}🇦🇪{% when 'hi' %}🇮🇳{% when 'bn' %}🇧🇩{% when 'id' %}🇮🇩{% when 'tr' %}🇹🇷{% when 'pl' %}🇵🇱{% when 'el' %}🇬🇷{% else %}🇬🇧{% endcase %} {{ lang_name }}
-          </span>
-        </div>
+  <!-- Transcribed Text Body (Readable measure ~38rem / 65-72ch) -->
+  <div class="reader-body" id="transcription">
+    {{ content }}
+  </div>
 
-        <div class="metadata-item">
-          <span class="metadata-label">{{ format_label }}</span>
-          <span class="metadata-value" style="font-family: monospace; font-size: 0.85rem">PDF Document (.pdf)</span>
-        </div>
-
-        {% if page.section_title and page.section_url %}
-        <div class="metadata-item">
-          <span class="metadata-label">{{ section_label }}</span>
-          <span class="metadata-value">
-            <a href="{{ relative_prefix }}{{ page.section_url }}" style="color: var(--accent-gold); text-decoration: none; font-weight: 500">
-              📁 {{ page.section_title }}
-            </a>
-          </span>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-
-    {% if page.pdf %}
-      <div class="sidebar-widget" style="border-color: rgba(214, 48, 49, 0.3)">
-        <h3 class="sidebar-widget-title" style="color: var(--accent-red)">Actions</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem">
-          <a href="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" download class="btn btn-primary btn-block">
-            📥 {{ download_text }}
-          </a>
-          <a href="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" target="_blank" class="btn btn-secondary btn-block">
-            🔗 {{ view_full_text }}
-          </a>
-        </div>
-      </div>
+  <!-- Sibling Works in Current Section -->
+  {% assign sibling_texts = "" | split: "," %}
+  {% for t in site.texts %}
+    {% if t.language == page.language and t.section_id == page.section_id and t.url != page.url %}
+      {% assign sibling_texts = sibling_texts | push: t %}
     {% endif %}
-  </aside>
-</div>
+  {% endfor %}
+
+  {% if sibling_texts.size > 0 %}
+    <section class="reader-siblings-box">
+      <div class="reader-siblings-title">{{ in_this_section_label }}: {{ sec_roman }} {{ page.section_title }}</div>
+      <ul class="reader-siblings-list">
+        {% for sib in sibling_texts limit: 5 %}
+          <li class="reader-sibling-item">
+            <a href="{{ relative_prefix }}{{ sib.url | remove_first: '/' }}">{{ sib.title }}</a>
+            {% if sib.author %}
+              <span class="reader-sibling-author">— {{ sib.author }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</article>

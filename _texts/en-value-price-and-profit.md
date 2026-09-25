@@ -5,6 +5,7 @@ subcategory: "Labour Theory of Value"
 layout: text
 title: "Value, Price and Profit"
 author: "Karl Marx"
+year: 1865
 language: "en"
 section_title: "Critique of Political Economy"
 section_url: "sections/en-critique-political-economy.html"

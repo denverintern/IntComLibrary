@@ -5,6 +5,7 @@ subcategory: "Finance Capital"
 layout: text
 title: "L'Impérialisme, Stade Suprême du Capitalisme"
 author: "V. I. Lénine"
+year: 1916
 language: "fr"
 section_title: "Critique de l'Économie Politique"
 section_url: "sections/fr-critique-economie-politique.html"

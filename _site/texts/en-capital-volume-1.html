@@ -7,15 +7,15 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  <!-- Inline early script to avoid theme flash (FOUC) -->
+  <!-- Inline early script to avoid theme flash (FOUC) - default is Paper (light) -->
   <script>
     (function() {
       try {
         var saved = localStorage.getItem('theme');
-        var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        var theme = saved || 'light';
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'light');
       }
     })();
   </script>
@@ -29,1211 +29,1107 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap');
 
-/* Color Variables & Theme System - Homogeneous Archival Aesthetic */
+/* ==========================================================================
+   COLOR & PAPER PALETTE — PRINT ARCHIVAL STANDARD
+   ========================================================================== */
 :root {
-  --bg-primary: #0d0e12;
-  --bg-secondary: #13161c;
-  --bg-tertiary: #1a1e27;
-  --bg-hover: #222733;
-  --accent-red: #9e1b1e;
-  --accent-red-hover: #ba2326;
-  --accent-gold: #c99e2b;
-  --accent-gold-hover: #e0b43c;
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
-  --border-color: rgba(255, 255, 255, 0.09);
-  --border-color-focus: rgba(158, 27, 30, 0.5);
-  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-  --card-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.45);
-  --font-display: 'Cinzel', Georgia, "Times New Roman", serif;
-  --font-serif: Georgia, 'Times New Roman', Times, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --border-radius: 2px;
-  --transition: all 0.18s ease-in-out;
-  color-scheme: dark;
-}
-
-[data-theme="light"] {
-  --bg-primary: #f7f5ef;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #ece7dc;
-  --bg-hover: #e2dbce;
-  --accent-red: #8b1214;
+  /* Paper Ground (Default Classical Archival) */
+  --bg-primary: #f4efe4;          /* Warm archival book paper */
+  --bg-secondary: #faf7f0;        /* Slightly lighter paper tone */
+  --bg-tertiary: #ebe4d5;         /* Subtle paper shading */
+  --bg-hover: #e3dcce;
+  --accent-red: #8b1214;          /* Crimson rule & masthead accent */
   --accent-red-hover: #a8191c;
-  --accent-gold: #966c14;
-  --accent-gold-hover: #78540c;
-  --text-main: #18191c;
-  --text-muted: #4b5563;
-  --text-dim: #6b7280;
-  --border-color: rgba(0, 0, 0, 0.12);
-  --border-color-focus: rgba(139, 18, 20, 0.4);
-  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  --card-shadow-hover: 0 3px 12px rgba(0, 0, 0, 0.08);
+  --accent-gold: #8f6515;         /* Bronze/gold author & numerals */
+  --accent-gold-hover: #73500d;
+  --text-main: #1a1714;          /* Print ink, not pitch black */
+  --text-muted: #5c554e;         /* Muted editorial type */
+  --text-dim: #80766b;           /* Metadata, breadcrumbs, rules */
+  --border-color: #d9d0c4;       /* Bookbinder hairline rule */
+  --border-color-focus: #8b1214;
+  --card-border: #d9d0c4;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --font-display: 'Cinzel', Georgia, "Times New Roman", serif;
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --border-radius: 0px;
+  --measure: 38rem;
   color-scheme: light;
 }
 
-/* Global Reset & Base Styles */
+[data-theme="dark"] {
+  /* Inverted Ink on Blotting Paper (Night Mode) */
+  --bg-primary: #1c1916;          /* Deep warm blotting ground */
+  --bg-secondary: #231f1c;        /* Elevated sheet surface */
+  --bg-tertiary: #2b2622;
+  --bg-hover: #332e29;
+  --accent-red: #9e1b1e;          /* Muted night crimson */
+  --accent-red-hover: #ba2326;
+  --accent-gold: #c99e2b;         /* Warm bronze type */
+  --accent-gold-hover: #dfb33e;
+  --text-main: #e8e0d4;          /* Warm parchment type */
+  --text-muted: #9e9486;         /* Secondary editorial type */
+  --text-dim: #73695c;
+  --border-color: #36302a;       /* Dark hairline rule */
+  --border-color-focus: #9e1b1e;
+  --card-border: #36302a;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   GLOBAL RESET & BASE STYLES
+   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+  background-color: var(--bg-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: var(--font-sans);
-  line-height: 1.7;
+  font-family: var(--font-serif);
+  line-height: 1.65;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background-color var(--transition), color var(--transition);
 }
 
-/* Scrollbars */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-red);
+/* Print-disciplined focus ring */
+:focus-visible {
+  outline: 1px solid var(--accent-red);
+  outline-offset: 1px;
 }
 
-/* Header Component */
+a {
+  color: var(--accent-red);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent-red-hover);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   MASTHEAD & HEADER
+   ========================================================================== */
 .header {
   background: var(--bg-secondary);
-  padding: 1.25rem 1rem 1rem 1rem;
-  border-bottom: 2px solid var(--accent-red);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
-  transition: background var(--transition), border-color var(--transition);
+  border-bottom: 1px solid var(--accent-red);
+  padding: 1.25rem 1.5rem 0.75rem 1.5rem;
 }
 
 .header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  max-width: 1400px;
-  margin: 0 auto 1.25rem auto;
-  position: relative;
-  padding: 0 1rem;
-}
-
-.header-spacer {
-  width: 42px;
-  flex-shrink: 0;
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  padding-bottom: 0.75rem;
 }
 
 .logo-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
   color: var(--accent-red);
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-decoration: none;
-  transition: var(--transition);
-  text-align: center;
 }
 
 .logo-link:hover {
+  text-decoration: none;
   color: var(--accent-red-hover);
 }
 
 .logo-img {
-  height: 42px;
-  width: 42px;
+  height: 36px;
+  width: 36px;
   flex-shrink: 0;
 }
 
-.header-controls {
+.header-motto {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  letter-spacing: 0.01em;
+}
+
+/* Header Utility Line (Languages · Paper/Night · Search) */
+.utility-bar {
+  max-width: 1300px;
+  margin: 0.5rem auto 0 auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 1.15rem;
-}
-
-.theme-toggle:hover {
-  border-color: var(--accent-gold);
-  background: var(--bg-hover);
-  transform: scale(1.08);
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
-}
-
-.theme-icon {
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-[data-theme="dark"] .icon-moon { display: flex; }
-[data-theme="dark"] .icon-sun { display: none; }
-[data-theme="light"] .icon-moon { display: none; }
-[data-theme="light"] .icon-sun { display: flex; }
-
-/* Language Navigation */
-.lang-nav {
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.lang-link {
-  color: var(--text-muted);
+  gap: 0.75rem;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  transition: var(--transition);
 }
 
-.lang-link:hover {
-  color: var(--accent-red);
-  background: var(--bg-tertiary);
+.utility-left {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
 }
 
-.lang-link.active {
-  color: var(--accent-gold);
-  font-weight: 700;
-  background: var(--bg-tertiary);
-  border-color: var(--border-color);
-}
-
-.lang-sep {
-  color: var(--border-color);
+.utility-label {
   font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.utility-select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  padding: 2px 6px;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.utility-select:focus {
+  border-color: var(--accent-red);
+  outline: none;
+}
+
+.utility-sep {
+  color: var(--border-color);
   user-select: none;
 }
 
-/* Wide, Balanced Layout Grid */
-.container {
-  max-width: 1400px;
-  width: 100%;
-  margin: 2rem auto;
-  padding: 0 2rem;
-  flex: 1;
+.utility-divider {
+  color: var(--border-color);
+  margin: 0 0.35rem;
+  user-select: none;
 }
 
-/* Titles */
-h1, h2, h3 {
-  font-family: var(--font-display);
+.utility-quick-lang {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  padding: 1px 3px;
+}
+
+.utility-quick-lang:hover {
+  color: var(--accent-red);
+  text-decoration: none;
+}
+
+.utility-quick-lang.active {
   color: var(--accent-red);
   font-weight: 700;
-  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--accent-red);
 }
 
-/* Main 2-column Layout */
+/* Paper / Night Text Switch */
+.theme-text-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.theme-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  cursor: pointer;
+  padding: 1px 3px;
+}
+
+.theme-btn:hover {
+  color: var(--text-main);
+}
+
+.theme-btn.active {
+  color: var(--accent-red);
+  font-weight: 700;
+  border-bottom: 1px solid var(--accent-red);
+}
+
+.theme-btn-sep {
+  color: var(--border-color);
+}
+
+/* Search Field (Rule-based, no icon soup) */
+.header-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.search-text-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.search-input-clean {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  width: 180px;
+  transition: width 0.2s ease, border-color 0.2s ease;
+}
+
+.search-input-clean:focus {
+  width: 240px;
+  border-color: var(--accent-red);
+  outline: none;
+}
+
+/* ==========================================================================
+   LAYOUT STRUCTURE (Reading-Room Spread)
+   ========================================================================== */
+.container {
+  max-width: 1300px;
+  margin: 1.5rem auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
 .main-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 2.5rem;
   align-items: start;
 }
 
-/* Sidebar Styles */
+/* Left Rail (Sections Only) */
 .sidebar {
-  position: sticky;
-  top: 2rem;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-right: 0.5rem;
-}
-
-/* Search Bar */
-.search-container {
-  position: relative;
-  width: 100%;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.8rem 1.25rem 0.8rem 2.8rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  color: var(--text-main);
-  font-size: 0.92rem;
-  font-family: var(--font-sans);
-  transition: var(--transition);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--accent-red);
-  box-shadow: 0 0 0 3px var(--border-color-focus);
-}
-
-.search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-dim);
-  pointer-events: none;
-  font-size: 0.95rem;
+  border-right: 1px solid var(--border-color);
+  padding-right: 1.5rem;
 }
 
 .sidebar-title {
-  font-family: var(--font-display);
-  color: var(--accent-gold);
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 0.6rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.4rem;
+  color: var(--text-dim);
   font-weight: 700;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.25rem;
 }
 
 .sidebar-link {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  color: var(--text-muted);
+  align-items: baseline;
+  padding: 0.45rem 0.2rem;
+  color: var(--text-main);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.4;
   text-decoration: none;
-  font-size: 0.88rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
   border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
 .sidebar-link:hover {
   color: var(--accent-red);
-  background: var(--bg-tertiary);
   border-left-color: var(--accent-red);
+  text-decoration: none;
+  background: var(--bg-secondary);
 }
 
 .sidebar-link.active {
+  color: var(--accent-red);
+  border-left-color: var(--accent-red);
+  font-weight: 600;
+  background: var(--bg-secondary);
+}
+
+.sidebar-roman {
+  font-family: var(--font-display);
   color: var(--accent-gold);
-  font-weight: 600;
-  background: var(--bg-tertiary);
-  border-left-color: var(--accent-gold);
+  font-size: 0.85rem;
+  margin-right: 0.3rem;
 }
 
-.sidebar-link-title {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.sidebar-count-badge {
-  font-size: 0.72rem;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+.sidebar-count {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
   color: var(--text-dim);
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 600;
+  font-weight: normal;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
 }
 
-.moderator-link {
-  color: var(--accent-gold) !important;
-  font-weight: 600;
+/* Main Content Surface */
+.main-content {
+  min-width: 0;
 }
 
-/* Archive Header & Interactive Toolbar */
-.archive-header {
-  margin-bottom: 1.75rem;
+/* Archive Top Bar (Scope & View Toggles) */
+.archive-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .archive-headline {
-  font-size: 2rem;
-  margin-bottom: 0.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--accent-red);
+  letter-spacing: 0.02em;
 }
 
-.archive-subtitle {
+.archive-scope-text {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
   color: var(--text-muted);
-  font-size: 1rem;
-  max-width: 850px;
+  margin-top: 0.2rem;
+  line-height: 1.5;
 }
 
-.archive-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-/* Archival Category Filter Tabs */
-.category-pills-bar {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.cat-pill {
+.archive-views-control {
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0.75rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 2px;
-  color: var(--text-muted);
-  font-size: 0.76rem;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.cat-pill:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-main);
-  border-color: var(--accent-red);
-}
-
-.cat-pill.active {
-  background: var(--accent-red);
-  color: #ffffff;
-  border-color: var(--accent-red);
-}
-
-.pill-count {
-  font-size: 0.7rem;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 1px 5px;
-  border-radius: 2px;
-  font-weight: 600;
-  margin-left: 0.35rem;
-}
-
-.cat-pill.active .pill-count {
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-}
-
-[data-theme="light"] .pill-count {
-  background: rgba(0, 0, 0, 0.08);
-}
-[data-theme="light"] .cat-pill.active .pill-count {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.archive-actions-bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-left: auto;
-}
-
-.results-badge {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 500;
-}
-
-/* View Mode Switcher */
-.view-switch-group {
-  display: flex;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 2px;
-  padding: 2px;
-}
-
-.view-toggle-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-size: 0.76rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.3rem 0.65rem;
-  border-radius: 2px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: var(--transition);
-}
-
-.view-toggle-btn:hover {
-  color: var(--text-main);
-}
-
-.view-toggle-btn.active {
-  background: var(--bg-tertiary);
-  color: var(--accent-gold);
-  border-bottom: 2px solid var(--accent-gold);
-}
-
-/* Text Cards Grid (Homogeneous Archival Cards) */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-
-.text-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 2px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-  overflow: hidden;
-}
-
-.text-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--accent-red);
-}
-
-[dir="rtl"] .text-card::before {
-  left: auto;
-  right: 0;
-}
-
-.text-card:hover {
-  border-color: var(--accent-red);
-  box-shadow: var(--card-shadow-hover);
-}
-
-.card-top-meta {
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.4rem;
-  align-items: center;
-}
-
-.card-section-tag {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-gold);
-  background: transparent;
-  border: 1px solid rgba(201, 158, 43, 0.3);
-  padding: 2px 6px;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.card-section-tag:hover {
-  background: var(--accent-gold);
-  color: #0d0e12;
-}
-
-.card-category-tag {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-dim);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  padding: 2px 6px;
-  border-radius: 2px;
-}
-
-.card-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-/* Classical Scholarly Card Titles */
-.card-title {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  line-height: 1.35;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.card-title a {
-  color: var(--text-main);
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-.text-card:hover .card-title a {
-  color: var(--accent-red);
-}
-
-.card-author {
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  font-style: italic;
-  font-weight: normal;
-  color: var(--accent-gold);
-  letter-spacing: normal;
-}
-
-.card-description {
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  color: var(--text-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.6;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.card-meta-tag {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: transparent;
-  padding: 0;
-  font-weight: 500;
-}
-
-.card-read-link {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--accent-red);
-  text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: var(--transition);
 }
 
-.card-read-link:hover {
-  color: var(--accent-red-hover);
+.view-label {
+  color: var(--text-dim);
+  margin-right: 0.2rem;
 }
 
-.card-read-link:hover .arrow-icon {
-  transform: translateX(4px);
+.view-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 1px 4px;
 }
 
-.arrow-icon {
-  transition: transform var(--transition);
+.view-btn:hover {
+  color: var(--text-main);
 }
 
-[dir="rtl"] .card-read-link:hover .arrow-icon {
-  transform: translateX(-4px);
+.view-btn.active {
+  color: var(--accent-red);
+  font-weight: 700;
+  border-bottom: 1px solid var(--accent-red);
 }
 
-/* Compact Catalog Table View */
+.view-sep {
+  color: var(--border-color);
+}
+
+/* ==========================================================================
+   VIEW 1: READING-ROOM CATALOG TABLE (SPINE B — DEFAULT)
+   ========================================================================== */
 .catalog-table-wrap {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  width: 100%;
+  border-top: 1px solid var(--border-color);
   overflow-x: auto;
-  box-shadow: var(--card-shadow);
 }
 
 .catalog-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  font-family: var(--font-serif);
 }
 
 .catalog-table th {
-  background: var(--bg-tertiary);
-  padding: 0.9rem 1.25rem;
-  font-size: 0.75rem;
+  padding: 0.65rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   color: var(--text-dim);
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
 }
 
 .catalog-table td {
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 0.5rem;
   border-bottom: 1px solid var(--border-color);
-  font-size: 0.92rem;
-  vertical-align: middle;
+  font-size: 0.96rem;
+  vertical-align: baseline;
 }
 
 .catalog-row:hover {
-  background: var(--bg-hover);
+  background: var(--bg-secondary);
 }
 
-.table-title-link {
-  font-family: var(--font-serif);
+.col-work-title {
   font-weight: 600;
+}
+
+.col-work-title a {
   color: var(--text-main);
   text-decoration: none;
-  font-size: 1.05rem;
 }
 
-.table-title-link:hover {
+.col-work-title a:hover {
   color: var(--accent-red);
+  text-decoration: underline;
 }
 
-.table-subcat-hint {
+.col-work-author {
+  color: var(--accent-gold);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.col-work-year {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  font-variant-numeric: oldstyle-nums;
+  white-space: nowrap;
+}
+
+.col-work-lang {
+  color: var(--text-dim);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: var(--text-dim);
-  margin-top: 0.15rem;
-}
-
-.col-author {
-  font-weight: 500;
-  color: var(--accent-gold);
-}
-
-.table-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  padding: 2px 7px;
-  border-radius: 4px;
-  margin-right: 0.3rem;
-  margin-bottom: 0.2rem;
-}
-
-.section-badge {
-  background: rgba(229, 193, 88, 0.08);
-  border: 1px solid rgba(229, 193, 88, 0.2);
-  color: var(--accent-gold);
-}
-
-.cat-badge {
-  background: var(--bg-tertiary);
-  color: var(--text-dim);
-}
-
-.btn-sm {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.78rem;
-}
-
-/* Scholarly Text Reader Layout */
-.reader-container {
-  display: flex;
-  gap: 2.5rem;
-  width: 100%;
-}
-
-.reader-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.reader-sidebar {
-  width: 300px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.sidebar-widget {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-}
-
-.sidebar-widget-title {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  color: var(--accent-gold);
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
-  letter-spacing: 0.05em;
-}
-
-.metadata-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.metadata-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.metadata-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  letter-spacing: 0.05em;
-  font-weight: 600;
-}
-
-.metadata-value {
-  font-size: 0.92rem;
-  color: var(--text-main);
-}
-
-.pdf-viewer-frame {
-  width: 100%;
-  height: 72vh;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--bg-primary);
-  box-shadow: var(--card-shadow);
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.65rem 1.25rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border-radius: var(--border-radius);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  transition: var(--transition);
-}
-
-.btn-primary {
-  background: var(--accent-red);
-  color: #ffffff !important;
-}
-.btn-primary:hover {
-  background: var(--accent-red-hover);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: var(--bg-tertiary);
-  color: var(--text-main) !important;
-  border: 1px solid var(--border-color);
-}
-.btn-secondary:hover {
-  background: var(--bg-hover);
-  border-color: var(--accent-gold);
-  transform: translateY(-1px);
-}
-
-.btn-block {
-  display: flex;
-  width: 100%;
-}
-
-/* Editorial & Moderator Tabs (Homogeneous Archival) */
-.admin-tab-btn {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 0.55rem 1rem;
-  border-radius: 2px;
-  font-size: 0.78rem;
-  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: var(--transition);
+  white-space: nowrap;
 }
 
-.admin-tab-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-main);
-  border-color: var(--accent-red);
-}
-
-.admin-tab-btn.active {
-  background: var(--accent-red);
-  color: #ffffff;
-  border-color: var(--accent-red);
-}
-
-.admin-tab-content {
-  display: none;
-}
-
-.admin-tab-content.active {
-  display: block;
-}
-
-/* Authentication Gate & Hierarchy Security */
-.auth-gate-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 11, 14, 0.92);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  padding: 1.5rem;
-}
-
-.auth-gate-box {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-top: 3px solid var(--accent-red);
-  border-radius: 2px;
-  width: 100%;
-  max-width: 480px;
-  padding: 2.25rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-}
-
-.auth-gate-title {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  color: var(--accent-red);
+.col-work-links {
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
-  margin-bottom: 0.6rem;
-  text-align: center;
 }
 
-.auth-gate-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
+.format-link {
+  color: var(--accent-red);
+  text-decoration: none;
 }
 
-.auth-error {
-  background: rgba(158, 27, 30, 0.15);
-  border: 1px solid var(--accent-red);
-  color: #ff6b6b;
-  font-size: 0.84rem;
-  padding: 0.6rem 0.9rem;
-  border-radius: 2px;
-  margin-bottom: 1.25rem;
-  display: none;
+.format-link:hover {
+  text-decoration: underline;
 }
 
-.hierarchy-status-bar {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-left: 3px solid var(--accent-red);
-  padding: 0.85rem 1.25rem;
-  margin-bottom: 1.75rem;
-  border-radius: 2px;
+.format-sep {
+  color: var(--border-color);
+  margin: 0 3px;
+}
+
+/* ==========================================================================
+   VIEW 2: DENSE NEWSPAPER / PARTY ORGAN INDEX (SPINE A — INDEX TOGGLE)
+   ========================================================================== */
+.index-column-wrap {
+  max-width: var(--measure);
+  margin: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.role-badge {
+.index-section-group {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.index-section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-red);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.4rem;
+}
+
+.index-cat-group {
+  margin-top: 1rem;
+}
+
+.index-cat-name {
+  font-family: var(--font-sans);
   font-size: 0.74rem;
-  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 2px;
-  display: inline-flex;
-  align-items: center;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.index-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
   gap: 0.35rem;
 }
 
-.role-badge.lead-admin {
-  background: var(--accent-red);
-  color: #ffffff;
+.index-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.95rem;
 }
 
-.role-badge.moderator {
-  background: var(--accent-gold);
-  color: #0d0e12;
+.index-item-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
-.pending-badge {
-  background: var(--accent-red);
-  color: #ffffff;
-  padding: 1px 6px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  border-radius: 2px;
-  margin-left: 0.25rem;
+.index-num {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  width: 1.5rem;
+  text-align: right;
+  flex-shrink: 0;
 }
 
-.pending-queue-card {
+.index-item-title {
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.index-item-title:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+.index-item-author {
+  font-style: italic;
+  color: var(--accent-gold);
+  font-size: 0.9rem;
+}
+
+.index-item-meta {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   VIEW 3: INDEX CARD DRAWER (SPINE D — SHELF VIEW)
+   ========================================================================== */
+.cards-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px; /* Never three on standard desktop */
+}
+
+.drawer-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-left: 3px solid var(--accent-gold);
-  border-radius: 2px;
-  padding: 1.5rem;
-  margin-bottom: 1.25rem;
+  border-left: 3px solid var(--accent-red);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-radius: 0;
 }
 
-.pending-meta {
+.drawer-card-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.75rem;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.drawer-card-label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.drawer-card-year {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-variant-numeric: oldstyle-nums;
+}
+
+.drawer-card-author {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.drawer-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1.35;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.drawer-card-title a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.drawer-card-title a:hover {
+  color: var(--accent-red);
+}
+
+.drawer-card-desc {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.drawer-card-footer {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
   letter-spacing: 0.05em;
+}
+
+.drawer-card-footer a {
+  color: var(--accent-red);
+}
+
+/* ==========================================================================
+   WORK READER PAGE (Readable Measure ~38rem)
+   ========================================================================== */
+.reader-frame {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1rem 0 4rem 0;
+}
+
+/* Breadcrumb: Library / II. Party, State & Revolution / Party and Class */
+.reader-breadcrumb {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.reader-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.reader-breadcrumb a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+.reader-breadcrumb .sep {
+  color: var(--border-color);
+  user-select: none;
+}
+
+.reader-breadcrumb .current {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* Running Header with Title + Author */
+.reader-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.reader-title {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+.reader-author {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
   color: var(--accent-gold);
 }
 
-/* RTL Layout Support (Arabic) */
-[dir="rtl"] {
-  text-align: right;
-  direction: rtl;
+/* Actions as text */
+.reader-actions {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  color: var(--text-dim);
 }
 
-[dir="rtl"] .sidebar {
-  border-right: none;
-  border-left: 1px solid var(--border-color);
-  padding-right: 0;
-  padding-left: 0.5rem;
-}
-
-[dir="rtl"] .sidebar-link {
-  border-left: none;
-  border-right: 2px solid transparent;
-}
-
-[dir="rtl"] .sidebar-link:hover,
-[dir="rtl"] .sidebar-link.active {
-  border-left-color: transparent;
-  border-right-color: var(--accent-gold);
-}
-
-[dir="rtl"] .main-content ul,
-[dir="rtl"] .main-content ol {
-  padding-left: 0;
-  padding-right: 1.5rem;
-}
-
-[dir="rtl"] .main-content ul li {
-  padding-left: 0;
-  padding-right: 1.5rem;
-}
-
-[dir="rtl"] .main-content ul li::before {
-  left: auto;
-  right: 0;
-}
-
-/* Responsive Styles & Mobile Polish */
-@media (max-width: 1024px) {
-  .main-layout {
-    grid-template-columns: 240px 1fr;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .reader-container {
-    flex-direction: column-reverse;
-  }
-  .reader-sidebar {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .header-inner {
-    flex-direction: column;
-    gap: 0.85rem;
-  }
-  
-  .header-spacer {
-    display: none;
-  }
-
-  .main-layout {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .sidebar {
-    position: static;
-    max-height: none;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1.5rem;
-    padding-right: 0;
-  }
-
-  .header {
-    padding: 1rem 0.5rem;
-  }
-
-  .logo-link {
-    font-size: 1.35rem;
-    gap: 8px;
-  }
-
-  .logo-img {
-    height: 32px;
-    width: 32px;
-  }
-
-  .lang-nav {
-    gap: 0.25rem 0.4rem;
-  }
-
-  .lang-link {
-    font-size: 0.75rem;
-    padding: 2px 6px;
-  }
-
-  .container {
-    margin: 1.5rem auto;
-    padding: 0 1rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  h1, h2 {
-    font-size: 1.5rem;
-  }
-}
-
-/* Main Content Styling (Markdown rendering for Sections and Texts) */
-.main-content h1 {
-  font-size: 1.9rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.75rem;
+.reader-actions a, .reader-actions button {
   color: var(--accent-red);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  text-decoration: none;
 }
 
-.main-content h2 {
-  font-size: 1.4rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--accent-red);
+.reader-actions a:hover, .reader-actions button:hover {
+  text-decoration: underline;
 }
 
-.main-content p {
+.reader-actions .sep {
+  color: var(--border-color);
+}
+
+/* Reader Body */
+.reader-body {
+  font-family: var(--font-serif);
   font-size: 1.05rem;
+  line-height: 1.68;
   color: var(--text-main);
-  margin-bottom: 1.25rem;
-  line-height: 1.75;
 }
 
-.main-content ul, .main-content ol {
-  margin: 1.5rem 0;
+.reader-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--accent-red);
+  margin: 2rem 0 0.8rem 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.35rem;
+}
+
+.reader-body h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 1.5rem 0 0.6rem 0;
+}
+
+.reader-body p {
+  margin-bottom: 1.25rem;
+}
+
+.reader-body ul, .reader-body ol {
+  margin: 1.25rem 0;
   padding-left: 1.5rem;
 }
 
-.main-content li {
-  font-size: 1.05rem;
-  color: var(--text-main);
+.reader-body li {
+  margin-bottom: 0.5rem;
+}
+
+/* PDF Viewer frame */
+.reader-pdf-frame {
+  width: 100%;
+  height: 75vh;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  margin-bottom: 2rem;
+}
+
+/* In this section list at the bottom */
+.reader-siblings-box {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.reader-siblings-title {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 700;
   margin-bottom: 0.75rem;
+}
+
+.reader-siblings-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.reader-sibling-item {
+  font-size: 0.92rem;
+}
+
+.reader-sibling-item a {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.reader-sibling-item a:hover {
+  color: var(--accent-red);
+}
+
+.reader-sibling-author {
+  color: var(--accent-gold);
+  font-style: italic;
+  margin-left: 0.35rem;
+}
+
+/* ==========================================================================
+   SECTION PAGE (Chapter Style)
+   ========================================================================== */
+.chapter-container {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1.5rem 0 4rem 0;
+}
+
+.chapter-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.chapter-roman {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--accent-red);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.chapter-scope {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text-muted);
   line-height: 1.6;
 }
 
-.main-content a {
+.chapter-category-group {
+  margin-bottom: 2.5rem;
+}
+
+.chapter-category-title {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--accent-gold);
-  text-decoration: none;
-  border-bottom: 1px dashed rgba(229, 193, 88, 0.4);
-  transition: var(--transition);
+  font-weight: 700;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.75rem;
 }
 
-.main-content a:hover {
-  color: var(--accent-red-hover);
-  border-bottom-color: var(--accent-red);
-}
-
-/* Custom list items for section lists (militant communist theme) */
-.main-content ul li {
+.chapter-works-list {
   list-style: none;
-  position: relative;
-  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.main-content ul li::before {
-  content: "★";
-  position: absolute;
-  left: 0;
+.chapter-work-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.chapter-work-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.chapter-work-link {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.chapter-work-link:hover {
+  color: var(--accent-red);
+}
+
+.chapter-work-author {
   color: var(--accent-gold);
-  font-size: 0.8rem;
-  top: 0.25rem;
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+.chapter-work-actions {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   FOOTER (Archival Colophon)
+   ========================================================================== */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-motto {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+.footer-sep {
+  color: var(--border-color);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN & MOBILE OPTIMIZATION
+   ========================================================================== */
+@media (max-width: 900px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-right: 0;
+    padding-bottom: 1.25rem;
+  }
+
+  .utility-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .utility-right {
+    width: 100%;
+  }
+
+  .header-search-wrap {
+    width: 100%;
+  }
+
+  .search-input-clean {
+    width: 100%;
+  }
+
+  .search-input-clean:focus {
+    width: 100%;
+  }
+
+  .cards-shelf-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
   </style>
@@ -1242,116 +1138,119 @@ h1, h2, h3 {
 <body>
   <header class="header">
     <div class="header-inner">
-      <div class="header-spacer" aria-hidden="true"></div>
-      <div class="logo">
-        <a href="../index.html" class="logo-link">
-          <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Defs for reuse -->
-            <defs>
-              <g id="grain">
-                <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
-                <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
-              </g>
-              <g id="wheat-pair">
-                <use href="#grain" transform="rotate(-28) scale(0.95)" />
-                <use href="#grain" transform="rotate(28) scale(0.95)" />
-                <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
-              </g>
-              <g id="wreath-half">
-                <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
-                <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
-                <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
-                <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
-                <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
-                <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
-                <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
-                <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
-                <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
-                <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
-              </g>
-            </defs>
-
-            <use href="#wreath-half" />
-            <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
-
-            <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
-              <circle cx="0" cy="0" r="3" />
-              <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
-              <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
-              <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+      <a href="../index.html" class="logo-link">
+        <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Defs for reuse -->
+          <defs>
+            <g id="grain">
+              <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
+              <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
             </g>
-
-            <g transform="translate(50, 48) scale(0.68)">
-              <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+            <g id="wheat-pair">
+              <use href="#grain" transform="rotate(-28) scale(0.95)" />
+              <use href="#grain" transform="rotate(28) scale(0.95)" />
+              <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
             </g>
-          </svg>
-          <span>Internationalist Communist Library</span>
-        </a>
-      </div>
-      <div class="header-controls">
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme" title="Toggle Theme">
-          <span class="theme-icon icon-moon" aria-hidden="true">🌙</span>
-          <span class="theme-icon icon-sun" aria-hidden="true">☀️</span>
-        </button>
-      </div>
-    </div>
-    <div class="nav-container">
-      <nav class="lang-nav" aria-label="Language selector">
-  <a href="../index.html" class="lang-link active">English</a>
-  <span class="lang-sep">|</span>
-  <a href="../es/index.html" class="lang-link ">Español</a>
-  <span class="lang-sep">|</span>
-  <a href="../pt/index.html" class="lang-link ">Português</a>
-  <span class="lang-sep">|</span>
-  <a href="../fr/index.html" class="lang-link ">Français</a>
-  <span class="lang-sep">|</span>
-  <a href="../it/index.html" class="lang-link ">Italiano</a>
-  <span class="lang-sep">|</span>
-  <a href="../de/index.html" class="lang-link ">Deutsch</a>
-  <span class="lang-sep">|</span>
-  <a href="../nl/index.html" class="lang-link ">Nederlands</a>
-  <span class="lang-sep">|</span>
-  <a href="../ru/index.html" class="lang-link ">Русский</a>
-  <span class="lang-sep">|</span>
-  <a href="../zh/index.html" class="lang-link ">中文</a>
-  <span class="lang-sep">|</span>
-  <a href="../ja/index.html" class="lang-link ">日本語</a>
-  <span class="lang-sep">|</span>
-  <a href="../ko/index.html" class="lang-link ">한국어</a>
-  <span class="lang-sep">|</span>
-  <a href="../ar/index.html" class="lang-link ">العربية</a>
-  <span class="lang-sep">|</span>
-  <a href="../hi/index.html" class="lang-link ">हिन्दी</a>
-  <span class="lang-sep">|</span>
-  <a href="../bn/index.html" class="lang-link ">বাংলা</a>
-  <span class="lang-sep">|</span>
-  <a href="../id/index.html" class="lang-link ">Bahasa Indonesia</a>
-  <span class="lang-sep">|</span>
-  <a href="../tr/index.html" class="lang-link ">Türkçe</a>
-  <span class="lang-sep">|</span>
-  <a href="../pl/index.html" class="lang-link ">Polski</a>
-  <span class="lang-sep">|</span>
-  <a href="../el/index.html" class="lang-link ">Ελληνικά</a>
-</nav>
+            <g id="wreath-half">
+              <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
+              <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
+              <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
+              <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
+              <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
+              <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
+              <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
+              <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
+              <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
+              <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
+            </g>
+          </defs>
 
+          <use href="#wreath-half" />
+          <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
+
+          <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
+            <circle cx="0" cy="0" r="3" />
+            <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
+            <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
+            <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+
+          <g transform="translate(50, 48) scale(0.68)">
+            <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+          </g>
+        </svg>
+        <span>Internationalist Communist Library</span>
+      </a>
+      <p class="header-motto">Texts of the communist left. No advertising. No login.</p>
     </div>
+    <div class="utility-bar">
+  <div class="utility-left">
+    <span class="utility-label">Language:</span>
+    <select id="lang-dropdown" class="utility-select" aria-label="Select language" onchange="if(this.value) window.location.href=this.value;">
+      <option value="../index.html" selected>English</option>
+      <option value="../es/index.html" >Español</option>
+      <option value="../pt/index.html" >Português</option>
+      <option value="../fr/index.html" >Français</option>
+      <option value="../it/index.html" >Italiano</option>
+      <option value="../de/index.html" >Deutsch</option>
+      <option value="../nl/index.html" >Nederlands</option>
+      <option value="../ru/index.html" >Русский</option>
+      <option value="../zh/index.html" >中文</option>
+      <option value="../ja/index.html" >日本語</option>
+      <option value="../ko/index.html" >한국어</option>
+      <option value="../ar/index.html" >العربية</option>
+      <option value="../hi/index.html" >हिन्दी</option>
+      <option value="../bn/index.html" >বাংলা</option>
+      <option value="../id/index.html" >Bahasa Indonesia</option>
+      <option value="../tr/index.html" >Türkçe</option>
+      <option value="../pl/index.html" >Polski</option>
+      <option value="../el/index.html" >Ελληνικά</option>
+    </select>
+    <span class="utility-sep">·</span>
+    <a href="../es/index.html" class="utility-quick-lang ">es</a>
+    <a href="../pt/index.html" class="utility-quick-lang ">pt</a>
+    <a href="../it/index.html" class="utility-quick-lang ">it</a>
+    <a href="../fr/index.html" class="utility-quick-lang ">fr</a>
+    <a href="../de/index.html" class="utility-quick-lang ">de</a>
+    <a href="../ru/index.html" class="utility-quick-lang ">ru</a>
+    
+    <span class="utility-divider">|</span>
+    
+    <span class="theme-text-control">
+      <button type="button" class="theme-btn" id="theme-btn-paper" title="Switch to paper ground">Paper</button>
+      <span class="theme-btn-sep">/</span>
+      <button type="button" class="theme-btn" id="theme-btn-night" title="Switch to night ground">Night</button>
+    </span>
+  </div>
+
+  <div class="utility-right">
+    <div class="header-search-wrap">
+      <label for="global-search" class="search-text-label">Search:</label>
+      <input type="text" id="global-search" class="search-input-clean" placeholder="Title, author, term...">
+    </div>
+  </div>
+</div>
+
   </header>
 
   <div class="container main-layout">
     <aside class="sidebar">
-      <div class="search-container">
-        <span class="search-icon" aria-hidden="true">¶</span>
-        <input type="text" class="search-input" id="global-search" placeholder="Search archive by title, author...">
-      </div>
       <nav class="sidebar-nav">
+        
+        
+        
+
         <a href="../index.html" class="sidebar-link ">
-          All Works
+          <span>All Works</span>
+          
+            <span class="sidebar-count">(13)</span>
+          
         </a>
         
         <div id="sidebar-sections-container">
@@ -1360,44 +1259,61 @@ h1, h2, h3 {
           
           
           
-          
             <div class="sidebar-title" style="margin-top: 1.5rem">Thematic Sections</div>
-            <div class="sidebar-nav">
+            
               
-                
-                
-
-                
-                
-
-                <a href="../sections/en-critique-political-economy.html" class="sidebar-link " data-sidebar-filter="critique-political-economy">
-                  <span class="sidebar-link-title"><span style="color: var(--accent-gold); font-family: var(--font-display); font-size: 0.8rem; margin-right: 4px;">I.</span> Critique of Political Economy</span>
-                  
-                    <span class="sidebar-count-badge">5</span>
-                  
-                </a>
               
-                
-                
 
-                
-                
-
-                <a href="../sections/en-party-and-state.html" class="sidebar-link " data-sidebar-filter="party-state-revolution">
-                  <span class="sidebar-link-title"><span style="color: var(--accent-gold); font-family: var(--font-display); font-size: 0.8rem; margin-right: 4px;">II.</span> Party, State & Revolution</span>
-                  
-                    <span class="sidebar-count-badge">5</span>
-                  
-                </a>
               
-            </div>
+              
+
+              <a href="../sections/en-critique-political-economy.html" class="sidebar-link " data-sidebar-filter="critique-political-economy">
+                <span class="sidebar-link-title"><span class="sidebar-roman">I.</span> Critique of Political Economy</span>
+                
+                  <span class="sidebar-count">(5)</span>
+                
+              </a>
+            
+              
+              
+
+              
+              
+
+              <a href="../sections/en-party-state-revolution.html" class="sidebar-link " data-sidebar-filter="party-state-revolution">
+                <span class="sidebar-link-title"><span class="sidebar-roman">II.</span> Party, State & Revolution</span>
+                
+                  <span class="sidebar-count">(4)</span>
+                
+              </a>
+            
+              
+              
+
+              
+              
+
+              <a href="../sections/en-historical-materialism.html" class="sidebar-link " data-sidebar-filter="historical-materialism">
+                <span class="sidebar-link-title"><span class="sidebar-roman">III.</span> Historical Materialism & Method</span>
+                
+                  <span class="sidebar-count">(2)</span>
+                
+              </a>
+            
+              
+              
+
+              
+              
+
+              <a href="../sections/en-history-communist-left.html" class="sidebar-link " data-sidebar-filter="history-communist-left">
+                <span class="sidebar-link-title"><span class="sidebar-roman">IV.</span> Tactics & History of the Communist Left</span>
+                
+                  <span class="sidebar-count">(2)</span>
+                
+              </a>
+            
           
-          
-          <div style="margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-            <a href="../manage/index.html" class="sidebar-link moderator-link" title="Open Editorial & Moderator Desk">
-              <span class="sidebar-link-title" style="letter-spacing: 0.04em;">Editorial & Moderator Desk</span>
-            </a>
-          </div>
         </div>
       </nav>
     </aside>
@@ -1410,37 +1326,49 @@ h1, h2, h3 {
 
 
 
-<div class="reader-container">
-  <!-- Main content area (Viewer + Info) -->
-  <div class="reader-main">
-    <nav class="language-nav" style="justify-content: flex-start; margin-bottom: 1rem">
-      <a href="../index.html" style="font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem">
-        ← Back to Library
-      </a>
-    </nav>
 
-    <header style="margin-bottom: 2rem">
-      <h1 style="font-size: 2.2rem; line-height: 1.2; margin-bottom: 0.5rem">Capital, Volume 1</h1>
-      
-        <p style="font-family: var(--font-display); color: var(--accent-gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em">
-          Karl Marx
-        </p>
-      
-    </header>
 
+<article class="reader-frame">
+  <!-- Archival Breadcrumb -->
+  <nav class="reader-breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">Library</a>
     
-      <div style="padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center">
-        <p style="color: var(--accent-red); font-size: 1.1rem; font-weight: 500">No PDF file attached to this entry.</p>
+      <span class="sep">/</span>
+      
+        
+        
+        
+        <a href="../sections/en-critique-political-economy.html">I. Critique of Political Economy</a>
+      
+    
+    <span class="sep">/</span>
+    <span class="current">Capital, Volume 1</span>
+  </nav>
+
+  <!-- Running Header -->
+  <header class="reader-header">
+    <h1 class="reader-title">Capital, Volume 1</h1>
+    
+      <div class="reader-author">
+        Karl Marx, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">1867</span>
       </div>
     
+  </header>
 
-    <!-- Text Description / Commentary (Rendered underneath PDF) -->
-    <section class="sidebar-widget" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2rem; margin-top: 1.5rem">
-      <h2 style="font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-gold); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem">
-        About this Text
-      </h2>
-      <div style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main)">
-        <h3 id="scientific-foundation-of-scientific-socialism">Scientific Foundation of Scientific Socialism</h3>
+  <!-- Text Actions (Dignified print links, no icon soup) -->
+  <div class="reader-actions">
+    
+    <a href="#transcription">Transcribed Text</a>
+    <span class="sep">·</span>
+    <button type="button" onclick="window.print()">Print</button>
+  </div>
+
+  <!-- Embedded PDF Document Viewer (if attached) -->
+  
+
+  <!-- Transcribed Text Body (Readable measure ~38rem / 65-72ch) -->
+  <div class="reader-body" id="transcription">
+    <h3 id="scientific-foundation-of-scientific-socialism">Scientific Foundation of Scientific Socialism</h3>
 
 <p><em>Das Kapital: Kritik der politischen Ökonomie</em> (Volume I) was published in Hamburg in 1867. It represents the culmination of more than two decades of rigorous investigation into the anatomy of bourgeois society.</p>
 
@@ -1453,232 +1381,192 @@ h1, h2, h3 {
   <li><strong>The General Law of Capitalist Accumulation</strong>: The rising organic composition of capital ($c:v$), the constant reproduction of the industrial reserve army, and the polarization of extreme wealth and collective misery culminating in the expropriation of the expropriators.</li>
 </ol>
 
-      </div>
-    </section>
   </div>
 
-  <!-- Sidebar widget area (Metadata + Download Actions) -->
-  <aside class="reader-sidebar">
-    <div class="sidebar-widget">
-      <h3 class="sidebar-widget-title">Document Details</h3>
-      <div class="metadata-list">
-        <div class="metadata-item">
-          <span class="metadata-label">Title</span>
-          <span class="metadata-value" style="font-weight: 600">Capital, Volume 1</span>
-        </div>
-        
-        
-          <div class="metadata-item">
-            <span class="metadata-label">Author</span>
-            <span class="metadata-value">Karl Marx</span>
-          </div>
-        
+  <!-- Sibling Works in Current Section -->
+  
+  
 
-        <div class="metadata-item">
-          <span class="metadata-label">Language</span>
-          <span class="metadata-value" style="display: flex; align-items: center; gap: 0.4rem">
-            🇬🇧 English
-          </span>
-        </div>
-
-        <div class="metadata-item">
-          <span class="metadata-label">Format</span>
-          <span class="metadata-value" style="font-family: monospace; font-size: 0.85rem">PDF Document (.pdf)</span>
-        </div>
-
+  
+    <section class="reader-siblings-box">
+      <div class="reader-siblings-title">In this section: I. Critique of Political Economy</div>
+      <ul class="reader-siblings-list">
         
-        <div class="metadata-item">
-          <span class="metadata-label">Section</span>
-          <span class="metadata-value">
-            <a href="../sections/en-critique-political-economy.html" style="color: var(--accent-gold); text-decoration: none; font-weight: 500">
-              📁 Critique of Political Economy
-            </a>
-          </span>
-        </div>
+          <li class="reader-sibling-item">
+            <a href="../texts/en-grundrisse.html">Grundrisse: Outlines of the Critique of Political Economy</a>
+            
+              <span class="reader-sibling-author">— Karl Marx</span>
+            
+          </li>
         
-      </div>
-    </div>
-
-    
-  </aside>
-</div>
+          <li class="reader-sibling-item">
+            <a href="../texts/en-imperialism-highest-stage-of-capitalism.html">Imperialism, the Highest Stage of Capitalism</a>
+            
+              <span class="reader-sibling-author">— V. I. Lenin</span>
+            
+          </li>
+        
+          <li class="reader-sibling-item">
+            <a href="../texts/en-value-price-and-profit.html">Value, Price and Profit</a>
+            
+              <span class="reader-sibling-author">— Karl Marx</span>
+            
+          </li>
+        
+          <li class="reader-sibling-item">
+            <a href="../texts/en-wage-labour-and-capital.html">Wage Labour and Capital</a>
+            
+              <span class="reader-sibling-author">— Karl Marx</span>
+            
+          </li>
+        
+      </ul>
+    </section>
+  
+</article>
 
     </main>
   </div>
 
-  <footer style="margin-top: auto; padding: 2.5rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
-    <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">Proletarians of all countries, unite!</p>
-    <div style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center; gap: 1rem; font-size: 0.8rem;">
-      <a href="../index.html" style="color: var(--text-dim); text-decoration: none;">Library Home</a>
-      <span style="color: var(--border-color);">•</span>
-      <a href="../manage/index.html" style="color: var(--accent-gold); text-decoration: none; font-weight: 500;">Editorial & Moderator Desk</a>
+  <footer style="margin-top: auto; padding: 2.5rem 1.5rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
+    <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">Proletarians of all countries, unite!</p>
+    <p style="margin-bottom: 0.5rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">Internationalist Communist Library · An independent public archive of historical communist literature.</p>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: var(--font-sans);">
+      <a href="../index.html" style="color: var(--text-dim); text-decoration: none;">Library Index</a>
+      <span style="color: var(--border-color);">·</span>
+      <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">Repository</a>
+      <span style="color: var(--border-color);">·</span>
+      <span>Transcriptions &amp; Corrections: <a href="mailto:contact@intcp.org" style="color: var(--accent-red); text-decoration: none;">contact@intcp.org</a></span>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Theme Toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', newTheme);
-          try {
-            localStorage.setItem('theme', newTheme);
-          } catch (e) {}
+      // 1. Paper / Night Text Switch
+      const btnPaper = document.getElementById('theme-btn-paper');
+      const btnNight = document.getElementById('theme-btn-night');
+
+      function updateThemeButtons(theme) {
+        if (btnPaper && btnNight) {
+          if (theme === 'dark') {
+            btnNight.classList.add('active');
+            btnPaper.classList.remove('active');
+          } else {
+            btnPaper.classList.add('active');
+            btnNight.classList.remove('active');
+          }
+        }
+      }
+
+      const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      updateThemeButtons(activeTheme);
+
+      if (btnPaper) {
+        btnPaper.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-theme', 'light');
+          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+          updateThemeButtons('light');
+        });
+      }
+      if (btnNight) {
+        btnNight.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+          updateThemeButtons('dark');
         });
       }
 
-      // Sync with system preference if user hasn't explicitly set a preference
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-          }
-        });
+      // 2. Archive Views Control (Catalog | Index | Shelf)
+      const btnCatalog = document.getElementById('view-btn-catalog');
+      const btnIndex = document.getElementById('view-btn-index');
+      const btnShelf = document.getElementById('view-btn-shelf');
+      const viewCatalog = document.getElementById('view-catalog');
+      const viewIndex = document.getElementById('view-index');
+      const viewShelf = document.getElementById('view-shelf');
+
+      function setArchiveView(mode) {
+        if (!viewCatalog) return; // Not on archive page
+        if (viewCatalog) viewCatalog.style.display = (mode === 'catalog' ? 'block' : 'none');
+        if (viewIndex) viewIndex.style.display = (mode === 'index' ? 'flex' : 'none');
+        if (viewShelf) viewShelf.style.display = (mode === 'shelf' ? 'grid' : 'none');
+
+        if (btnCatalog) btnCatalog.classList.toggle('active', mode === 'catalog');
+        if (btnIndex) btnIndex.classList.toggle('active', mode === 'index');
+        if (btnShelf) btnShelf.classList.toggle('active', mode === 'shelf');
+
+        try { localStorage.setItem('library-archive-view', mode); } catch (e) {}
       }
+
+      if (btnCatalog && btnIndex && btnShelf) {
+        btnCatalog.addEventListener('click', () => setArchiveView('catalog'));
+        btnIndex.addEventListener('click', () => setArchiveView('index'));
+        btnShelf.addEventListener('click', () => setArchiveView('shelf'));
+
+        const savedView = localStorage.getItem('library-archive-view') || 'catalog';
+        setArchiveView(savedView);
+      }
+
+      // 3. Live Search Filtering
       const searchInput = document.getElementById('global-search');
       const pageUrl = "/texts/en-capital-volume-1.html";
       const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl.includes("/index.html");
 
-      let currentSectionFilter = 'all';
       let currentSearchQuery = '';
 
-      function applyFilters() {
-        const cards = document.querySelectorAll('.text-card');
+      function applySearch() {
         const rows = document.querySelectorAll('.catalog-row');
+        const indexItems = document.querySelectorAll('.index-item');
+        const shelfCards = document.querySelectorAll('.drawer-card');
         const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
-        const totalCount = cards.length;
+        const totalCount = rows.length || shelfCards.length;
 
-        cards.forEach(card => {
-          const sec = card.getAttribute('data-section') || '';
-          const title = card.getAttribute('data-title') || '';
-          const author = card.getAttribute('data-author') || '';
-          const desc = card.getAttribute('data-desc') || '';
-          const cat = card.getAttribute('data-category') || '';
-
-          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
-          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
-
-          if (matchesSection && matchesQuery) {
-            card.style.display = 'flex';
-            visibleCount++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        // Also filter catalog table rows
         rows.forEach(row => {
-          const sec = row.getAttribute('data-section') || '';
           const title = row.getAttribute('data-title') || '';
           const author = row.getAttribute('data-author') || '';
           const desc = row.getAttribute('data-desc') || '';
-          const cat = row.getAttribute('data-category') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
+          row.style.display = matches ? '' : 'none';
+          if (matches) visibleCount++;
+        });
 
-          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
-          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+        indexItems.forEach(item => {
+          const title = item.getAttribute('data-title') || '';
+          const author = item.getAttribute('data-author') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery));
+          item.style.display = matches ? 'flex' : 'none';
+        });
 
-          row.style.display = (matchesSection && matchesQuery) ? '' : 'none';
+        shelfCards.forEach(card => {
+          const title = card.getAttribute('data-title') || '';
+          const author = card.getAttribute('data-author') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
+          card.style.display = matches ? 'flex' : 'none';
         });
 
         if (resultsBadge) {
-          if (currentSearchQuery || currentSectionFilter !== 'all') {
-            resultsBadge.textContent = `Showing ${visibleCount} of ${totalCount} texts`;
+          if (currentSearchQuery) {
+            resultsBadge.textContent = `${visibleCount} of ${totalCount} works`;
           } else {
-            resultsBadge.textContent = `${totalCount} texts available`;
+            resultsBadge.textContent = `${totalCount} works`;
           }
-        }
-
-        // Show/hide no-match alert
-        let noMatch = document.getElementById('no-match-alert');
-        const grid = document.getElementById('cards-grid');
-        if (visibleCount === 0 && totalCount > 0) {
-          if (!noMatch && grid) {
-            noMatch = document.createElement('div');
-            noMatch.id = 'no-match-alert';
-            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
-            grid.appendChild(noMatch);
-          }
-          if (noMatch) {
-            noMatch.innerHTML = '<p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent-gold);">No matching texts found.</p><p style="font-size: 0.9rem;">Try selecting "All Works" or clearing your search query.</p>';
-            noMatch.style.display = 'block';
-          }
-        } else if (noMatch) {
-          noMatch.style.display = 'none';
         }
       }
 
-      // 1. Category Filter Pills
-      const pills = document.querySelectorAll('.cat-pill');
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          pills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          currentSectionFilter = pill.getAttribute('data-filter') || 'all';
-          applyFilters();
-        });
-      });
-
-      // 2. Card Section Tag click filter
-      document.addEventListener('click', (e) => {
-        const target = e.target.closest('[data-filter-click]');
-        if (target) {
-          const filterSlug = target.getAttribute('data-filter-click');
-          const matchingPill = document.querySelector(`.cat-pill[data-filter="${filterSlug}"]`);
-          if (matchingPill) {
-            matchingPill.click();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }
-      });
-
-      // 3. View Switcher (Grid vs List)
-      const gridBtn = document.getElementById('grid-view-btn');
-      const listBtn = document.getElementById('list-view-btn');
-      const gridView = document.getElementById('cards-grid');
-      const listView = document.getElementById('catalog-list');
-
-      function setView(mode) {
-        if (!gridView || !listView) return;
-        if (mode === 'list') {
-          gridView.style.display = 'none';
-          listView.style.display = 'block';
-          if (listBtn) listBtn.classList.add('active');
-          if (gridBtn) gridBtn.classList.remove('active');
-        } else {
-          gridView.style.display = 'grid';
-          listView.style.display = 'none';
-          if (gridBtn) gridBtn.classList.add('active');
-          if (listBtn) listBtn.classList.remove('active');
-        }
-        try { localStorage.setItem('library-view', mode); } catch (e) {}
-      }
-
-      if (gridBtn && listBtn) {
-        gridBtn.addEventListener('click', () => setView('grid'));
-        listBtn.addEventListener('click', () => setView('list'));
-
-        const savedView = localStorage.getItem('library-view') || 'grid';
-        setView(savedView);
-      }
-
-      // 4. Live Search
       if (searchInput) {
         const urlParams = new URLSearchParams(window.location.search);
         const queryParam = urlParams.get('q');
         if (queryParam) {
           searchInput.value = queryParam;
           currentSearchQuery = queryParam.toLowerCase().trim();
-          if (isHomepage) applyFilters();
+          if (isHomepage) applySearch();
         }
 
         searchInput.addEventListener('input', (e) => {
           currentSearchQuery = e.target.value.toLowerCase().trim();
           if (isHomepage) {
-            applyFilters();
+            applySearch();
           }
         });
 

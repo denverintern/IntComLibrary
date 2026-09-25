@@ -5,6 +5,7 @@ subcategory: "Finance Capital"
 layout: text
 title: "L'Imperialismo, Fase Suprema del Capitalismo"
 author: "V. I. Lenin"
+year: 1916
 language: "it"
 section_title: "Critica dell'Economia Politica"
 section_url: "sections/it-critica-economia-politica.html"

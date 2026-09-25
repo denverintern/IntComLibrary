@@ -5,6 +5,7 @@ subcategory: "Finance Capital"
 layout: text
 title: "Imperialism, the Highest Stage of Capitalism"
 author: "V. I. Lenin"
+year: 1916
 language: "en"
 section_title: "Critique of Political Economy"
 section_url: "sections/en-critique-political-economy.html"

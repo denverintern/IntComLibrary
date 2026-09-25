@@ -5,9 +5,10 @@ subcategory: "Party & Class"
 layout: text
 title: "Party and Class (1921)"
 author: "Amadeo Bordiga"
+year: 1921
 language: "en"
 section_title: "Party, State & Revolution"
-section_url: "sections/en-party-and-state.html"
+section_url: "sections/en-party-state-revolution.html"
 description: "Seminal theoretical text of the Italian Communist Left defining the revolutionary party as the conscious organ of the proletariat, refuting both bourgeois parliamentarism and syndicalist/workerist illusions of economic immediacy."
 ---
 

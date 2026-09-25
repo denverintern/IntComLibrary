@@ -5,6 +5,7 @@ subcategory: "Labour Theory of Value"
 layout: text
 title: "Заработная плата, цена и прибыль"
 author: "Карл Маркс"
+year: 1865
 language: "ru"
 section_title: "Критика Политической Экономии"
 section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"

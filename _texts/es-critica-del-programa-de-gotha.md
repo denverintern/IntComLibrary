@@ -5,6 +5,7 @@ subcategory: "Transition Period"
 layout: text
 title: "Crítica del Programa de Gotha"
 author: "Karl Marx"
+year: 1875
 language: "es"
 section_title: "Crítica General de la Economía Política"
 section_url: "sections/es-critica-economia-politica.html"

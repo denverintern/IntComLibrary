@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Lohnarbeit und Kapital"
 author: "Karl Marx"
+year: 1849
 language: "de"
 section_title: "Kritik der politischen Ökonomie"
 section_url: "sections/de-kritik-politische-oekonomie.html"

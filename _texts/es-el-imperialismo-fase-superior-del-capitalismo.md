@@ -5,6 +5,7 @@ subcategory: "Finance Capital"
 layout: text
 title: "El Imperialismo, Fase Superior del Capitalismo"
 author: "V. I. Lenin"
+year: 1916
 language: "es"
 section_title: "Crítica General de la Economía Política"
 section_url: "sections/es-critica-economia-politica.html"

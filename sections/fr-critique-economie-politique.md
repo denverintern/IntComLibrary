@@ -1,12 +1,9 @@
 ---
 layout: section
-title: Critique de l'Économie Politique
+title: "Critique de l’Économie Politique"
+numeral: "I"
 language: fr
-order: 10
-slug: critique-economie-politique
+order: 1
+slug: critique-political-economy
+scope: "Analyse scientifique du mode de production capitaliste et de l’extraction de la plus-value."
 ---
-
-- [Travail Salarié et Capital](../texts/fr-travail-salarie-et-capital.html) — Karl Marx
-- [Salaire, Prix et Profit](../texts/fr-salaire-prix-et-profit.html) — Karl Marx
-- [Le Capital, Livre I](../texts/fr-le-capital-livre-1.html) — Karl Marx
-- [L'Impérialisme, Stade Suprême du Capitalisme](../texts/fr-l-imperialisme-stade-supreme-du-capitalisme.html) — V. I. Lénine

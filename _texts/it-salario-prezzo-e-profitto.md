@@ -5,6 +5,7 @@ subcategory: "Labour Theory of Value"
 layout: text
 title: "Salario, Prezzo e Profitto"
 author: "Karl Marx"
+year: 1865
 language: "it"
 section_title: "Critica dell'Economia Politica"
 section_url: "sections/it-critica-economia-politica.html"

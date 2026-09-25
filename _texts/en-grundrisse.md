@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Grundrisse: Outlines of the Critique of Political Economy"
 author: "Karl Marx"
+year: 1857
 language: "en"
 section_title: "Critique of Political Economy"
 section_url: "sections/en-critique-political-economy.html"

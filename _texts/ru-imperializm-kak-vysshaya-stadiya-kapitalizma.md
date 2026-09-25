@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Империализм как высшая стадия капитализма"
 author: "В. И. Ленин"
+year: 1916
 language: "ru"
 section_title: "Критика Политической Экономии"
 section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"

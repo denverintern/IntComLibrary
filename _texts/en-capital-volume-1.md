@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Capital, Volume 1"
 author: "Karl Marx"
+year: 1867
 language: "en"
 section_title: "Critique of Political Economy"
 section_url: "sections/en-critique-political-economy.html"

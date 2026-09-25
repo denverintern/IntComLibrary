@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Wage Labour and Capital"
 author: "Karl Marx"
+year: 1849
 language: "en"
 section_title: "Critique of Political Economy"
 section_url: "sections/en-critique-political-economy.html"

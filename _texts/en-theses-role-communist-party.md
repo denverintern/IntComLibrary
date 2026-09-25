@@ -5,9 +5,10 @@ subcategory: "Party & Class"
 layout: text
 title: "Theses on the Role of the Communist Party in the Proletarian Revolution (1920)"
 author: "Communist International (Comintern)"
+year: 1920
 language: "en"
 section_title: "Party, State & Revolution"
-section_url: "sections/en-party-and-state.html"
+section_url: "sections/en-party-state-revolution.html"
 description: "Adopted at the Second World Congress of the Communist International in Petrograd and Moscow, establishing the necessity of a centralized, disciplined communist vanguard party rooted in the working class to lead the overthrow of capitalism."
 ---
 

@@ -5,6 +5,7 @@ subcategory: "Finance Capital"
 layout: text
 title: "Der Imperialismus als höchstes Stadium des Kapitalismus"
 author: "W. I. Lenin"
+year: 1916
 language: "de"
 section_title: "Kritik der politischen Ökonomie"
 section_url: "sections/de-kritik-politische-oekonomie.html"

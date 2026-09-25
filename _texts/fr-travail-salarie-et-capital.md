@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Travail Salarié et Capital"
 author: "Karl Marx"
+year: 1849
 language: "fr"
 section_title: "Critique de l'Économie Politique"
 section_url: "sections/fr-critique-economie-politique.html"

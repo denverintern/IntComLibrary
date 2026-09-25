@@ -1,37 +1,47 @@
-<nav class="lang-nav" aria-label="Language selector">
-  <a href="{{ relative_prefix }}index.html" class="lang-link {% if page.language == 'en' %}active{% endif %}">English</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}es/index.html" class="lang-link {% if page.language == 'es' %}active{% endif %}">Español</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}pt/index.html" class="lang-link {% if page.language == 'pt' %}active{% endif %}">Português</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}fr/index.html" class="lang-link {% if page.language == 'fr' %}active{% endif %}">Français</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}it/index.html" class="lang-link {% if page.language == 'it' %}active{% endif %}">Italiano</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}de/index.html" class="lang-link {% if page.language == 'de' %}active{% endif %}">Deutsch</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}nl/index.html" class="lang-link {% if page.language == 'nl' %}active{% endif %}">Nederlands</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}ru/index.html" class="lang-link {% if page.language == 'ru' %}active{% endif %}">Русский</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}zh/index.html" class="lang-link {% if page.language == 'zh' %}active{% endif %}">中文</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}ja/index.html" class="lang-link {% if page.language == 'ja' %}active{% endif %}">日本語</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}ko/index.html" class="lang-link {% if page.language == 'ko' %}active{% endif %}">한국어</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}ar/index.html" class="lang-link {% if page.language == 'ar' %}active{% endif %}">العربية</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}hi/index.html" class="lang-link {% if page.language == 'hi' %}active{% endif %}">हिन्दी</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}bn/index.html" class="lang-link {% if page.language == 'bn' %}active{% endif %}">বাংলা</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}id/index.html" class="lang-link {% if page.language == 'id' %}active{% endif %}">Bahasa Indonesia</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}tr/index.html" class="lang-link {% if page.language == 'tr' %}active{% endif %}">Türkçe</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}pl/index.html" class="lang-link {% if page.language == 'pl' %}active{% endif %}">Polski</a>
-  <span class="lang-sep">|</span>
-  <a href="{{ relative_prefix }}el/index.html" class="lang-link {% if page.language == 'el' %}active{% endif %}">Ελληνικά</a>
-</nav>
+<div class="utility-bar">
+  <div class="utility-left">
+    <span class="utility-label">Language:</span>
+    <select id="lang-dropdown" class="utility-select" aria-label="Select language" onchange="if(this.value) window.location.href=this.value;">
+      <option value="{{ relative_prefix }}index.html" {% if page.language == 'en' %}selected{% endif %}>English</option>
+      <option value="{{ relative_prefix }}es/index.html" {% if page.language == 'es' %}selected{% endif %}>Español</option>
+      <option value="{{ relative_prefix }}pt/index.html" {% if page.language == 'pt' %}selected{% endif %}>Português</option>
+      <option value="{{ relative_prefix }}fr/index.html" {% if page.language == 'fr' %}selected{% endif %}>Français</option>
+      <option value="{{ relative_prefix }}it/index.html" {% if page.language == 'it' %}selected{% endif %}>Italiano</option>
+      <option value="{{ relative_prefix }}de/index.html" {% if page.language == 'de' %}selected{% endif %}>Deutsch</option>
+      <option value="{{ relative_prefix }}nl/index.html" {% if page.language == 'nl' %}selected{% endif %}>Nederlands</option>
+      <option value="{{ relative_prefix }}ru/index.html" {% if page.language == 'ru' %}selected{% endif %}>Русский</option>
+      <option value="{{ relative_prefix }}zh/index.html" {% if page.language == 'zh' %}selected{% endif %}>中文</option>
+      <option value="{{ relative_prefix }}ja/index.html" {% if page.language == 'ja' %}selected{% endif %}>日本語</option>
+      <option value="{{ relative_prefix }}ko/index.html" {% if page.language == 'ko' %}selected{% endif %}>한국어</option>
+      <option value="{{ relative_prefix }}ar/index.html" {% if page.language == 'ar' %}selected{% endif %}>العربية</option>
+      <option value="{{ relative_prefix }}hi/index.html" {% if page.language == 'hi' %}selected{% endif %}>हिन्दी</option>
+      <option value="{{ relative_prefix }}bn/index.html" {% if page.language == 'bn' %}selected{% endif %}>বাংলা</option>
+      <option value="{{ relative_prefix }}id/index.html" {% if page.language == 'id' %}selected{% endif %}>Bahasa Indonesia</option>
+      <option value="{{ relative_prefix }}tr/index.html" {% if page.language == 'tr' %}selected{% endif %}>Türkçe</option>
+      <option value="{{ relative_prefix }}pl/index.html" {% if page.language == 'pl' %}selected{% endif %}>Polski</option>
+      <option value="{{ relative_prefix }}el/index.html" {% if page.language == 'el' %}selected{% endif %}>Ελληνικά</option>
+    </select>
+    <span class="utility-sep">·</span>
+    <a href="{{ relative_prefix }}es/index.html" class="utility-quick-lang {% if page.language == 'es' %}active{% endif %}">es</a>
+    <a href="{{ relative_prefix }}pt/index.html" class="utility-quick-lang {% if page.language == 'pt' %}active{% endif %}">pt</a>
+    <a href="{{ relative_prefix }}it/index.html" class="utility-quick-lang {% if page.language == 'it' %}active{% endif %}">it</a>
+    <a href="{{ relative_prefix }}fr/index.html" class="utility-quick-lang {% if page.language == 'fr' %}active{% endif %}">fr</a>
+    <a href="{{ relative_prefix }}de/index.html" class="utility-quick-lang {% if page.language == 'de' %}active{% endif %}">de</a>
+    <a href="{{ relative_prefix }}ru/index.html" class="utility-quick-lang {% if page.language == 'ru' %}active{% endif %}">ru</a>
+    
+    <span class="utility-divider">|</span>
+    
+    <span class="theme-text-control">
+      <button type="button" class="theme-btn" id="theme-btn-paper" title="Switch to paper ground">Paper</button>
+      <span class="theme-btn-sep">/</span>
+      <button type="button" class="theme-btn" id="theme-btn-night" title="Switch to night ground">Night</button>
+    </span>
+  </div>
+
+  <div class="utility-right">
+    <div class="header-search-wrap">
+      <label for="global-search" class="search-text-label">Search:</label>
+      <input type="text" id="global-search" class="search-input-clean" placeholder="Title, author, term...">
+    </div>
+  </div>
+</div>

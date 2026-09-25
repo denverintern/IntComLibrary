@@ -1,286 +1,379 @@
 {% case page.language %}
   {% when 'pt' %}
     {% assign archive_title = 'Arquivo Teórico' %}
-    {% assign archive_desc = 'Acesse textos teóricos essenciais, teses e manifestos históricos da esquerda comunista e das correntes internacionalistas.' %}
+    {% assign archive_desc = 'Textos teóricos essenciais, teses e manifestos históricos da esquerda comunista.' %}
     {% assign all_works_label = 'Todas as Obras' %}
     {% assign read_text_label = 'Ler Texto' %}
-    {% assign texts_count_suffix = 'textos disponíveis' %}
+    {% assign texts_count_suffix = 'obras' %}
     {% assign no_texts_label = 'Nenhum texto disponível neste idioma ainda.' %}
+    {% assign view_label_text = 'Exibição:' %}
+    {% assign col_title_label = 'Obra / Título' %}
+    {% assign col_author_label = 'Autor' %}
+    {% assign col_year_label = 'Ano' %}
+    {% assign col_lang_label = 'Idioma' %}
+    {% assign col_format_label = 'Formato' %}
   {% when 'es' %}
     {% assign archive_title = 'Archivo Teórico' %}
-    {% assign archive_desc = 'Acceda a textos teóricos esenciales, tesis y manifiestos históricos de la izquierda comunista y las corrientes internacionalistas.' %}
+    {% assign archive_desc = 'Textos teóricos esenciales, tesis y manifiestos históricos de la izquierda comunista.' %}
     {% assign all_works_label = 'Todas las Obras' %}
     {% assign read_text_label = 'Leer Texto' %}
-    {% assign texts_count_suffix = 'textos disponibles' %}
+    {% assign texts_count_suffix = 'obras' %}
     {% assign no_texts_label = 'No hay textos disponibles en este idioma todavía.' %}
+    {% assign view_label_text = 'Vista:' %}
+    {% assign col_title_label = 'Obra / Título' %}
+    {% assign col_author_label = 'Autor' %}
+    {% assign col_year_label = 'Año' %}
+    {% assign col_lang_label = 'Idioma' %}
+    {% assign col_format_label = 'Formato' %}
   {% when 'fr' %}
     {% assign archive_title = 'Archives Théoriques' %}
-    {% assign archive_desc = 'Accédez aux textes théoriques essentiels, thèses et manifestes historiques de la gauche communiste et du courant internationaliste.' %}
+    {% assign archive_desc = 'Textes théoriques essentiels, thèses et manifestes historiques de la gauche communiste.' %}
     {% assign all_works_label = 'Toutes les Œuvres' %}
     {% assign read_text_label = 'Lire le Texte' %}
-    {% assign texts_count_suffix = 'textes disponibles' %}
+    {% assign texts_count_suffix = 'ouvrages' %}
     {% assign no_texts_label = 'Aucun texte disponible dans cette langue pour le moment.' %}
+    {% assign view_label_text = 'Affichage :' %}
+    {% assign col_title_label = 'Titre' %}
+    {% assign col_author_label = 'Auteur' %}
+    {% assign col_year_label = 'Année' %}
+    {% assign col_lang_label = 'Langue' %}
+    {% assign col_format_label = 'Format' %}
   {% when 'it' %}
     {% assign archive_title = 'Archivio Teorico' %}
-    {% assign archive_desc = 'Accedi ai testi teorici essenziali, alle tesi e ai manifesti storici della sinistra comunista e delle correnti internazionaliste.' %}
+    {% assign archive_desc = 'Testi teorici essenziali, tesi e manifesti storici della sinistra comunista.' %}
     {% assign all_works_label = 'Tutte le Opere' %}
     {% assign read_text_label = 'Leggi Testo' %}
-    {% assign texts_count_suffix = 'testi disponibili' %}
+    {% assign texts_count_suffix = 'opere' %}
     {% assign no_texts_label = 'Nessun testo ancora disponibile in questa lingua.' %}
+    {% assign view_label_text = 'Vista:' %}
+    {% assign col_title_label = 'Opera / Titolo' %}
+    {% assign col_author_label = 'Autore' %}
+    {% assign col_year_label = 'Anno' %}
+    {% assign col_lang_label = 'Lingua' %}
+    {% assign col_format_label = 'Formato' %}
   {% when 'de' %}
     {% assign archive_title = 'Theoretisches Archiv' %}
-    {% assign archive_desc = 'Zugang zu zentralen theoretischen Texten, Thesen und historischen Manifesten der kommunistischen Linken und des Internationalismus.' %}
+    {% assign archive_desc = 'Zentrale theoretische Texte, Thesen und Manifeste der kommunistischen Linken.' %}
     {% assign all_works_label = 'Alle Werke' %}
     {% assign read_text_label = 'Text Lesen' %}
-    {% assign texts_count_suffix = 'Texte verfügbar' %}
+    {% assign texts_count_suffix = 'Werke' %}
     {% assign no_texts_label = 'In dieser Sprache sind noch keine Texte verfügbar.' %}
+    {% assign view_label_text = 'Ansicht:' %}
+    {% assign col_title_label = 'Werk / Titel' %}
+    {% assign col_author_label = 'Autor' %}
+    {% assign col_year_label = 'Jahr' %}
+    {% assign col_lang_label = 'Sprache' %}
+    {% assign col_format_label = 'Format' %}
   {% when 'nl' %}
     {% assign archive_title = 'Theoretisch Archief' %}
-    {% assign archive_desc = 'Toegang tot theoretische sleutelteksten, stellingen en historische manifesten van de communistische linkerzijde.' %}
+    {% assign archive_desc = 'Belangrijke theoretische teksten en stellingen van de communistische linkerzijde.' %}
     {% assign all_works_label = 'Alle Werken' %}
     {% assign read_text_label = 'Lees Tekst' %}
-    {% assign texts_count_suffix = 'teksten beschikbaar' %}
+    {% assign texts_count_suffix = 'werken' %}
     {% assign no_texts_label = 'Nog geen teksten beschikbaar in deze taal.' %}
+    {% assign view_label_text = 'Weergave:' %}
+    {% assign col_title_label = 'Werk / Titel' %}
+    {% assign col_author_label = 'Auteur' %}
+    {% assign col_year_label = 'Jaar' %}
+    {% assign col_lang_label = 'Taal' %}
+    {% assign col_format_label = 'Formaat' %}
   {% when 'ru' %}
     {% assign archive_title = 'Теоретический Архив' %}
-    {% assign archive_desc = 'Ключевые теоретические труды, тезисы и исторические манифесты коммунистического левого крыла и интернационализма.' %}
+    {% assign archive_desc = 'Ключевые теоретические труды, тезисы и манифесты коммунистического левого крыла.' %}
     {% assign all_works_label = 'Все Труды' %}
     {% assign read_text_label = 'Читать Текст' %}
-    {% assign texts_count_suffix = 'текстов доступно' %}
+    {% assign texts_count_suffix = 'трудов' %}
     {% assign no_texts_label = 'На этом языке пока нет доступных текстов.' %}
+    {% assign view_label_text = 'Вид:' %}
+    {% assign col_title_label = 'Труд / Название' %}
+    {% assign col_author_label = 'Автор' %}
+    {% assign col_year_label = 'Год' %}
+    {% assign col_lang_label = 'Язык' %}
+    {% assign col_format_label = 'Формат' %}
   {% when 'zh' %}
     {% assign archive_title = '理论档案' %}
-    {% assign archive_desc = '阅读共产主义左翼与国际主义传统的重要理论文献、纲领与历史宣言。' %}
+    {% assign archive_desc = '共产主义左翼传统的核心理论文献、提纲与历史宣言。' %}
     {% assign all_works_label = '全部文献' %}
     {% assign read_text_label = '阅读文献' %}
-    {% assign texts_count_suffix = '篇文献可用' %}
+    {% assign texts_count_suffix = '篇文献' %}
     {% assign no_texts_label = '此语言下暂无文献。' %}
+    {% assign view_label_text = '视图：' %}
+    {% assign col_title_label = '文献 / 标题' %}
+    {% assign col_author_label = '作者' %}
+    {% assign col_year_label = '年份' %}
+    {% assign col_lang_label = '语言' %}
+    {% assign col_format_label = '格式' %}
   {% when 'ja' %}
     {% assign archive_title = '理論アーカイブ' %}
-    {% assign archive_desc = '共産主義左翼と国際主義的伝統の主要な理論的テキスト、テーゼ、歴史的宣言へのアクセス。' %}
+    {% assign archive_desc = '共産主義左翼の主要な理論的テキスト、テーゼ、歴史的宣言。' %}
     {% assign all_works_label = '全文献' %}
     {% assign read_text_label = '文献を読む' %}
-    {% assign texts_count_suffix = '件の文献' %}
+    {% assign texts_count_suffix = '編' %}
     {% assign no_texts_label = 'この言語の文献はまだありません。' %}
+    {% assign view_label_text = '表示:' %}
+    {% assign col_title_label = '文献 / 表題' %}
+    {% assign col_author_label = '著者' %}
+    {% assign col_year_label = '年' %}
+    {% assign col_lang_label = '言語' %}
+    {% assign col_format_label = '形式' %}
   {% when 'ko' %}
     {% assign archive_title = '이론 아카이브' %}
-    {% assign archive_desc = '공산주의 좌파 및 국제주의 전통의 핵심 이론 문헌, 테제 및 역사적 선언문을 확인하십시오.' %}
+    {% assign archive_desc = '공산주의 좌파 전통의 핵심 이론 문헌, 테제 및 선언문.' %}
     {% assign all_works_label = '모든 문서' %}
     {% assign read_text_label = '문서 읽기' %}
-    {% assign texts_count_suffix = '개의 문서 이용 가능' %}
+    {% assign texts_count_suffix = '편' %}
     {% assign no_texts_label = '이 언어로 등록된 문서가 아직 없습니다.' %}
+    {% assign view_label_text = '보기:' %}
+    {% assign col_title_label = '문서 / 제목' %}
+    {% assign col_author_label = '저자' %}
+    {% assign col_year_label = '연도' %}
+    {% assign col_lang_label = '언어' %}
+    {% assign col_format_label = '형식' %}
   {% when 'ar' %}
     {% assign archive_title = 'الأرشيف النظري' %}
-    {% assign archive_desc = 'الوصول إلى النصوص النظرية الأساسية والأطروحات والبيانات التاريخية لليسار الشيوعي والتيارات الأممية.' %}
+    {% assign archive_desc = 'النصوص النظرية الأساسية والأطروحات التاريخية لليسار الشيوعي.' %}
     {% assign all_works_label = 'جميع الأعمال' %}
     {% assign read_text_label = 'قراءة النص' %}
-    {% assign texts_count_suffix = 'نصوص متاحة' %}
+    {% assign texts_count_suffix = 'عمل' %}
     {% assign no_texts_label = 'لا توجد نصوص متاحة بهذه اللغة بعد.' %}
+    {% assign view_label_text = 'العرض:' %}
+    {% assign col_title_label = 'العمل / العنوان' %}
+    {% assign col_author_label = 'المؤلف' %}
+    {% assign col_year_label = 'السنة' %}
+    {% assign col_lang_label = 'اللغة' %}
+    {% assign col_format_label = 'الصيغة' %}
   {% when 'hi' %}
     {% assign archive_title = 'सैद्धांतिक अभिलेखागार' %}
-    {% assign archive_desc = 'साम्यवादी वाम और अंतरराष्ट्रीयतावादी परंपराओं के प्रमुख सैद्धांतिक ग्रंथों, थीसिस और ऐतिहासिक घोषणापत्रों का संग्रह।' %}
+    {% assign archive_desc = 'साम्यवादी वाम के प्रमुख सैद्धांतिक ग्रंथ, थीसिस और ऐतिहासिक घोषणापत्र।' %}
     {% assign all_works_label = 'सभी ग्रंथ' %}
     {% assign read_text_label = 'ग्रंथ पढ़ें' %}
-    {% assign texts_count_suffix = 'ग्रंथ उपलब्ध' %}
+    {% assign texts_count_suffix = 'ग्रंथ' %}
     {% assign no_texts_label = 'इस भाषा में अभी कोई ग्रंथ उपलब्ध नहीं है।' %}
+    {% assign view_label_text = 'दृश्य:' %}
+    {% assign col_title_label = 'ग्रंथ / शीर्षक' %}
+    {% assign col_author_label = 'लेखक' %}
+    {% assign col_year_label = 'वर्ष' %}
+    {% assign col_lang_label = 'भाषा' %}
+    {% assign col_format_label = 'प्रारूप' %}
   {% when 'bn' %}
     {% assign archive_title = 'তাত্ত্বিক আর্কাইভ' %}
-    {% assign archive_desc = 'কমিউনিস্ট বাম ও আন্তর্জাতিকতাবাদী ঐতিহ্যের গুরুত্বপূর্ণ তাত্ত্বিক রচনা, থিসিস ও ঐতিহাসিক ঘোষণাপত্র।' %}
+    {% assign archive_desc = 'কমিউনিস্ট বাম ঐতিহ্যের গুরুত্বপূর্ণ তাত্ত্বিক রচনা ও ঐতিহাসিক ঘোষণাপত্র।' %}
     {% assign all_works_label = 'সকল গ্রন্থ' %}
     {% assign read_text_label = 'লেখাটি পড়ুন' %}
-    {% assign texts_count_suffix = 'টি লেখা উপলব্ধ' %}
+    {% assign texts_count_suffix = 'টি রচনা' %}
     {% assign no_texts_label = 'এই ভাষায় এখনও কোনো লেখা উপলব্ধ নেই।' %}
+    {% assign view_label_text = 'প্রদর্শন:' %}
+    {% assign col_title_label = 'রচনা / শিরোনাম' %}
+    {% assign col_author_label = 'লেখক' %}
+    {% assign col_year_label = 'বছর' %}
+    {% assign col_lang_label = 'ভাষা' %}
+    {% assign col_format_label = 'ফরম্যাট' %}
   {% when 'id' %}
     {% assign archive_title = 'Arsip Teoretis' %}
-    {% assign archive_desc = 'Akses teks teoretis penting, tesis, dan manifesto historis dari kiri komunis dan tradisi internasionalis.' %}
+    {% assign archive_desc = 'Teks teoretis penting, tesis, dan manifesto historis dari kiri komunis.' %}
     {% assign all_works_label = 'Semua Karya' %}
     {% assign read_text_label = 'Baca Teks' %}
-    {% assign texts_count_suffix = 'teks tersedia' %}
+    {% assign texts_count_suffix = 'karya' %}
     {% assign no_texts_label = 'Belum ada teks yang tersedia dalam bahasa ini.' %}
+    {% assign view_label_text = 'Tampilan:' %}
+    {% assign col_title_label = 'Karya / Judul' %}
+    {% assign col_author_label = 'Penulis' %}
+    {% assign col_year_label = 'Tahun' %}
+    {% assign col_lang_label = 'Bahasa' %}
+    {% assign col_format_label = 'Format' %}
   {% when 'tr' %}
     {% assign archive_title = 'Teorik Arşiv' %}
-    {% assign archive_desc = 'Komünist sol ve enternasyonalist geleneğin temel teorik metinlerine, tezlerine ve manifestolarına erişin.' %}
+    {% assign archive_desc = 'Komünist sol geleneğin temel teorik metinleri, tezleri ve manifestoları.' %}
     {% assign all_works_label = 'Tüm Eserler' %}
     {% assign read_text_label = 'Metni Oku' %}
-    {% assign texts_count_suffix = 'metin mevcut' %}
+    {% assign texts_count_suffix = 'eser' %}
     {% assign no_texts_label = 'Bu dilde henüz metin bulunmamaktadır.' %}
+    {% assign view_label_text = 'Görünüm:' %}
+    {% assign col_title_label = 'Eser / Başlık' %}
+    {% assign col_author_label = 'Yazar' %}
+    {% assign col_year_label = 'Yıl' %}
+    {% assign col_lang_label = 'Dil' %}
+    {% assign col_format_label = 'Biçim' %}
   {% when 'pl' %}
     {% assign archive_title = 'Archiwum Teoretyczne' %}
-    {% assign archive_desc = 'Dostęp do kluczowych tekstów teoretycznych, tez i historycznych manifestów komunistycznej lewicy.' %}
+    {% assign archive_desc = 'Kluczowe teksty teoretyczne, tezy i historyczne manifesty komunistycznej lewicy.' %}
     {% assign all_works_label = 'Wszystkie Dzieła' %}
     {% assign read_text_label = 'Czytaj Tekst' %}
-    {% assign texts_count_suffix = 'tekstów dostępnych' %}
+    {% assign texts_count_suffix = 'dzieł' %}
     {% assign no_texts_label = 'Brak dostępnych tekstów w tym języku.' %}
+    {% assign view_label_text = 'Widok:' %}
+    {% assign col_title_label = 'Dzieło / Tytuł' %}
+    {% assign col_author_label = 'Autor' %}
+    {% assign col_year_label = 'Rok' %}
+    {% assign col_lang_label = 'Język' %}
+    {% assign col_format_label = 'Format' %}
   {% when 'el' %}
     {% assign archive_title = 'Θεωρητικό Αρχείο' %}
-    {% assign archive_desc = 'Πρόσβαση σε θεμελιώδη θεωρητικά κείμενα, θέσεις και ιστορικά μανιφέστα της κομμουνιστικής αριστεράς.' %}
+    {% assign archive_desc = 'Θεμελιώδη θεωρητικά κείμενα, θέσεις και ιστορικά μανιφέστα της κομμουνιστικής αριστεράς.' %}
     {% assign all_works_label = 'Όλα τα Έργα' %}
     {% assign read_text_label = 'Ανάγνωση Κειμένου' %}
-    {% assign texts_count_suffix = 'διαθέσιμα κείμενα' %}
+    {% assign texts_count_suffix = 'κείμενα' %}
     {% assign no_texts_label = 'Δεν υπάρχουν ακόμα διαθέσιμα κείμενα σε αυτήν τη γλώσσα.' %}
+    {% assign view_label_text = 'Προβολή:' %}
+    {% assign col_title_label = 'Έργο / Τίτλος' %}
+    {% assign col_author_label = 'Συγγραφέας' %}
+    {% assign col_year_label = 'Έτος' %}
+    {% assign col_lang_label = 'Γλώσσα' %}
+    {% assign col_format_label = 'Μορφή' %}
   {% else %}
     {% assign archive_title = 'Theoretical Archive' %}
-    {% assign archive_desc = 'Key theoretical texts, theses, and historical manifestos of the communist left and internationalist tradition.' %}
+    {% assign archive_desc = 'Key theoretical texts, theses, and historical manifestos of the communist left.' %}
     {% assign all_works_label = 'All Works' %}
     {% assign read_text_label = 'Read Text' %}
-    {% assign texts_count_suffix = 'texts available' %}
+    {% assign texts_count_suffix = 'works' %}
     {% assign no_texts_label = 'No texts available in this language yet.' %}
+    {% assign view_label_text = 'View:' %}
+    {% assign col_title_label = 'Work / Title' %}
+    {% assign col_author_label = 'Author' %}
+    {% assign col_year_label = 'Year' %}
+    {% assign col_lang_label = 'Lang' %}
+    {% assign col_format_label = 'Format' %}
 {% endcase %}
 
 {% assign current_lang = page.language | default: 'en' %}
 {% assign lang_texts = site.texts | where: "language", current_lang | sort: "title" %}
 
-<div class="archive-header">
+<!-- Archive Top Bar with Scope & View Toggles -->
+<div class="archive-topbar">
   <div class="archive-title-wrap">
     <h2 class="archive-headline">{{ archive_title }}</h2>
-    <p class="archive-subtitle">{{ archive_desc }}</p>
+    <p class="archive-scope-text">{{ archive_desc }}</p>
+  </div>
+  <div class="archive-views-control">
+    <span class="view-label">{{ view_label_text }}</span>
+    <button type="button" class="view-btn active" id="view-btn-catalog" title="Catalog Reading Room Spread">Catalog</button>
+    <span class="view-sep">·</span>
+    <button type="button" class="view-btn" id="view-btn-index" title="Dense Party Organ Column">Index</button>
+    <span class="view-sep">·</span>
+    <button type="button" class="view-btn" id="view-btn-shelf" title="Index Card Shelf Drawer">Shelf</button>
   </div>
 </div>
 
-<!-- Dynamic Thematic Filter Toolbar -->
-<div class="archive-toolbar">
-  <div class="category-pills-bar" id="category-pills" role="tablist">
-    <button type="button" class="cat-pill active" data-filter="all" role="tab" aria-selected="true">
-      <span>{{ all_works_label }}</span>
-      <span class="pill-count">{{ lang_texts.size }}</span>
-    </button>
-    
-    <!-- Extract unique sections -->
-    {% assign raw_sections = "" | split: "," %}
-    {% for t in lang_texts %}
-      {% if t.section_id and t.section_title %}
-        {% assign entry = t.section_id | append: ":::" | append: t.section_title %}
-        {% unless raw_sections contains entry %}
-          {% assign raw_sections = raw_sections | push: entry %}
-        {% endunless %}
-      {% endif %}
-    {% endfor %}
+{% if lang_texts.size == 0 %}
+  <div style="padding: 3rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-secondary); text-align: center; color: var(--text-muted); font-style: italic;">
+    <p>{{ no_texts_label }}</p>
+  </div>
+{% else %}
 
-    {% for sec_entry in raw_sections %}
-      {% assign parts = sec_entry | split: ":::" %}
-      {% assign s_id = parts[0] %}
-      {% assign s_title = parts[1] %}
-      {% assign s_count = 0 %}
+  <!-- VIEW 1: CATALOG TABLE (Reading-room spread, Default) -->
+  <div class="catalog-table-wrap" id="view-catalog">
+    <table class="catalog-table">
+      <thead>
+        <tr>
+          <th>{{ col_title_label }}</th>
+          <th>{{ col_author_label }}</th>
+          <th>{{ col_year_label }}</th>
+          <th>{{ col_lang_label }}</th>
+          <th style="text-align: right;">{{ col_format_label }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for text in lang_texts %}
+          <tr class="catalog-row" 
+            data-title="{{ text.title | downcase }}" 
+            data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
+            data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
+            <td class="col-work-title">
+              <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}">{{ text.title }}</a>
+            </td>
+            <td class="col-work-author">{{ text.author | default: '—' }}</td>
+            <td class="col-work-year">{{ text.year | default: '—' }}</td>
+            <td class="col-work-lang">{{ text.language | upcase }}</td>
+            <td class="col-work-links" style="text-align: right;">
+              {% if text.pdf %}
+                <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" class="format-link" target="_blank" download>PDF</a>
+                <span class="format-sep">·</span>
+              {% endif %}
+              <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="format-link">HTML</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VIEW 2: DENSE NEWSPAPER / PARTY ORGAN INDEX (Spine A) -->
+  <div class="index-column-wrap" id="view-index" style="display: none;">
+    {% assign sections_slugs = "critique-political-economy,party-state-revolution,historical-materialism,history-communist-left" | split: "," %}
+    {% for s_slug in sections_slugs %}
+      {% assign s_texts = "" | split: "," %}
       {% for t in lang_texts %}
-        {% if t.section_id == s_id %}
-          {% assign s_count = s_count | plus: 1 %}
+        {% if t.section_id == s_slug %}
+          {% assign s_texts = s_texts | push: t %}
         {% endif %}
       {% endfor %}
 
-      <button type="button" class="cat-pill" data-filter="{{ s_id }}" role="tab" aria-selected="false">
-        <span>{{ s_title }}</span>
-        <span class="pill-count">{{ s_count }}</span>
-      </button>
+      {% if s_texts.size > 0 %}
+        {% assign s_title = s_texts[0].section_title %}
+        <section class="index-section-group">
+          <h3 class="index-section-title">
+            <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
+            {{ s_title }}
+          </h3>
+          <ul class="index-list">
+            {% for text in s_texts %}
+              <li class="index-item" 
+                data-title="{{ text.title | downcase }}" 
+                data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}">
+                <div class="index-item-main">
+                  <span class="index-num">{{ forloop.index }}.</span>
+                  <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="index-item-title">{{ text.title }}</a>
+                  {% if text.author %}
+                    <span class="index-item-author">— {{ text.author }}</span>
+                  {% endif %}
+                </div>
+                <div class="index-item-meta">
+                  {% if text.year %}<span style="font-variant-numeric: oldstyle-nums;">{{ text.year }}</span> · {% endif %}
+                  {% if text.pdf %}
+                    <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" target="_blank" download>PDF</a> · 
+                  {% endif %}
+                  <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}">HTML</a>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
     {% endfor %}
   </div>
 
-  <div class="archive-actions-bar">
-    <span class="results-badge" id="results-count">{{ lang_texts.size }} {{ texts_count_suffix }}</span>
-    <div class="view-switch-group">
-      <button type="button" id="grid-view-btn" class="view-toggle-btn active" title="Grid View" aria-label="Grid View">
-        Grid
-      </button>
-      <button type="button" id="list-view-btn" class="view-toggle-btn" title="Catalog Table View" aria-label="Catalog Table View">
-        Catalog
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Texts Grid View -->
-<div class="cards-grid" id="cards-grid">
-  {% for text in lang_texts %}
-    <article class="text-card" 
-      data-section="{{ text.section_id | default: 'general' }}" 
-      data-category="{{ text.category | downcase }}"
-      data-title="{{ text.title | downcase }}" 
-      data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
-      data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
-      
-      <div class="card-top-meta">
-        {% if text.section_title %}
-          <span class="card-section-tag" data-filter-click="{{ text.section_id }}">
-            {{ text.section_title }}
-          </span>
+  <!-- VIEW 3: INDEX CARD DRAWER (Spine D) -->
+  <div class="cards-shelf-grid" id="view-shelf" style="display: none;">
+    {% for text in lang_texts %}
+      <article class="drawer-card" 
+        data-title="{{ text.title | downcase }}" 
+        data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
+        data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
+        <div class="drawer-card-header">
+          <span class="drawer-card-label">{{ text.section_title | default: 'Archive' }}</span>
+          <span class="drawer-card-year">{{ text.year | default: '' }}</span>
+        </div>
+        {% if text.author %}
+          <div class="drawer-card-author">{{ text.author }}</div>
         {% endif %}
-        {% if text.category %}
-          <span class="card-category-tag">
-            {{ text.category }}
-          </span>
-        {% endif %}
-      </div>
-
-      <div class="card-header">
-        <h3 class="card-title">
+        <h3 class="drawer-card-title">
           <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}">{{ text.title }}</a>
         </h3>
-        {% if text.author %}
-          <span class="card-author">{{ text.author }}</span>
+        {% if text.description %}
+          <p class="drawer-card-desc">{{ text.description }}</p>
         {% endif %}
-      </div>
-      
-      {% if text.description %}
-        <p class="card-description">{{ text.description }}</p>
-      {% endif %}
-      
-      <div class="card-footer">
-        <span class="card-meta-tag">
-          {% case text.language %}
-            {% when 'pt' %}Português{% when 'es' %}Español{% when 'fr' %}Français{% when 'it' %}Italiano{% when 'de' %}Deutsch{% when 'nl' %}Nederlands{% when 'ru' %}Русский{% when 'zh' %}中文{% when 'ja' %}日本語{% when 'ko' %}한국어{% when 'ar' %}العربية{% when 'hi' %}हिन्दी{% when 'bn' %}বাংলা{% when 'id' %}Indonesia{% when 'tr' %}Türkçe{% when 'pl' %}Polski{% when 'el' %}Ελληνικά{% else %}English{% endcase %}
-        </span>
-        <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="card-read-link">
-          {{ read_text_label }} →
-        </a>
-      </div>
-    </article>
-  {% else %}
-    <div class="empty-state-box">
-      <p>{{ no_texts_label }}</p>
-    </div>
-  {% endfor %}
-</div>
+        <div class="drawer-card-footer">
+          <span>{{ text.language | upcase }}</span>
+          <div>
+            {% if text.pdf %}
+              <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" target="_blank" download>PDF</a>
+              <span style="color: var(--border-color); margin: 0 4px;">·</span>
+            {% endif %}
+            <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}">{{ read_text_label }} →</a>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
 
-<!-- Compact Catalog List View -->
-<div class="catalog-table-wrap" id="catalog-list" style="display: none;">
-  <table class="catalog-table">
-    <thead>
-      <tr>
-        <th>Work Title</th>
-        <th>Author</th>
-        <th>Thematic Section / Category</th>
-        <th style="text-align: right;">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for text in lang_texts %}
-        <tr class="catalog-row" 
-          data-section="{{ text.section_id | default: 'general' }}" 
-          data-category="{{ text.category | downcase }}"
-          data-title="{{ text.title | downcase }}" 
-          data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
-          data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
-          <td class="col-title">
-            <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="table-title-link">{{ text.title }}</a>
-            {% if text.subcategory %}
-              <div class="table-subcat-hint">{{ text.subcategory }}</div>
-            {% endif %}
-          </td>
-          <td class="col-author">{{ text.author | default: '—' }}</td>
-          <td class="col-category">
-            {% if text.section_title %}
-              <span class="table-badge section-badge">{{ text.section_title }}</span>
-            {% endif %}
-            {% if text.category %}
-              <span class="table-badge cat-badge">{{ text.category }}</span>
-            {% endif %}
-          </td>
-          <td class="col-action" style="text-align: right;">
-            <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="btn btn-sm btn-primary">
-              {{ read_text_label }} →
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+{% endif %}

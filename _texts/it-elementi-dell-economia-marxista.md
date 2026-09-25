@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Elementi dell'Economia Marxista"
 author: "Amadeo Bordiga"
+year: 1949
 language: "it"
 section_title: "Critica dell'Economia Politica"
 section_url: "sections/it-critica-economia-politica.html"

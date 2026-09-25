@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "O Capital, Volume 1"
 author: "Karl Marx"
+year: 1867
 language: "pt"
 section_title: "Crítica Geral da Economia Política"
 section_url: "sections/pt-critica-economia-politica.html"

@@ -5,9 +5,10 @@ subcategory: "Party & Class"
 layout: text
 title: "The State and Revolution"
 author: "V. I. Lenin"
+year: 1917
 language: "en"
 section_title: "Party, State & Revolution"
-section_url: "sections/en-party-and-state.html"
+section_url: "sections/en-party-state-revolution.html"
 description: "Written in hiding during August-September 1917, restoring the revolutionary Marxist doctrine of the state as an organ of class rule, the necessity of the dictatorship of the proletariat, the violent smashing of the bourgeois state apparatus, and the eventual withering away of the state under communism."
 ---
 

@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Lavoro Salariato e Capitale"
 author: "Karl Marx"
+year: 1849
 language: "it"
 section_title: "Critica dell'Economia Politica"
 section_url: "sections/it-critica-economia-politica.html"

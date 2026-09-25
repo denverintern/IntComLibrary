@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Trabajo Asalariado y Capital"
 author: "Karl Marx"
+year: 1849
 language: "es"
 section_title: "Crítica General de la Economía Política"
 section_url: "sections/es-critica-economia-politica.html"

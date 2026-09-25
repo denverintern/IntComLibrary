@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Капитал, Том 1"
 author: "Карл Маркс"
+year: 1867
 language: "ru"
 section_title: "Критика Политической Экономии"
 section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"

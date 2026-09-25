@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "El Capital, Tomo 1"
 author: "Karl Marx"
+year: 1867
 language: "es"
 section_title: "Crítica General de la Economía Política"
 section_url: "sections/es-critica-economia-politica.html"

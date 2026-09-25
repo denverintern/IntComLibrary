@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "Le Capital, Livre I"
 author: "Karl Marx"
+year: 1867
 language: "fr"
 section_title: "Critique de l'Économie Politique"
 section_url: "sections/fr-critique-economie-politique.html"

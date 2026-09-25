@@ -133,15 +133,15 @@
 <!DOCTYPE html>
 <html lang="{{ page.language | default: 'en' }}" {% if page.language == 'ar' %}dir="rtl"{% endif %}>
 <head>
-  <!-- Inline early script to avoid theme flash (FOUC) -->
+  <!-- Inline early script to avoid theme flash (FOUC) - default is Paper (light) -->
   <script>
     (function() {
       try {
         var saved = localStorage.getItem('theme');
-        var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        var theme = saved || 'light';
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'light');
       }
     })();
   </script>
@@ -160,83 +160,79 @@
 <body>
   <header class="header">
     <div class="header-inner">
-      <div class="header-spacer" aria-hidden="true"></div>
-      <div class="logo">
-        <a href="{{ relative_prefix }}{{ home_path }}" class="logo-link">
-          <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Defs for reuse -->
-            <defs>
-              <g id="grain">
-                <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
-                <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
-              </g>
-              <g id="wheat-pair">
-                <use href="#grain" transform="rotate(-28) scale(0.95)" />
-                <use href="#grain" transform="rotate(28) scale(0.95)" />
-                <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
-              </g>
-              <g id="wreath-half">
-                <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
-                <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
-                <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
-                <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
-                <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
-                <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
-                <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
-                <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
-                <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
-                <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
-                <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
-              </g>
-            </defs>
-
-            <use href="#wreath-half" />
-            <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
-
-            <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
-              <circle cx="0" cy="0" r="3" />
-              <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
-              <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
-              <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+      <a href="{{ relative_prefix }}{{ home_path }}" class="logo-link">
+        <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Defs for reuse -->
+          <defs>
+            <g id="grain">
+              <path d="M 0,0 C -1.8,-3 -2.5,-7 0,-10 C 2.5,-7 1.8,-3 0,0 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.6"/>
+              <path d="M 0,-2 V -8" stroke="#0c0d10" stroke-width="0.5"/>
             </g>
-
-            <g transform="translate(50, 48) scale(0.68)">
-              <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
-              <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+            <g id="wheat-pair">
+              <use href="#grain" transform="rotate(-28) scale(0.95)" />
+              <use href="#grain" transform="rotate(28) scale(0.95)" />
+              <path d="M 0,0 V -12" stroke="#e5c158" stroke-width="1.2" stroke-linecap="round"/>
             </g>
-          </svg>
-          <span>Internationalist Communist Library</span>
-        </a>
-      </div>
-      <div class="header-controls">
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="{{ theme_title }}" title="{{ theme_title }}">
-          <span class="theme-icon icon-moon" aria-hidden="true">🌙</span>
-          <span class="theme-icon icon-sun" aria-hidden="true">☀️</span>
-        </button>
-      </div>
+            <g id="wreath-half">
+              <path d="M 50,86 C 26,86 13,67 15,48 C 17,32 28,19 46,14" stroke="#e5c158" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <use href="#wheat-pair" transform="translate(48, 85) rotate(100)" />
+              <use href="#wheat-pair" transform="translate(39, 83) rotate(120)" />
+              <use href="#wheat-pair" transform="translate(30, 78) rotate(140)" />
+              <use href="#wheat-pair" transform="translate(22, 70) rotate(160)" />
+              <use href="#wheat-pair" transform="translate(17, 60) rotate(180)" />
+              <use href="#wheat-pair" transform="translate(16, 49) rotate(200)" />
+              <use href="#wheat-pair" transform="translate(19, 38) rotate(220)" />
+              <use href="#wheat-pair" transform="translate(25, 28) rotate(240)" />
+              <use href="#wheat-pair" transform="translate(34, 21) rotate(260)" />
+              <use href="#wheat-pair" transform="translate(44, 16) rotate(280)" />
+            </g>
+          </defs>
+
+          <use href="#wreath-half" />
+          <use href="#wreath-half" transform="translate(100, 0) scale(-1, 1)" />
+
+          <g transform="translate(50, 85)" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8">
+            <circle cx="0" cy="0" r="3" />
+            <path d="M 0,0 C -8,-6 -12,-2 -5,2 Z" />
+            <path d="M 0,0 C 8,-6 12,-2 5,2 Z" />
+            <path d="M -2,2 C -5,7 -8,10 -8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 2,2 C 5,7 8,10 8,10" stroke="#e5c158" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+
+          <g transform="translate(50, 48) scale(0.68)">
+            <path d="M -28,19 C -19,19 -9,11 0,11 C 9,11 19,19 28,19 V -19 C 19,-19 9,-27 0,-27 C -9,-27 -19,-19 -28,-19 Z" fill="#9e791b" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M -26,17 C -18,17 -8,9 0,9 C 8,9 18,17 26,17 V -21 C 18,-21 8,-29 0,-29 C -8,-29 -18,-21 -26,-21 Z" fill="#c99e2b" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M -24,14 C -16,14 -6,6 0,6 V -24 C -6,-24 -16,-16 -24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M 24,14 C 16,14 6,6 0,6 V -24 C 6,-24 16,-16 24,-16 Z" fill="#e5c158" stroke="#0c0d10" stroke-width="0.8"/>
+            <path d="M 0,6 V -24" stroke="#0c0d10" stroke-width="0.8"/>
+          </g>
+        </svg>
+        <span>Internationalist Communist Library</span>
+      </a>
+      <p class="header-motto">Texts of the communist left. No advertising. No login.</p>
     </div>
-    <div class="nav-container">
-      {% include nav.html %}
-    </div>
+    {% include nav.html %}
   </header>
 
   <div class="container main-layout">
     <aside class="sidebar">
-      <div class="search-container">
-        <span class="search-icon" aria-hidden="true">¶</span>
-        <input type="text" class="search-input" id="global-search" placeholder="{{ search_placeholder }}">
-      </div>
       <nav class="sidebar-nav">
+        {% assign current_lang = page.language | default: 'en' %}
+        {% assign all_count = 0 %}
+        {% for t in site.texts %}
+          {% if t.language == current_lang %}
+            {% assign all_count = all_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+
         <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/zh/index.html' or page.url == '/ja/index.html' or page.url == '/ko/index.html' or page.url == '/ar/index.html' or page.url == '/hi/index.html' or page.url == '/bn/index.html' or page.url == '/id/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
-          {{ all_texts_text }}
+          <span>{{ all_texts_text }}</span>
+          {% if all_count > 0 %}
+            <span class="sidebar-count">({{ all_count }})</span>
+          {% endif %}
         </a>
         
         <div id="sidebar-sections-container">
-          {% assign current_lang = page.language | default: 'en' %}
           {% assign sections_list = "" | split: "," %}
           {% for p in site.pages %}
             {% if p.dir == "/sections/" and p.language == current_lang %}
@@ -247,35 +243,27 @@
           
           {% if sorted_sections.size > 0 %}
             <div class="sidebar-title" style="margin-top: 1.5rem">{{ sidebar_title }}</div>
-            <div class="sidebar-nav">
-              {% for s in sorted_sections %}
-                {% assign is_active = false %}
-                {% if page.url == s.url %}
-                  {% assign is_active = true %}
+            {% for s in sorted_sections %}
+              {% assign is_active = false %}
+              {% if page.url == s.url %}
+                {% assign is_active = true %}
+              {% endif %}
+
+              {% assign s_count = 0 %}
+              {% for t in site.texts %}
+                {% if t.language == current_lang and t.section_id == s.slug %}
+                  {% assign s_count = s_count | plus: 1 %}
                 {% endif %}
-
-                {% assign s_count = 0 %}
-                {% for t in site.texts %}
-                  {% if t.language == current_lang and t.section_id == s.slug %}
-                    {% assign s_count = s_count | plus: 1 %}
-                  {% endif %}
-                {% endfor %}
-
-                <a href="{{ relative_prefix }}{{ s.url | remove_first: '/' }}" class="sidebar-link {% if is_active %}active{% endif %}" data-sidebar-filter="{{ s.slug }}">
-                  <span class="sidebar-link-title"><span style="color: var(--accent-gold); font-family: var(--font-display); font-size: 0.8rem; margin-right: 4px;">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% when 5 %}V.{% else %}•{% endcase %}</span> {{ s.title }}</span>
-                  {% if s_count > 0 %}
-                    <span class="sidebar-count-badge">{{ s_count }}</span>
-                  {% endif %}
-                </a>
               {% endfor %}
-            </div>
+
+              <a href="{{ relative_prefix }}{{ s.url | remove_first: '/' }}" class="sidebar-link {% if is_active %}active{% endif %}" data-sidebar-filter="{{ s.slug }}">
+                <span class="sidebar-link-title"><span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% when 5 %}V.{% else %}•{% endcase %}</span> {{ s.title }}</span>
+                {% if s_count > 0 %}
+                  <span class="sidebar-count">({{ s_count }})</span>
+                {% endif %}
+              </a>
+            {% endfor %}
           {% endif %}
-          
-          <div style="margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-            <a href="{{ relative_prefix }}manage/index.html" class="sidebar-link moderator-link" title="Open Editorial & Moderator Desk">
-              <span class="sidebar-link-title" style="letter-spacing: 0.04em;">Editorial & Moderator Desk</span>
-            </a>
-          </div>
         </div>
       </nav>
     </aside>
@@ -285,179 +273,145 @@
     </main>
   </div>
 
-  <footer style="margin-top: auto; padding: 2.5rem 1rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
-    <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 0.75rem; letter-spacing: 0.05em">{{ unite_text }}</p>
-    <div style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center; gap: 1rem; font-size: 0.8rem;">
-      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">Library Home</a>
-      <span style="color: var(--border-color);">•</span>
-      <a href="{{ relative_prefix }}manage/index.html" style="color: var(--accent-gold); text-decoration: none; font-weight: 500;">Editorial & Moderator Desk</a>
+  <footer style="margin-top: auto; padding: 2.5rem 1.5rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
+    <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">{{ unite_text }}</p>
+    <p style="margin-bottom: 0.5rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">Internationalist Communist Library · An independent public archive of historical communist literature.</p>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: var(--font-sans);">
+      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">Library Index</a>
+      <span style="color: var(--border-color);">·</span>
+      <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">Repository</a>
+      <span style="color: var(--border-color);">·</span>
+      <span>Transcriptions &amp; Corrections: <a href="mailto:contact@intcp.org" style="color: var(--accent-red); text-decoration: none;">contact@intcp.org</a></span>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Theme Toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', newTheme);
-          try {
-            localStorage.setItem('theme', newTheme);
-          } catch (e) {}
+      // 1. Paper / Night Text Switch
+      const btnPaper = document.getElementById('theme-btn-paper');
+      const btnNight = document.getElementById('theme-btn-night');
+
+      function updateThemeButtons(theme) {
+        if (btnPaper && btnNight) {
+          if (theme === 'dark') {
+            btnNight.classList.add('active');
+            btnPaper.classList.remove('active');
+          } else {
+            btnPaper.classList.add('active');
+            btnNight.classList.remove('active');
+          }
+        }
+      }
+
+      const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      updateThemeButtons(activeTheme);
+
+      if (btnPaper) {
+        btnPaper.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-theme', 'light');
+          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+          updateThemeButtons('light');
+        });
+      }
+      if (btnNight) {
+        btnNight.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+          updateThemeButtons('dark');
         });
       }
 
-      // Sync with system preference if user hasn't explicitly set a preference
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-          }
-        });
+      // 2. Archive Views Control (Catalog | Index | Shelf)
+      const btnCatalog = document.getElementById('view-btn-catalog');
+      const btnIndex = document.getElementById('view-btn-index');
+      const btnShelf = document.getElementById('view-btn-shelf');
+      const viewCatalog = document.getElementById('view-catalog');
+      const viewIndex = document.getElementById('view-index');
+      const viewShelf = document.getElementById('view-shelf');
+
+      function setArchiveView(mode) {
+        if (!viewCatalog) return; // Not on archive page
+        if (viewCatalog) viewCatalog.style.display = (mode === 'catalog' ? 'block' : 'none');
+        if (viewIndex) viewIndex.style.display = (mode === 'index' ? 'flex' : 'none');
+        if (viewShelf) viewShelf.style.display = (mode === 'shelf' ? 'grid' : 'none');
+
+        if (btnCatalog) btnCatalog.classList.toggle('active', mode === 'catalog');
+        if (btnIndex) btnIndex.classList.toggle('active', mode === 'index');
+        if (btnShelf) btnShelf.classList.toggle('active', mode === 'shelf');
+
+        try { localStorage.setItem('library-archive-view', mode); } catch (e) {}
       }
+
+      if (btnCatalog && btnIndex && btnShelf) {
+        btnCatalog.addEventListener('click', () => setArchiveView('catalog'));
+        btnIndex.addEventListener('click', () => setArchiveView('index'));
+        btnShelf.addEventListener('click', () => setArchiveView('shelf'));
+
+        const savedView = localStorage.getItem('library-archive-view') || 'catalog';
+        setArchiveView(savedView);
+      }
+
+      // 3. Live Search Filtering
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
       const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl.includes("/index.html");
 
-      let currentSectionFilter = 'all';
       let currentSearchQuery = '';
 
-      function applyFilters() {
-        const cards = document.querySelectorAll('.text-card');
+      function applySearch() {
         const rows = document.querySelectorAll('.catalog-row');
+        const indexItems = document.querySelectorAll('.index-item');
+        const shelfCards = document.querySelectorAll('.drawer-card');
         const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
-        const totalCount = cards.length;
+        const totalCount = rows.length || shelfCards.length;
 
-        cards.forEach(card => {
-          const sec = card.getAttribute('data-section') || '';
-          const title = card.getAttribute('data-title') || '';
-          const author = card.getAttribute('data-author') || '';
-          const desc = card.getAttribute('data-desc') || '';
-          const cat = card.getAttribute('data-category') || '';
-
-          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
-          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
-
-          if (matchesSection && matchesQuery) {
-            card.style.display = 'flex';
-            visibleCount++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        // Also filter catalog table rows
         rows.forEach(row => {
-          const sec = row.getAttribute('data-section') || '';
           const title = row.getAttribute('data-title') || '';
           const author = row.getAttribute('data-author') || '';
           const desc = row.getAttribute('data-desc') || '';
-          const cat = row.getAttribute('data-category') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
+          row.style.display = matches ? '' : 'none';
+          if (matches) visibleCount++;
+        });
 
-          const matchesSection = (currentSectionFilter === 'all' || sec === currentSectionFilter);
-          const matchesQuery = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery) || cat.includes(currentSearchQuery));
+        indexItems.forEach(item => {
+          const title = item.getAttribute('data-title') || '';
+          const author = item.getAttribute('data-author') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery));
+          item.style.display = matches ? 'flex' : 'none';
+        });
 
-          row.style.display = (matchesSection && matchesQuery) ? '' : 'none';
+        shelfCards.forEach(card => {
+          const title = card.getAttribute('data-title') || '';
+          const author = card.getAttribute('data-author') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
+          card.style.display = matches ? 'flex' : 'none';
         });
 
         if (resultsBadge) {
-          if (currentSearchQuery || currentSectionFilter !== 'all') {
-            resultsBadge.textContent = `Showing ${visibleCount} of ${totalCount} texts`;
+          if (currentSearchQuery) {
+            resultsBadge.textContent = `${visibleCount} of ${totalCount} works`;
           } else {
-            resultsBadge.textContent = `${totalCount} texts available`;
+            resultsBadge.textContent = `${totalCount} works`;
           }
-        }
-
-        // Show/hide no-match alert
-        let noMatch = document.getElementById('no-match-alert');
-        const grid = document.getElementById('cards-grid');
-        if (visibleCount === 0 && totalCount > 0) {
-          if (!noMatch && grid) {
-            noMatch = document.createElement('div');
-            noMatch.id = 'no-match-alert';
-            noMatch.style.cssText = 'grid-column: 1 / -1; padding: 3rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius); text-align: center; color: var(--text-muted);';
-            grid.appendChild(noMatch);
-          }
-          if (noMatch) {
-            noMatch.innerHTML = '<p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent-gold);">No matching texts found.</p><p style="font-size: 0.9rem;">Try selecting "All Works" or clearing your search query.</p>';
-            noMatch.style.display = 'block';
-          }
-        } else if (noMatch) {
-          noMatch.style.display = 'none';
         }
       }
 
-      // 1. Category Filter Pills
-      const pills = document.querySelectorAll('.cat-pill');
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          pills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          currentSectionFilter = pill.getAttribute('data-filter') || 'all';
-          applyFilters();
-        });
-      });
-
-      // 2. Card Section Tag click filter
-      document.addEventListener('click', (e) => {
-        const target = e.target.closest('[data-filter-click]');
-        if (target) {
-          const filterSlug = target.getAttribute('data-filter-click');
-          const matchingPill = document.querySelector(`.cat-pill[data-filter="${filterSlug}"]`);
-          if (matchingPill) {
-            matchingPill.click();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }
-      });
-
-      // 3. View Switcher (Grid vs List)
-      const gridBtn = document.getElementById('grid-view-btn');
-      const listBtn = document.getElementById('list-view-btn');
-      const gridView = document.getElementById('cards-grid');
-      const listView = document.getElementById('catalog-list');
-
-      function setView(mode) {
-        if (!gridView || !listView) return;
-        if (mode === 'list') {
-          gridView.style.display = 'none';
-          listView.style.display = 'block';
-          if (listBtn) listBtn.classList.add('active');
-          if (gridBtn) gridBtn.classList.remove('active');
-        } else {
-          gridView.style.display = 'grid';
-          listView.style.display = 'none';
-          if (gridBtn) gridBtn.classList.add('active');
-          if (listBtn) listBtn.classList.remove('active');
-        }
-        try { localStorage.setItem('library-view', mode); } catch (e) {}
-      }
-
-      if (gridBtn && listBtn) {
-        gridBtn.addEventListener('click', () => setView('grid'));
-        listBtn.addEventListener('click', () => setView('list'));
-
-        const savedView = localStorage.getItem('library-view') || 'grid';
-        setView(savedView);
-      }
-
-      // 4. Live Search
       if (searchInput) {
         const urlParams = new URLSearchParams(window.location.search);
         const queryParam = urlParams.get('q');
         if (queryParam) {
           searchInput.value = queryParam;
           currentSearchQuery = queryParam.toLowerCase().trim();
-          if (isHomepage) applyFilters();
+          if (isHomepage) applySearch();
         }
 
         searchInput.addEventListener('input', (e) => {
           currentSearchQuery = e.target.value.toLowerCase().trim();
           if (isHomepage) {
-            applyFilters();
+            applySearch();
           }
         });
 

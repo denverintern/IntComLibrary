@@ -5,6 +5,7 @@ subcategory: "Capital Accumulation"
 layout: text
 title: "O Capital vol. 1: Uma Versão Abreviada"
 author: "Otto Rühle"
+year: 1939
 language: "pt"
 section_title: "Crítica Geral da Economia Política"
 section_url: "sections/pt-critica-economia-politica.html"

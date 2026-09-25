@@ -5,6 +5,7 @@ subcategory: "Wages & Exploitation"
 layout: text
 title: "Наемный труд и капитал"
 author: "Карл Маркс"
+year: 1849
 language: "ru"
 section_title: "Критика Политической Экономии"
 section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"
