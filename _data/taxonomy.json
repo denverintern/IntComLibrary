@@ -3,7 +3,8 @@
     {
       "id": "critique-political-economy",
       "slug": "critique-political-economy",
-      "icon": "📈",
+      "numeral": "I",
+      "icon": "",
       "order": 1,
       "title": {
         "en": "Critique of Political Economy",
@@ -30,7 +31,8 @@
     {
       "id": "party-state-revolution",
       "slug": "party-state-revolution",
-      "icon": "🚩",
+      "numeral": "II",
+      "icon": "",
       "order": 2,
       "title": {
         "en": "Party, State & Revolution",
@@ -57,7 +59,8 @@
     {
       "id": "historical-materialism",
       "slug": "historical-materialism",
-      "icon": "⚡",
+      "numeral": "III",
+      "icon": "",
       "order": 3,
       "title": {
         "en": "Historical Materialism & Method",
@@ -79,7 +82,8 @@
     {
       "id": "history-communist-left",
       "slug": "history-communist-left",
-      "icon": "⚔️",
+      "numeral": "IV",
+      "icon": "",
       "order": 4,
       "title": {
         "en": "Tactics & History of Communist Left",
