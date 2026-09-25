@@ -141,6 +141,11 @@ def parse_sheet_rows(rows):
             k = key.strip().lower()
             v = val.strip()
 
+            # If the value itself is a URL / Drive link, assign to drive_link regardless of header
+            if v.startswith("http://") or v.startswith("https://") or "drive.google.com" in v:
+                drive_link = v
+                continue
+
             if any(t in k for t in ["title", "título", "titulo", "livro", "book"]):
                 title = v
             elif any(a in k for a in ["author", "autor", "escritor"]):
@@ -150,12 +155,11 @@ def parse_sheet_rows(rows):
             elif any(d in k for d in ["desc", "resumo", "notes", "coment"]):
                 description = v
             elif any(p in k for p in ["pdf", "file", "archivo", "arquivo", "upload", "drive"]):
-                # May contain multiple URLs if multi-file enabled
                 drive_link = v
             elif any(s in k for s in ["section", "sección", "seccion", "seção", "categoria"]):
                 section = v
 
-        if title:
+        if title and not (title.startswith("http://") or title.startswith("https://")):
             parsed.append({
                 "title": title,
                 "author": author,
