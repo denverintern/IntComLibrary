@@ -22,6 +22,7 @@ layout: default
     {% assign view_full_text = 'Tela Cheia' %}
     {% assign description_label = 'Sobre este Texto' %}
     {% assign no_pdf_text = 'Nenhum arquivo PDF anexado a esta entrada.' %}
+    {% assign section_label = 'Seção' %}
     {% assign lang_name = 'Português (BR)' %}
   {% when 'es' %}
     {% assign back_text = '← Volver a la Biblioteca' %}
@@ -35,6 +36,7 @@ layout: default
     {% assign view_full_text = 'Pantalla Completa' %}
     {% assign description_label = 'Acerca de este Texto' %}
     {% assign no_pdf_text = 'No hay ningún archivo PDF adjunto a esta entrada.' %}
+    {% assign section_label = 'Sección' %}
     {% assign lang_name = 'Español' %}
   {% when 'fr' %}
     {% assign back_text = '← Retour à la Bibliothèque' %}
@@ -48,6 +50,7 @@ layout: default
     {% assign view_full_text = 'Plein Écran' %}
     {% assign description_label = 'À propos de ce Texte' %}
     {% assign no_pdf_text = 'Aucun fichier PDF joint à cette entrée.' %}
+    {% assign section_label = 'Section' %}
     {% assign lang_name = 'Français' %}
   {% when 'it' %}
     {% assign back_text = '← Torna alla Biblioteca' %}
@@ -61,6 +64,7 @@ layout: default
     {% assign view_full_text = 'Schermo Intero' %}
     {% assign description_label = 'Informazioni su questo Testo' %}
     {% assign no_pdf_text = 'Nessun file PDF allegato a questa voce.' %}
+    {% assign section_label = 'Sezione' %}
     {% assign lang_name = 'Italiano' %}
   {% when 'nl' %}
     {% assign back_text = '← Terug naar de Bibliotheek' %}
@@ -74,6 +78,7 @@ layout: default
     {% assign view_full_text = 'Volledig Scherm' %}
     {% assign description_label = 'Over deze Tekst' %}
     {% assign no_pdf_text = 'Geen PDF-bestand gekoppeld aan dit item.' %}
+    {% assign section_label = 'Sectie' %}
     {% assign lang_name = 'Nederlands' %}
   {% when 'de' %}
     {% assign back_text = '← Zurück zur Bibliothek' %}
@@ -87,6 +92,7 @@ layout: default
     {% assign view_full_text = 'Vollbild' %}
     {% assign description_label = 'Über diesen Text' %}
     {% assign no_pdf_text = 'Diesem Eintrag ist keine PDF-Datei beigefügt.' %}
+    {% assign section_label = 'Bereich' %}
     {% assign lang_name = 'Deutsch' %}
   {% when 'ru' %}
     {% assign back_text = '← Вернуться в Библиотеку' %}
@@ -100,6 +106,7 @@ layout: default
     {% assign view_full_text = 'Во весь экран' %}
     {% assign description_label = 'Об этом Тексте' %}
     {% assign no_pdf_text = 'К этой записи не прикреплен PDF-файл.' %}
+    {% assign section_label = 'Раздел' %}
     {% assign lang_name = 'Русский' %}
   {% when 'zh' %}
     {% assign back_text = '← 返回图书馆' %}
@@ -113,6 +120,7 @@ layout: default
     {% assign view_full_text = '全屏阅读' %}
     {% assign description_label = '关于本文献' %}
     {% assign no_pdf_text = '此条目尚未上传 PDF 文件。' %}
+    {% assign section_label = '板块' %}
     {% assign lang_name = '中文' %}
   {% when 'ja' %}
     {% assign back_text = '← 図書館へ戻る' %}
@@ -126,6 +134,7 @@ layout: default
     {% assign view_full_text = '全画面表示' %}
     {% assign description_label = 'この文献について' %}
     {% assign no_pdf_text = 'この項目にはPDFファイルが添付されていません。' %}
+    {% assign section_label = 'セクション' %}
     {% assign lang_name = '日本語' %}
   {% when 'ko' %}
     {% assign back_text = '← 도서관으로 돌아가기' %}
@@ -139,6 +148,7 @@ layout: default
     {% assign view_full_text = '전체 화면' %}
     {% assign description_label = '이 문서에 대하여' %}
     {% assign no_pdf_text = '이 항목에 첨부된 PDF 파일이 없습니다.' %}
+    {% assign section_label = '섹션' %}
     {% assign lang_name = '한국어' %}
   {% when 'ar' %}
     {% assign back_text = 'العودة إلى المكتبة →' %}
@@ -152,6 +162,7 @@ layout: default
     {% assign view_full_text = 'ملء الشاشة' %}
     {% assign description_label = 'حول هذا النص' %}
     {% assign no_pdf_text = 'لا يوجد ملف PDF مرفق بهذا النص.' %}
+    {% assign section_label = 'القسم' %}
     {% assign lang_name = 'العربية' %}
   {% when 'hi' %}
     {% assign back_text = '← पुस्तकालय पर वापस जाएं' %}
@@ -165,6 +176,7 @@ layout: default
     {% assign view_full_text = 'पूर्ण स्क्रीन' %}
     {% assign description_label = 'इस ग्रंथ के बारे में' %}
     {% assign no_pdf_text = 'इस प्रविष्टि से कोई PDF फ़ाइल संलग्न नहीं है।' %}
+    {% assign section_label = 'अनुभाग' %}
     {% assign lang_name = 'हिन्दी' %}
   {% when 'bn' %}
     {% assign back_text = '← লাইব্রেরিতে ফিরে যান' %}
@@ -178,6 +190,7 @@ layout: default
     {% assign view_full_text = 'পূর্ণ পর্দা' %}
     {% assign description_label = 'এই লেখা সম্পর্কে' %}
     {% assign no_pdf_text = 'এই লেখার সাথে কোনো PDF ফাইল সংযুক্ত নেই।' %}
+    {% assign section_label = 'বিভাগ' %}
     {% assign lang_name = 'বাংলা' %}
   {% when 'id' %}
     {% assign back_text = '← Kembali ke Perpustakaan' %}
@@ -191,6 +204,7 @@ layout: default
     {% assign view_full_text = 'Layar Penuh' %}
     {% assign description_label = 'Tentang Teks Ini' %}
     {% assign no_pdf_text = 'Tidak ada berkas PDF yang dilampirkan pada entri ini.' %}
+    {% assign section_label = 'Bagian' %}
     {% assign lang_name = 'Bahasa Indonesia' %}
   {% when 'tr' %}
     {% assign back_text = '← Kütüphaneye Dön' %}
@@ -204,6 +218,7 @@ layout: default
     {% assign view_full_text = 'Tam Ekran' %}
     {% assign description_label = 'Bu Metin Hakkında' %}
     {% assign no_pdf_text = 'Bu girişe eklenmiş PDF dosyası yok.' %}
+    {% assign section_label = 'Bölüm' %}
     {% assign lang_name = 'Türkçe' %}
   {% when 'pl' %}
     {% assign back_text = '← Wróć do Biblioteki' %}
@@ -217,6 +232,7 @@ layout: default
     {% assign view_full_text = 'Pełny Ekran' %}
     {% assign description_label = 'O tym Tekście' %}
     {% assign no_pdf_text = 'Brak pliku PDF dołączonego do tego wpisu.' %}
+    {% assign section_label = 'Sekcja' %}
     {% assign lang_name = 'Polski' %}
   {% when 'el' %}
     {% assign back_text = '← Επιστροφή στη Βιβλιοθήκη' %}
@@ -230,6 +246,7 @@ layout: default
     {% assign view_full_text = 'Πλήρης Οθόνη' %}
     {% assign description_label = 'Σχετικά με το Κείμενο' %}
     {% assign no_pdf_text = 'Δεν υπάρχει αρχείο PDF συνδεδεμένο με αυτήν την καταχώρηση.' %}
+    {% assign section_label = 'Ενότητα' %}
     {% assign lang_name = 'Ελληνικά' %}
   {% else %}
     {% assign back_text = '← Back to Library' %}
@@ -243,6 +260,7 @@ layout: default
     {% assign view_full_text = 'Full Screen' %}
     {% assign description_label = 'About this Text' %}
     {% assign no_pdf_text = 'No PDF file attached to this entry.' %}
+    {% assign section_label = 'Section' %}
     {% assign lang_name = 'English' %}
 {% endcase %}
 
@@ -319,6 +337,17 @@ layout: default
           <span class="metadata-label">{{ format_label }}</span>
           <span class="metadata-value" style="font-family: monospace; font-size: 0.85rem">PDF Document (.pdf)</span>
         </div>
+
+        {% if page.section_title and page.section_url %}
+        <div class="metadata-item">
+          <span class="metadata-label">{{ section_label }}</span>
+          <span class="metadata-value">
+            <a href="{{ relative_prefix }}{{ page.section_url }}" style="color: var(--accent-gold); text-decoration: none; font-weight: 500">
+              📁 {{ page.section_title }}
+            </a>
+          </span>
+        </div>
+        {% endif %}
       </div>
     </div>
 
