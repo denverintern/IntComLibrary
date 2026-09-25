@@ -299,13 +299,13 @@
   <div class="catalog-table-wrap" id="view-catalog" style="display: none;">
     <table class="catalog-table">
       <thead>
-        <tr>
-          <th>{{ col_title_label }}</th>
-          <th>{{ col_author_label }}</th>
-          <th style="text-align: right;">{{ col_year_label }}</th>
-          <th style="text-align: right; width: 4rem;">{{ col_format_label }}</th>
-        </tr>
-      </thead>
+  <tr>
+    <th style="cursor: pointer; user-select: none;" id="sort-title">{{ col_title_label }} <span class="sort-indicator"></span></th>
+    <th style="cursor: pointer; user-select: none;" id="sort-author">{{ col_author_label }} <span class="sort-indicator"></span></th>
+    <th style="cursor: pointer; user-select: none; text-align: right;" id="sort-year">{{ col_year_label }} <span class="sort-indicator"></span></th>
+    <th style="cursor: pointer; user-select: none; text-align: right; width: 4rem;" id="sort-pdf" title="Toggle PDF only">{{ col_format_label }} <span class="sort-indicator"></span></th>
+  </tr>
+</thead>
       <tbody>
         {% for text in lang_texts %}
           <tr class="catalog-row" 
