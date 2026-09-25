@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Credentials & secrets
+*credentials*.json
+*service-account*.json
+*gdrive-key*.json
+firebase-admin-key.json
+
+# Jekyll cache
+.jekyll-cache/
+.jekyll-metadata
