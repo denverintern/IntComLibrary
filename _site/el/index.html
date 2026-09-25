@@ -35,16 +35,17 @@
 :root {
   /* Paper Ground (Default Classical Archival) */
   --bg-primary: #f4efe4;          /* Warm archival book paper */
-  --bg-secondary: #faf7f0;        /* Slightly lighter paper tone */
-  --bg-tertiary: #ebe4d5;         /* Subtle paper shading */
-  --bg-hover: #e3dcce;
+  --bg-secondary: #f4efe4;        /* Same as ground — NO lifted panels */
+  --bg-tertiary: #ebe4d5;
+  --bg-hover: #ece5d6;
   --accent-red: #8b1214;          /* Crimson rule & masthead accent */
   --accent-red-hover: #a8191c;
-  --accent-gold: #8f6515;         /* Bronze/gold author & numerals */
+  --accent-gold: #8f6515;         /* Bronze/gold numerals & crest */
   --accent-gold-hover: #73500d;
+  --author-color: #8f6515;        /* Authors on paper: warm bronze */
   --text-main: #1a1714;          /* Print ink, not pitch black */
   --text-muted: #5c554e;         /* Muted editorial type */
-  --text-dim: #80766b;           /* Metadata, breadcrumbs, rules */
+  --text-dim: #7d7265;           /* Metadata, breadcrumbs, rules */
   --border-color: #d9d0c4;       /* Bookbinder hairline rule */
   --border-color-focus: #8b1214;
   --card-border: #d9d0c4;
@@ -54,26 +55,28 @@
   --font-serif: Georgia, "Times New Roman", Times, serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --border-radius: 0px;
-  --measure: 38rem;
+  --measure: 54rem;              /* Contents page measure for main lists */
+  --prose-measure: 38rem;        /* Reading measure for texts */
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  /* Inverted Ink on Blotting Paper (Night Mode) */
-  --bg-primary: #1c1916;          /* Deep warm blotting ground */
-  --bg-secondary: #231f1c;        /* Elevated sheet surface */
-  --bg-tertiary: #2b2622;
-  --bg-hover: #332e29;
+  /* Press-Dark Ground (Warmer, Press Paper Night) */
+  --bg-primary: #191512;          /* Warmer press-dark ground (#191512 - #1c1814) */
+  --bg-secondary: #191512;        /* Exactly same as page — NO lifted panels! */
+  --bg-tertiary: #201b17;
+  --bg-hover: #221c17;
   --accent-red: #9e1b1e;          /* Muted night crimson */
   --accent-red-hover: #ba2326;
-  --accent-gold: #c99e2b;         /* Warm bronze type */
+  --accent-gold: #c99e2b;         /* Gold ONLY for motto, crest, numerals & footer slogan */
   --accent-gold-hover: #dfb33e;
+  --author-color: #d1c8bb;        /* Authors on night: clear ivory italic, NEVER muddy gold */
   --text-main: #e8e0d4;          /* Warm parchment type */
-  --text-muted: #9e9486;         /* Secondary editorial type */
-  --text-dim: #73695c;
-  --border-color: #36302a;       /* Dark hairline rule */
+  --text-muted: #9e9384;         /* Secondary editorial type */
+  --text-dim: #6e6457;           /* Metadata, years, hairline rules */
+  --border-color: #363028;       /* 1px warm dark rule between rows */
   --border-color-focus: #9e1b1e;
-  --card-border: #36302a;
+  --card-border: #363028;
   --card-shadow: none;
   --card-shadow-hover: none;
   color-scheme: dark;
@@ -285,7 +288,7 @@ a:hover {
   color: var(--border-color);
 }
 
-/* Search Field (Rule-based, no icon soup) */
+/* Search Field (Ledger-line: bottom border only, no dark inset box) */
 .header-search-wrap {
   display: flex;
   align-items: center;
@@ -301,20 +304,21 @@ a:hover {
 }
 
 .search-input-clean {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
   border-radius: 0;
   color: var(--text-main);
   font-family: var(--font-sans);
   font-size: 0.8rem;
-  padding: 3px 8px;
-  width: 180px;
+  padding: 2px 2px 3px 2px;
+  width: 170px;
   transition: width 0.2s ease, border-color 0.2s ease;
 }
 
 .search-input-clean:focus {
-  width: 240px;
-  border-color: var(--accent-red);
+  width: 220px;
+  border-bottom-color: var(--accent-red);
   outline: none;
 }
 
@@ -378,14 +382,14 @@ a:hover {
   color: var(--accent-red);
   border-left-color: var(--accent-red);
   text-decoration: none;
-  background: var(--bg-secondary);
+  background: var(--bg-hover);
 }
 
 .sidebar-link.active {
   color: var(--accent-red);
   border-left-color: var(--accent-red);
   font-weight: 600;
-  background: var(--bg-secondary);
+  background: var(--bg-hover);
 }
 
 .sidebar-roman {
@@ -395,21 +399,23 @@ a:hover {
   margin-right: 0.3rem;
 }
 
+/* Sidebar counts: same size as the label, normal serif, no pill */
 .sidebar-count {
   font-family: var(--font-serif);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-dim);
   font-weight: normal;
-  margin-left: 0.5rem;
+  margin-left: 0.35rem;
   flex-shrink: 0;
 }
 
-/* Main Content Surface */
+/* Main Content Surface (Capped measure ~54-56rem like a contents page) */
 .main-content {
   min-width: 0;
+  max-width: 56rem;
 }
 
-/* Archive Top Bar (Scope & View Toggles) */
+/* Archive Top Bar (Scope & Quiet View Toggles) */
 .archive-topbar {
   display: flex;
   justify-content: space-between;
@@ -436,6 +442,7 @@ a:hover {
   line-height: 1.5;
 }
 
+/* View toggle is quieter than the taxonomy rail */
 .archive-views-control {
   display: inline-flex;
   align-items: center;
@@ -458,7 +465,8 @@ a:hover {
   font-family: var(--font-sans);
   font-size: 0.78rem;
   cursor: pointer;
-  padding: 1px 4px;
+  padding: 1px 3px;
+  border-bottom: 1px solid transparent;
 }
 
 .view-btn:hover {
@@ -466,9 +474,9 @@ a:hover {
 }
 
 .view-btn.active {
-  color: var(--accent-red);
-  font-weight: 700;
-  border-bottom: 1px solid var(--accent-red);
+  color: var(--text-main);
+  font-weight: 600;
+  border-bottom: 1px solid var(--text-main); /* Quiet monochrome underline */
 }
 
 .view-sep {
@@ -476,11 +484,122 @@ a:hover {
 }
 
 /* ==========================================================================
-   VIEW 1: READING-ROOM CATALOG TABLE (SPINE B — DEFAULT)
+   VIEW 1: DENSE NEWSPAPER / PARTY ORGAN INDEX (SPINE A — DEFAULT)
+   ========================================================================== */
+.index-column-wrap {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.index-section-group {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.index-section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-red);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.index-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3-Column Grid: Title (1fr) | Author (no wrap) | Year + PDF (fixed right) */
+.index-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 6.5rem;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+.index-item:last-child {
+  border-bottom: none;
+}
+
+.index-item:hover {
+  background: var(--bg-hover);
+}
+
+.index-item-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.index-num {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  width: 1.4rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.index-item-title {
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.index-item-title:hover {
+  color: var(--accent-red);
+  text-decoration: underline;
+}
+
+/* Author: one line, ivory italic on night, bronze on paper */
+.index-item-author {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--author-color);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 0.92rem;
+}
+
+/* Year + PDF fixed right column (NO wall of red HTML) */
+.index-item-meta {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pdf-tag {
+  color: var(--accent-red);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.pdf-tag:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   VIEW 2: READING-ROOM CATALOG TABLE (SPINE B)
    ========================================================================== */
 .catalog-table-wrap {
   width: 100%;
-  border-top: 1px solid var(--border-color);
   overflow-x: auto;
 }
 
@@ -510,7 +629,7 @@ a:hover {
 }
 
 .catalog-row:hover {
-  background: var(--bg-secondary);
+  background: var(--bg-hover);
 }
 
 .col-work-title {
@@ -528,7 +647,7 @@ a:hover {
 }
 
 .col-work-author {
-  color: var(--accent-gold);
+  color: var(--author-color);
   font-style: italic;
   white-space: nowrap;
 }
@@ -538,228 +657,84 @@ a:hover {
   font-size: 0.9rem;
   font-variant-numeric: oldstyle-nums;
   white-space: nowrap;
-}
-
-.col-work-lang {
-  color: var(--text-dim);
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-}
-
-.col-work-links {
-  white-space: nowrap;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-}
-
-.format-link {
-  color: var(--accent-red);
-  text-decoration: none;
-}
-
-.format-link:hover {
-  text-decoration: underline;
-}
-
-.format-sep {
-  color: var(--border-color);
-  margin: 0 3px;
-}
-
-/* ==========================================================================
-   VIEW 2: DENSE NEWSPAPER / PARTY ORGAN INDEX (SPINE A — INDEX TOGGLE)
-   ========================================================================== */
-.index-column-wrap {
-  max-width: var(--measure);
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.index-section-group {
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1.5rem;
-}
-
-.index-section-title {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  color: var(--accent-red);
-  letter-spacing: 0.03em;
-  margin-bottom: 0.4rem;
-}
-
-.index-cat-group {
-  margin-top: 1rem;
-}
-
-.index-cat-name {
-  font-family: var(--font-sans);
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.index-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.index-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.75rem;
-  font-size: 0.95rem;
-}
-
-.index-item-main {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.index-num {
-  font-family: var(--font-serif);
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  width: 1.5rem;
   text-align: right;
-  flex-shrink: 0;
 }
 
-.index-item-title {
+.col-work-pdf {
+  text-align: right;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+}
+
+/* ==========================================================================
+   VIEW 3: BULLETIN LIST (Single-Column, No Cards, No Blurbs, No Truncation)
+   ========================================================================== */
+.bulletin-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+}
+
+.bulletin-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 6.5rem;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+}
+
+.bulletin-item:hover {
+  background: var(--bg-hover);
+}
+
+.bulletin-main {
+  min-width: 0;
+}
+
+.bulletin-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--text-main);
   text-decoration: none;
+  line-height: 1.35;
 }
 
-.index-item-title:hover {
+.bulletin-title:hover {
   color: var(--accent-red);
   text-decoration: underline;
 }
 
-.index-item-author {
-  font-style: italic;
-  color: var(--accent-gold);
-  font-size: 0.9rem;
+.bulletin-section {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-top: 0.15rem;
 }
 
-.index-item-meta {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  color: var(--text-dim);
+.bulletin-author {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--author-color);
   white-space: nowrap;
   flex-shrink: 0;
+  font-size: 0.92rem;
 }
 
-/* ==========================================================================
-   VIEW 3: INDEX CARD DRAWER (SPINE D — SHELF VIEW)
-   ========================================================================== */
-.cards-shelf-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5rem;
-  max-width: 900px; /* Never three on standard desktop */
-}
-
-.drawer-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-left: 3px solid var(--accent-red);
-  padding: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  border-radius: 0;
-}
-
-.drawer-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.drawer-card-label {
+.bulletin-meta {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-size: 0.8rem;
   color: var(--text-dim);
-  font-weight: 600;
-}
-
-.drawer-card-year {
-  font-family: var(--font-serif);
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  font-variant-numeric: oldstyle-nums;
-}
-
-.drawer-card-author {
-  font-family: var(--font-sans);
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent-gold);
-  font-weight: 700;
-}
-
-.drawer-card-title {
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  line-height: 1.35;
-  font-weight: 600;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.drawer-card-title a {
-  color: var(--text-main);
-  text-decoration: none;
-}
-
-.drawer-card-title a:hover {
-  color: var(--accent-red);
-}
-
-.drawer-card-desc {
-  font-family: var(--font-serif);
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.drawer-card-footer {
-  margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-family: var(--font-sans);
-  font-size: 0.76rem;
-  letter-spacing: 0.05em;
-}
-
-.drawer-card-footer a {
-  color: var(--accent-red);
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -823,7 +798,7 @@ a:hover {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.1rem;
-  color: var(--accent-gold);
+  color: var(--author-color);
 }
 
 /* Actions as text */
@@ -940,7 +915,7 @@ a:hover {
 }
 
 .reader-sibling-author {
-  color: var(--accent-gold);
+  color: var(--author-color);
   font-style: italic;
   margin-left: 0.35rem;
 }
@@ -979,7 +954,7 @@ a:hover {
 
 .chapter-scope {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -993,7 +968,7 @@ a:hover {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--accent-gold);
+  color: var(--text-dim);
   font-weight: 700;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--border-color);
@@ -1030,7 +1005,7 @@ a:hover {
 }
 
 .chapter-work-author {
-  color: var(--accent-gold);
+  color: var(--author-color);
   font-style: italic;
   font-size: 0.92rem;
 }
@@ -1267,7 +1242,7 @@ a:hover {
 
 
 
-<!-- Archive Top Bar with Scope & View Toggles -->
+<!-- Archive Top Bar with Scope & Quiet View Toggles -->
 <div class="archive-topbar">
   <div class="archive-title-wrap">
     <h2 class="archive-headline">Θεωρητικό Αρχείο</h2>
@@ -1275,16 +1250,16 @@ a:hover {
   </div>
   <div class="archive-views-control">
     <span class="view-label">Προβολή:</span>
-    <button type="button" class="view-btn active" id="view-btn-catalog" title="Catalog Reading Room Spread">Catalog</button>
+    <button type="button" class="view-btn active" id="view-btn-index" title="Dense Party Organ Column">Index</button>
     <span class="view-sep">·</span>
-    <button type="button" class="view-btn" id="view-btn-index" title="Dense Party Organ Column">Index</button>
+    <button type="button" class="view-btn" id="view-btn-catalog" title="Catalog Reading Room Spread">Catalog</button>
     <span class="view-sep">·</span>
-    <button type="button" class="view-btn" id="view-btn-shelf" title="Index Card Shelf Drawer">Shelf</button>
+    <button type="button" class="view-btn" id="view-btn-shelf" title="Single-column Bulletin List">Bulletin</button>
   </div>
 </div>
 
 
-  <div style="padding: 3rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-secondary); text-align: center; color: var(--text-muted); font-style: italic;">
+  <div style="padding: 3rem 1.5rem; border: 1px solid var(--border-color); background: var(--bg-primary); text-align: center; color: var(--text-muted); font-style: italic;">
     <p>Δεν υπάρχουν ακόμα διαθέσιμα κείμενα σε αυτήν τη γλώσσα.</p>
   </div>
 
@@ -1367,7 +1342,7 @@ a:hover {
         btnIndex.addEventListener('click', () => setArchiveView('index'));
         btnShelf.addEventListener('click', () => setArchiveView('shelf'));
 
-        const savedView = localStorage.getItem('library-archive-view') || 'catalog';
+        const savedView = localStorage.getItem('library-archive-view') || 'index';
         setArchiveView(savedView);
       }
 
@@ -1381,10 +1356,10 @@ a:hover {
       function applySearch() {
         const rows = document.querySelectorAll('.catalog-row');
         const indexItems = document.querySelectorAll('.index-item');
-        const shelfCards = document.querySelectorAll('.drawer-card');
+        const bulletinItems = document.querySelectorAll('.bulletin-item');
         const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
-        const totalCount = rows.length || shelfCards.length;
+        const totalCount = rows.length || indexItems.length;
 
         rows.forEach(row => {
           const title = row.getAttribute('data-title') || '';
@@ -1399,15 +1374,15 @@ a:hover {
           const title = item.getAttribute('data-title') || '';
           const author = item.getAttribute('data-author') || '';
           const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery));
-          item.style.display = matches ? 'flex' : 'none';
+          item.style.display = matches ? 'grid' : 'none';
         });
 
-        shelfCards.forEach(card => {
+        bulletinItems.forEach(card => {
           const title = card.getAttribute('data-title') || '';
           const author = card.getAttribute('data-author') || '';
           const desc = card.getAttribute('data-desc') || '';
           const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
-          card.style.display = matches ? 'flex' : 'none';
+          card.style.display = matches ? 'grid' : 'none';
         });
 
         if (resultsBadge) {

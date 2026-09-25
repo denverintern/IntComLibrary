@@ -347,7 +347,7 @@
         btnIndex.addEventListener('click', () => setArchiveView('index'));
         btnShelf.addEventListener('click', () => setArchiveView('shelf'));
 
-        const savedView = localStorage.getItem('library-archive-view') || 'catalog';
+        const savedView = localStorage.getItem('library-archive-view') || 'index';
         setArchiveView(savedView);
       }
 
@@ -361,10 +361,10 @@
       function applySearch() {
         const rows = document.querySelectorAll('.catalog-row');
         const indexItems = document.querySelectorAll('.index-item');
-        const shelfCards = document.querySelectorAll('.drawer-card');
+        const bulletinItems = document.querySelectorAll('.bulletin-item');
         const resultsBadge = document.getElementById('results-count');
         let visibleCount = 0;
-        const totalCount = rows.length || shelfCards.length;
+        const totalCount = rows.length || indexItems.length;
 
         rows.forEach(row => {
           const title = row.getAttribute('data-title') || '';
@@ -379,15 +379,15 @@
           const title = item.getAttribute('data-title') || '';
           const author = item.getAttribute('data-author') || '';
           const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery));
-          item.style.display = matches ? 'flex' : 'none';
+          item.style.display = matches ? 'grid' : 'none';
         });
 
-        shelfCards.forEach(card => {
+        bulletinItems.forEach(card => {
           const title = card.getAttribute('data-title') || '';
           const author = card.getAttribute('data-author') || '';
           const desc = card.getAttribute('data-desc') || '';
           const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
-          card.style.display = matches ? 'flex' : 'none';
+          card.style.display = matches ? 'grid' : 'none';
         });
 
         if (resultsBadge) {
