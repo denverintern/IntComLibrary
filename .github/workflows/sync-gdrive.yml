@@ -1,0 +1,54 @@
+name: Sync from Google Drive
+
+on:
+  # Runs every 6 hours automatically
+  schedule:
+    - cron: "0 */6 * * *"
+
+  # Allows manual triggers anytime from the GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Google Dependencies
+        run: |
+          pip install --upgrade google-api-python-client google-auth
+
+      - name: Run Google Drive Sync
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_SHEET_ID: ${{ secrets.GDRIVE_SHEET_ID }}
+          GDRIVE_SHEET_CSV_URL: ${{ secrets.GDRIVE_SHEET_CSV_URL }}
+        run: |
+          python scripts/sync_gdrive.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage new/updated texts and uploaded PDFs
+          git add _texts/ assets/uploads/
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes detected. Site is already up to date."
+          else
+            git commit -m "Auto-sync new texts & PDFs from Google Drive"
+            git push origin main
+          fi
