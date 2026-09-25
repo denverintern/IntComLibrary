@@ -1,3 +1,4 @@
+source_url: "https://www.marxists.org/archive/lenin/works/1916/imp-hsc/"
 ---
 section_id: "critique-political-economy"
 category: "Imperialism & Monopoly Capitalism"

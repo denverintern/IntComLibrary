@@ -1,3 +1,4 @@
+source_url: "https://www.marxists.org/archive/marx/works/1865/value-price-profit/"
 ---
 section_id: "critique-political-economy"
 category: "Value, Surplus Value & Capital"

@@ -1,6 +1,7 @@
-<div class="utility-bar">
-  <div class="utility-left">
-    <nav class="lang-strip" aria-label="Languages">
+content = File.read("_includes/nav.html")
+
+replacement = <<~HTML
+<nav class="lang-strip" aria-label="Languages">
   <a href="{{ relative_prefix }}index.html" class="utility-quick-lang {% if page.language == 'en' or page.language == nil %}active{% endif %}">EN</a>
   <span class="utility-sep">&middot;</span>
   <a href="{{ relative_prefix }}es/index.html" class="utility-quick-lang {% if page.language == 'es' %}active{% endif %}">ES</a>
@@ -32,20 +33,7 @@
     </div>
   </div>
 </nav>
-    
-    <span class="utility-divider">|</span>
-    
-    <span class="theme-text-control">
-      <button type="button" class="theme-btn" id="theme-btn-paper" title="Switch to paper ground">Paper</button>
-      <span class="theme-btn-sep">/</span>
-      <button type="button" class="theme-btn" id="theme-btn-night" title="Switch to night ground">Night</button>
-    </span>
-  </div>
+HTML
 
-  <div class="utility-right">
-    <div class="header-search-wrap">
-      <label for="global-search" class="search-text-label">Search:</label>
-      <input type="text" id="global-search" class="search-input-clean" placeholder="Title, author, term...">
-    </div>
-  </div>
-</div>
+content.sub!(/<nav class="lang-strip".*?<\/nav>/m, replacement.strip)
+File.write("_includes/nav.html", content)

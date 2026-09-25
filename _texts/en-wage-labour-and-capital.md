@@ -1,3 +1,4 @@
+source_url: "https://www.marxists.org/archive/marx/works/1847/wage-labour/"
 ---
 section_id: "critique-political-economy"
 category: "Value, Surplus Value & Capital"

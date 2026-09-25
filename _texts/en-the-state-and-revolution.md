@@ -1,3 +1,4 @@
+source_url: "https://www.marxists.org/archive/lenin/works/1917/staterev/"
 ---
 section_id: "party-state-revolution"
 category: "State & Proletarian Dictatorship"

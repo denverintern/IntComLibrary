@@ -148,7 +148,17 @@ layout: default
   {% else %}{% assign sec_roman = '' %}
 {% endcase %}
 
+{% assign pdf_url = nil %}
+{% if page.pdf %}
+  {% if page.pdf contains "://" %}
+    {% assign pdf_url = page.pdf %}
+  {% else %}
+    {% assign pdf_url = relative_prefix | append: "assets/uploads/" | append: page.pdf %}
+  {% endif %}
+{% endif %}
+
 <article class="reader-frame">
+
   <!-- Archival Breadcrumb -->
   <nav class="reader-breadcrumb" aria-label="Breadcrumb">
     <a href="{{ relative_prefix }}{{ back_url }}">{{ library_label }}</a>
@@ -171,34 +181,68 @@ layout: default
 
   <!-- Running Header -->
   <header class="reader-header">
-    <h1 class="reader-title">{{ page.title }}</h1>
-    {% if page.author %}
-      <div class="reader-author">
-        {{ page.author }}{% if page.year %}, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">{{ page.year }}</span>{% endif %}
-      </div>
+  <h1 class="reader-title">{{ page.title }}</h1>
+  {% if page.author %}
+    <div class="reader-author">
+      {{ page.author }}{% if page.year %}, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">{{ page.year }}</span>{% endif %}
+    </div>
+  {% endif %}
+  <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; font-style: italic;">
+    Source: 
+    {% if page.source_name %}
+      {{ page.source_name }}
+    {% elsif page.source_url contains 'marxists.org' %}
+      Marxists Internet Archive
+    {% elsif page.source_url contains 'international-communist-party.org' %}
+      International Communist Party
+    {% else %}
+      Original Archive
     {% endif %}
-  </header>
+    {% if page.edition %} &middot; {{ page.edition }}{% endif %}
+    {% if pdf_url %} &middot; PDF (local){% elsif page.source_url %} &middot; HTML (external){% endif %}
+  </div>
+</header>
 
   <!-- Text Actions (Dignified print links, no icon soup) -->
-  <div class="reader-actions">
-    {% if page.pdf %}
-      <a href="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" download>{{ download_text }}</a>
-      <span class="sep">·</span>
-    {% endif %}
-    <a href="#transcription">{{ transcription_label }}</a>
+  <!-- Text Actions (Dignified print links, no icon soup) -->
+<div class="reader-actions">
+  {% if pdf_url %}
+    <a href="{{ pdf_url }}" download>{{ download_text }}</a>
     <span class="sep">·</span>
-    <button type="button" onclick="window.print()">{{ print_label }}</button>
-  </div>
-
-  <!-- Embedded PDF Document Viewer (if attached) -->
-  {% if page.pdf %}
-    <iframe 
-      src="{{ relative_prefix }}assets/uploads/{{ page.pdf }}" 
-      class="reader-pdf-frame" 
-      title="{{ page.title }} PDF"
-      allowfullscreen>
-    </iframe>
+    <a href="{{ pdf_url }}" target="_blank" rel="noopener">Open PDF</a>
+    <span class="sep">·</span>
   {% endif %}
+  {% if page.source_url %}
+    <a href="{{ page.source_url }}" target="_blank" rel="noopener">Source text</a>
+    <span class="sep">·</span>
+  {% endif %}
+  <a href="#transcription">{{ transcription_label }}</a>
+  <span class="sep">·</span>
+  <button type="button" onclick="window.print()">{{ print_label }}</button>
+</div>
+
+<!-- Embedded PDF Document Viewer (if attached) -->
+{% if pdf_url %}
+  <div class="reader-pdf-container">
+    <object data="{{ pdf_url }}" type="application/pdf" class="reader-pdf-frame">
+      <iframe src="{{ pdf_url }}" title="{{ page.title }} PDF" class="reader-pdf-frame" allowfullscreen></iframe>
+      <p style="padding: 1rem; text-align: center; color: var(--text-dim);">
+        This browser cannot display PDFs.
+        <a href="{{ pdf_url }}" download>Download the file</a>
+        {% if page.source_url %}or <a href="{{ page.source_url }}" target="_blank" rel="noopener">read the HTML source</a>{% endif %}.
+      </p>
+    </object>
+  </div>
+{% else %}
+  {% if content == nil or content == "" or content contains "Historical Significance" or content contains "Concise summary" %}
+    <p style="padding: 2rem 1rem; text-align: center; color: var(--text-dim); font-style: italic; border: 1px solid var(--border-color); margin-bottom: 2rem;">
+      No local PDF attached.
+      {% if page.source_url %}
+        <a href="{{ page.source_url }}" target="_blank" rel="noopener">Read on the source site</a>.
+      {% endif %}
+    </p>
+  {% endif %}
+{% endif %}
 
   <!-- Transcribed Text Body (Readable measure ~38rem / 65-72ch) -->
   <div class="reader-body" id="transcription">
