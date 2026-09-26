@@ -46,8 +46,54 @@ title: Internationalist Communist Library
   </g>
 </svg>
 
-<h1 class="portal-title">Internationalist Communist Library</h1>
-<p class="portal-motto">Theoretical Archive of the Communist Left</p>
+<h1 class="portal-title" id="dynamic-title">Internationalist Communist Library</h1>
+<p class="portal-motto" id="dynamic-motto">Theoretical Archive of the Communist Left</p>
+
+<script>
+  const i18n = {
+    {% for locale in site.data.locales %}
+    "{{ locale[0] }}": {
+      title: {{ locale[1].brand_title | jsonify }},
+      motto: {{ locale[1].motto_text | jsonify }}
+    }{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+  };
+
+  const langs = Object.keys(i18n);
+  
+  // Set initial based on browser language
+  const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
+  let currentIdx = langs.includes(userLang) ? langs.indexOf(userLang) : 0;
+  
+  const titleEl = document.getElementById('dynamic-title');
+  const mottoEl = document.getElementById('dynamic-motto');
+
+  function updateText() {
+    const langKey = langs[currentIdx];
+    
+    titleEl.style.opacity = 0;
+    mottoEl.style.opacity = 0;
+    
+    setTimeout(() => {
+      titleEl.textContent = i18n[langKey].title;
+      mottoEl.textContent = i18n[langKey].motto;
+      titleEl.style.opacity = 1;
+      mottoEl.style.opacity = 1;
+    }, 500);
+
+    currentIdx = (currentIdx + 1) % langs.length;
+  }
+  
+  // Update instantly if browser language matches
+  if (langs.includes(userLang) && userLang !== 'en') {
+    titleEl.textContent = i18n[userLang].title;
+    mottoEl.textContent = i18n[userLang].motto;
+  }
+
+  // Cycle every 4.5 seconds
+  setInterval(updateText, 4500);
+</script>
+
 
 <div class="lang-grid">
   <a href="en/index.html" class="lang-card">English <span>EN</span></a>

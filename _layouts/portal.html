@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internationalist Communist Library</title>
+  <title>Internationalist Communist Library | Biblioteca Comunista Internacionalista</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <script>
   const savedTheme = localStorage.getItem('lib_theme') || 'dark';
@@ -63,6 +63,7 @@
     }
     
     .portal-title {
+      transition: opacity 0.5s ease;
       font-family: var(--font-serif);
       font-size: 2.2rem;
       font-weight: 400;
@@ -71,6 +72,7 @@
     }
     
     .portal-motto {
+      transition: opacity 0.5s ease;
       font-family: var(--font-serif);
       font-size: 1.1rem;
       font-style: italic;
@@ -117,6 +119,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
       .portal-title {
+      transition: opacity 0.5s ease;
         font-size: 1.8rem;
       }
     }
