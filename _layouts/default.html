@@ -293,7 +293,7 @@
       <span style="color: var(--border-color);">·</span>
       <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">{{ t.repository_text }}</a>
       <span style="color: var(--border-color);">·</span>
-      <a href="{{ relative_prefix }}manage/index.html" style="color: var(--text-dim); text-decoration: none;">{{ t.editorial_desk_text | default: 'Editorial &amp; Moderator Desk' }}</a>
+      <a href="{{ relative_prefix }}manage/{{ page.language | default: 'en' }}/index.html" style="color: var(--text-dim); text-decoration: none;">{{ t.editorial_desk_text | default: 'Editorial &amp; Moderator Desk' }}</a>
     </div>
   </footer>
 
