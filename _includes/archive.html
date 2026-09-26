@@ -1,3 +1,9 @@
+{% assign lang = page.language | default: 'en' %}
+{% assign t = site.data.locales[lang] %}
+{% if t == nil %}
+  {% assign t = site.data.locales['en'] %}
+{% endif %}
+
 {% assign relative_prefix = "" %}
 {% if page.url != "/" and page.url != "/index.html" %}
   {% assign relative_prefix = "../" %}

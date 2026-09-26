@@ -287,13 +287,13 @@
 
   <footer style="margin-top: auto; padding: 2.5rem 1.5rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-dim); background: var(--bg-secondary)">
     <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">{{ t.unite_text }}</p>
-    <p style="margin-bottom: 0.6rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">{{ t.brand_title }} &middot; Updated {{ site.time | date: "%Y-%m-%d" }}</p>
+    <p style="margin-bottom: 0.6rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">{{ t.brand_title }} &middot; {{ t.updated_label | default: 'Updated' }} {{ site.time | date: "%Y-%m-%d" }}</p>
     <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: var(--font-sans);">
       <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">{{ t.library_index_text }}</a>
       <span style="color: var(--border-color);">·</span>
       <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">{{ t.repository_text }}</a>
       <span style="color: var(--border-color);">·</span>
-      <a href="{{ relative_prefix }}manage/index.html" style="color: var(--text-dim); text-decoration: none;">Editorial &amp; Moderator Desk</a>
+      <a href="{{ relative_prefix }}manage/index.html" style="color: var(--text-dim); text-decoration: none;">{{ t.editorial_desk_text | default: 'Editorial &amp; Moderator Desk' }}</a>
     </div>
   </footer>
 
