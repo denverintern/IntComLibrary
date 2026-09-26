@@ -37,18 +37,12 @@ jobs:
         run: |
           python scripts/sync_gdrive.py
 
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Stage new/updated texts and uploaded PDFs
-          git add _texts/ assets/uploads/
-
-          # Check if there are changes to commit
-          if git diff --staged --quiet; then
-            echo "No changes detected. Site is already up to date."
-          else
-            git commit -m "Auto-sync new texts & PDFs from Google Drive"
-            git push origin main
-          fi
+            - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Ingest new texts from Google Drive"
+          branch: "ingest/gdrive-sync"
+          delete-branch: true
+          title: "📥 Ingest new texts from Google Drive"
+          body: "Automated PR from Google Drive / Form submissions. Please review the new texts and PDFs before merging."
+          labels: "content"
