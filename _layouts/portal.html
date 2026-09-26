@@ -5,17 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Internationalist Communist Library</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <style>
-    :root {
-      --bg-primary: #f2eee8;
-      --text-main: #2b2723;
-      --accent-gold: #c99e2b;
-      --border-color: #d8cec0;
-      --font-serif: "New York", "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    }
-    
-    body {
+  <script>
+  const savedTheme = localStorage.getItem('lib_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+<style>
+  :root {
+    --bg-primary: #f4efe4;
+      --bg-secondary: #f4efe4;
+      --bg-hover: #ece5d6;
+    --text-main: #1a1714;
+      --text-muted: #5c554e;
+      --text-dim: #7d7265;
+    --accent-gold: #8f6515;
+    --border-color: #d9d0c4;
+    --font-serif: 'Cinzel', Georgia, "Times New Roman", Times, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg-primary: #191512;
+      --bg-secondary: #191512;
+      --bg-hover: #221c17;
+    --text-main: #e8e0d4;
+      --text-muted: #9e9384;
+      --text-dim: #6e6457;
+    --accent-gold: #c99e2b;
+    --border-color: #363028;
+  }
+  
+  body {
+
       background-color: var(--bg-primary);
       color: var(--text-main);
       font-family: var(--font-sans);
@@ -33,7 +52,7 @@
       padding: 3rem 2rem;
       text-align: center;
       border: 1px solid var(--border-color);
-      background: #faf8f5;
+      background: var(--bg-secondary);
       box-shadow: 0 10px 30px rgba(0,0,0,0.02);
     }
     
@@ -55,7 +74,7 @@
       font-family: var(--font-serif);
       font-size: 1.1rem;
       font-style: italic;
-      color: #6a6258;
+      color: var(--text-muted);
       margin-bottom: 3rem;
     }
     
@@ -68,26 +87,27 @@
     }
     
     .lang-card {
-      display: block;
-      padding: 1rem;
-      border: 1px solid var(--border-color);
-      text-decoration: none;
-      color: var(--text-main);
-      transition: all 0.2s ease;
-      background: var(--bg-primary);
-      font-size: 0.95rem;
-    }
-    
-    .lang-card:hover {
-      border-color: var(--accent-gold);
-      background: #fff;
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  background: var(--bg-primary);
+  font-size: 0.95rem;
+}
+
+.lang-card:hover {
+  border-color: var(--accent-gold);
+  background: var(--bg-hover);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201, 158, 43, 0.1);
-    }
+  box-shadow: 0 4px 12px rgba(201, 158, 43, 0.1);
+}
+
     
     .lang-card span {
       display: block;
-      color: #7b746a;
+      color: var(--text-dim);
       font-size: 0.8rem;
       margin-top: 0.25rem;
     }
