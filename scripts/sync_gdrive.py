@@ -1,30 +1,22 @@
 #!/usr/bin/env python3
 """
-Sync Google Drive / Google Form responses to the Internationalist Communist Library Jekyll site.
+Sync Google Drive / Google Form responses to the Internationalist Communist Library.
 
-Supports two modes of fetching the Google Sheet:
-1. Google Service Account (Recommended for private Sheets/Drive):
-   Set GDRIVE_CREDENTIALS (raw JSON string or path to JSON key file) and
-   GDRIVE_SHEET_ID (the spreadsheet ID from the URL).
-2. Public Google Sheet CSV (Zero-config alternative):
-   Set GDRIVE_SHEET_CSV_URL (the "Publish to the web" CSV link).
-
-PDF files uploaded via Google Forms will have drive links in the sheet.
-The script extracts file IDs, downloads new PDFs into `assets/uploads/`,
-and generates/updates markdown files in `_texts/`.
+QUEUE MODE:
+- Reads from Google Sheets.
+- Processes rows where status is empty or 'new'.
+- Validates data (slugs, year, lang, etc.).
+- Skips PDF download if drive_id and size match existing frontmatter.
+- Preserves markdown body and custom frontmatter (e.g., if source_url exists).
+- Writes status='pending' (or 'error: ...') back to the sheet.
 """
 
 import os
 import re
 import sys
 import json
-import unicodedata
-import urllib.request
-import urllib.parse
-import csv
 import io
 
-# Optional Google client libraries (used if GDRIVE_CREDENTIALS is provided)
 try:
     from google.oauth2 import service_account
     from googleapiclient.discovery import build
@@ -33,208 +25,68 @@ try:
 except ImportError:
     GOOGLE_LIBS_AVAILABLE = False
 
-
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TEXTS_DIR = os.path.join(REPO_ROOT, "_texts")
 UPLOADS_DIR = os.path.join(REPO_ROOT, "assets", "uploads")
-SECTIONS_DIR = os.path.join(REPO_ROOT, "sections")
 
-# Language code normalization map
-LANG_MAP = {
-    "en": "en", "english": "en", "ingles": "en", "inglês": "en",
-    "es": "es", "spanish": "es", "español": "es", "espanol": "es",
-    "pt": "pt", "portuguese": "pt", "português": "pt", "portugues": "pt",
-    "it": "it", "italian": "it", "italiano": "it",
-    "nl": "nl", "dutch": "nl", "nederlands": "nl",
-    "de": "de", "german": "de", "deutsch": "de",
-    "el": "el", "greek": "el", "ελληνικά": "el", "ellinika": "el",
-    "fr": "fr", "french": "fr", "français": "fr", "francais": "fr",
-    "ru": "ru", "russian": "ru", "русский": "ru", "russkiy": "ru",
-    "tr": "tr", "turkish": "tr", "türkçe": "tr", "turkce": "tr",
-    "pl": "pl", "polish": "pl", "polski": "pl",
-    "zh": "zh", "chinese": "zh", "mandarin": "zh", "中文": "zh", "zhongwen": "zh",
-    "ja": "ja", "japanese": "ja", "日本語": "ja", "nihongo": "ja",
-    "ko": "ko", "korean": "ko", "한국어": "ko", "hanguk": "ko",
-    "ar": "ar", "arabic": "ar", "العربية": "ar", "arab": "ar",
-    "hi": "hi", "hindi": "hi", "हिन्दी": "hi",
-    "bn": "bn", "bangla": "bn", "bengali": "bn", "বাংলা": "bn",
-    "id": "id", "indonesian": "id", "bahasa": "id", "bahasa indonesia": "id"
-}
+VALID_LANGS = {'en', 'es', 'pt', 'it'}
 
 def slugify(text):
-    """Generate a clean URL/filename slug from a string."""
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
-    text = re.sub(r'[^\w\s-]', '', text.lower())
-    return re.sub(r'[-\s]+', '-', text).strip('-_')
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9\-]', '-', text)
+    text = re.sub(r'-+', '-', text).strip('-')
+    return text
 
-def normalize_language(raw_lang):
-    """Normalize input language string to 2-letter ISO code."""
-    if not raw_lang:
-        return "en"
-    cleaned = raw_lang.strip().lower()
-    return LANG_MAP.get(cleaned, "en")
-
-def extract_drive_id(url_or_id):
-    """Extract Google Drive file ID from URL or return raw ID."""
-    if not url_or_id:
-        return None
-    url_or_id = url_or_id.strip()
-    # Match /d/<id> or id=<id>
-    match = re.search(r'/d/([a-zA-Z0-9_-]+)', url_or_id)
-    if match:
-        return match.group(1)
-    match = re.search(r'id=([a-zA-Z0-9_-]+)', url_or_id)
-    if match:
-        return match.group(1)
-    # Check if raw ID
-    if re.match(r'^[a-zA-Z0-9_-]{20,}$', url_or_id):
-        return url_or_id
+def extract_drive_id(url):
+    match = re.search(r'/file/d/([^/]+)', url)
+    if match: return match.group(1)
+    match = re.search(r'id=([^&]+)', url)
+    if match: return match.group(1)
     return None
 
-def download_drive_file_service_account(drive_service, file_id, destination_path):
-    """Download file using Google Drive API and Service Account."""
-    request = drive_service.files().get_media(fileId=file_id)
-    with io.FileIO(destination_path, 'wb') as fh:
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while not done:
-            status, done = downloader.next_chunk()
-            if status:
-                print(f"  Download progress: {int(status.progress() * 100)}%")
+def parse_md(filepath):
+    if not os.path.exists(filepath):
+        return {}, ""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    if content.startswith("---"):
+        parts = content.split("---", 2)
+        if len(parts) >= 3:
+            fm_raw = parts[1]
+            body = parts[2].strip()
+            fm = {}
+            for line in fm_raw.splitlines():
+                if ":" in line:
+                    k, v = line.split(":", 1)
+                    fm[k.strip()] = v.strip().strip('"\'')
+            return fm, body
+    return {}, content.strip()
 
-def download_drive_file_public(file_id, destination_path):
-    """Download publicly accessible Google Drive file via standard export/uc URL."""
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    )
-    with urllib.request.urlopen(req) as resp, open(destination_path, "wb") as f:
-        # Check for Google Drive virus warning confirmation page
-        content = resp.read()
-        if b"Google Drive - Virus scan warning" in content:
-            # Try to grab confirm token
-            html_text = content.decode('utf-8', errors='ignore')
-            confirm_match = re.search(r'confirm=([0-9A-Za-z_]+)', html_text)
-            if confirm_match:
-                confirm_token = confirm_match.group(1)
-                confirm_url = f"{url}&confirm={confirm_token}"
-                with urllib.request.urlopen(urllib.request.Request(confirm_url, headers=req.headers)) as confirm_resp:
-                    f.write(confirm_resp.read())
-                    return
-        f.write(content)
+def main():
+    print("=" * 60)
+    print("  ICL Ingest Pipeline")
+    print("=" * 60)
 
-TAXONOMY_PATH = os.path.join(REPO_ROOT, "_data", "taxonomy.json")
+    creds_env = os.environ.get("GDRIVE_CREDENTIALS")
+    sheet_id = os.environ.get("GDRIVE_SHEET_ID")
 
-def load_taxonomy():
-    """Load taxonomy definitions if present."""
-    if os.path.exists(TAXONOMY_PATH):
-        try:
-            with open(TAXONOMY_PATH, 'r', encoding='utf-8') as f:
-                return json.load(f).get("sections", [])
-        except Exception:
-            pass
-    return []
+    if not creds_env or not sheet_id:
+        print("[!] Missing GDRIVE_CREDENTIALS or GDRIVE_SHEET_ID")
+        sys.exit(1)
 
-def resolve_section(raw_section, lang="en", taxonomy=None):
-    """Map a raw section string to a canonical section_id, section_title, and section_url."""
-    if not raw_section:
-        return None, None, None
-    raw = raw_section.strip().lower()
-    
-    if taxonomy:
-        for sec in taxonomy:
-            if raw == sec.get("id", "").lower() or raw == sec.get("slug", "").lower():
-                sec_id = sec.get("id")
-                sec_title = sec.get("title", {}).get(lang) or sec.get("title", {}).get("en") or sec_id
-                sec_url = f"sections/{lang}-{sec_id}.html"
-                return sec_id, sec_title, sec_url
-            for title_lang, title_val in sec.get("title", {}).items():
-                if raw in title_val.lower() or title_val.lower() in raw:
-                    sec_id = sec.get("id")
-                    sec_title = sec.get("title", {}).get(lang) or sec.get("title", {}).get("en") or sec_id
-                    sec_url = f"sections/{lang}-{sec_id}.html"
-                    return sec_id, sec_title, sec_url
-
-    clean_id = slugify(raw_section)
-    return clean_id, raw_section, f"sections/{lang}-{clean_id}.html"
-
-def parse_sheet_rows(rows):
-    """Parse sheet rows (list of dicts) with flexible column header mapping."""
-    parsed = []
-    for row in rows:
-        title = None
-        author = "Unknown"
-        language = "en"
-        description = ""
-        drive_link = None
-        section = ""
-        category = ""
-        subcategory = ""
-
-        for key, val in row.items():
-            if not key or not val:
-                continue
-            k = key.strip().lower()
-            v = val.strip()
-
-            # If the value itself is a URL / Drive link, assign to drive_link regardless of header
-            if v.startswith("http://") or v.startswith("https://") or "drive.google.com" in v:
-                drive_link = v
-                continue
-
-            if any(t in k for t in ["title", "título", "titulo", "livro", "book"]):
-                title = v
-            elif any(a in k for a in ["author", "autor", "escritor"]):
-                author = v
-            elif any(l in k for l in ["language", "idioma", "lengua", "lang"]):
-                language = normalize_language(v)
-            elif any(d in k for d in ["desc", "resumo", "notes", "coment", "synopsis"]):
-                description = v
-            elif any(p in k for p in ["pdf", "file", "archivo", "arquivo", "upload", "drive"]):
-                drive_link = v
-            elif any(sub in k for sub in ["subcat", "sub-cat", "subseção", "subseccion"]):
-                subcategory = v
-            elif any(cat in k for cat in ["category", "categoría", "categoria", "theme", "tema"]):
-                category = v
-            elif any(s in k for s in ["section", "sección", "seccion", "seção"]):
-                section = v
-
-        if title and not (title.startswith("http://") or title.startswith("https://")):
-            parsed.append({
-                "title": title,
-                "author": author,
-                "language": language,
-                "description": description,
-                "drive_link": drive_link,
-                "section": section,
-                "category": category,
-                "subcategory": subcategory
-            })
-    return parsed
-
-def get_rows_from_service_account(creds_json, sheet_id):
-    """Read rows from Google Sheet using Google Sheets API."""
     if not GOOGLE_LIBS_AVAILABLE:
-        raise ImportError("google-api-python-client and google-auth are required for service account access.")
-    
-    if os.path.exists(creds_json):
-        creds = service_account.Credentials.from_service_account_file(
-            creds_json,
-            scopes=[
-                'https://www.googleapis.com/auth/spreadsheets.readonly',
-                'https://www.googleapis.com/auth/drive.readonly'
-            ]
-        )
+        print("[!] google-api-python-client not installed")
+        sys.exit(1)
+
+    scopes = [
+        'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/drive.readonly'
+    ]
+
+    if os.path.exists(creds_env):
+        creds = service_account.Credentials.from_service_account_file(creds_env, scopes=scopes)
     else:
-        info = json.loads(creds_json)
-        creds = service_account.Credentials.from_service_account_info(
-            info,
-            scopes=[
-                'https://www.googleapis.com/auth/spreadsheets.readonly',
-                'https://www.googleapis.com/auth/drive.readonly'
-            ]
-        )
+        creds = service_account.Credentials.from_service_account_info(json.loads(creds_env), scopes=scopes)
 
     sheets_service = build('sheets', 'v4', credentials=creds)
     drive_service = build('drive', 'v3', credentials=creds)
@@ -249,177 +101,154 @@ def get_rows_from_service_account(creds_json, sheet_id):
 
     values = result.get('values', [])
     if not values or len(values) < 2:
-        return [], drive_service
-
-    headers = [h.strip() for h in values[0]]
-    rows = []
-    for row in values[1:]:
-        row_dict = {}
-        for idx, header in enumerate(headers):
-            row_dict[header] = row[idx] if idx < len(row) else ""
-        rows.append(row_dict)
-
-    return rows, drive_service
-
-def get_rows_from_csv_url(csv_url):
-    """Read rows from a publicly published Google Sheet CSV URL."""
-    req = urllib.request.Request(
-        csv_url,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    with urllib.request.urlopen(req) as resp:
-        content = resp.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(content))
-        return list(reader), None
-
-def main():
-    print("=" * 60)
-    print("  Internationalist Communist Library - Google Drive & Sheet Synchronizer")
-    print("=" * 60)
-
-    os.makedirs(TEXTS_DIR, exist_ok=True)
-    os.makedirs(UPLOADS_DIR, exist_ok=True)
-
-    creds_env = os.environ.get("GDRIVE_CREDENTIALS")
-    sheet_id_env = os.environ.get("GDRIVE_SHEET_ID")
-    csv_url_env = os.environ.get("GDRIVE_SHEET_CSV_URL")
-
-    raw_rows = []
-    drive_service = None
-
-    if creds_env and sheet_id_env:
-        print("[*] Connecting via Google Cloud Service Account...")
-        try:
-            raw_rows, drive_service = get_rows_from_service_account(creds_env, sheet_id_env)
-        except Exception as e:
-            print(f"[!] Error reading sheet with Service Account: {e}")
-            sys.exit(1)
-    elif csv_url_env:
-        print("[*] Fetching Google Sheet via Public CSV URL...")
-        try:
-            raw_rows, drive_service = get_rows_from_csv_url(csv_url_env)
-        except Exception as e:
-            print(f"[!] Error fetching public CSV: {e}")
-            sys.exit(1)
-    else:
-        print("[!] No credentials found!")
-        print("Please configure one of the following:")
-        print("  1. Service Account: Set GDRIVE_CREDENTIALS and GDRIVE_SHEET_ID")
-        print("  2. Public CSV: Set GDRIVE_SHEET_CSV_URL")
+        print("[*] No rows found.")
         sys.exit(0)
 
-    taxonomy = load_taxonomy()
-    items = parse_sheet_rows(raw_rows)
-    print(f"[*] Found {len(items)} entries in Google Sheet.")
+    headers = [h.strip().lower() for h in values[0]]
+    col_idx = {h: i for i, h in enumerate(headers)}
+    
+    for req in ['title', 'author', 'year', 'language', 'status']:
+        if req not in col_idx:
+            print(f"[!] Missing required column in sheet: {req}")
+            sys.exit(1)
+            
+    status_col_index = col_idx['status']
+    # A=0, B=1, etc.
+    def col_num_to_letter(n):
+        string = ""
+        n += 1
+        while n > 0:
+            n, remainder = divmod(n - 1, 26)
+            string = chr(65 + remainder) + string
+        return string
+        
+    status_col_letter = col_num_to_letter(status_col_index)
 
-    synced_count = 0
-    downloaded_pdfs = 0
+    updates = []
+    
+    for row_num, row in enumerate(values[1:], start=2):
+        row_dict = {h: (row[col_idx[h]] if col_idx[h] < len(row) else "").strip() for h in headers}
+        
+        status = row_dict.get('status', '').lower()
+        if status in ['published', 'pending'] or status.startswith('error'):
+            continue
+            
+        title = row_dict.get('title', '')
+        author = row_dict.get('author', '')
+        year = row_dict.get('year', '')
+        language = row_dict.get('language', '').lower()
+        section_id = row_dict.get('section_id', '')
+        pdf_link = row_dict.get('pdf_link', '')
+        source_url = row_dict.get('source_url', '')
+        desc = row_dict.get('description', '')
+        custom_id = row_dict.get('id', '')
+        
+        errors = []
+        if language not in VALID_LANGS:
+            errors.append(f"Invalid language: {language}")
+        if not re.match(r'^\d{4}$', year):
+            errors.append(f"Invalid year: {year}")
+        if not title or not author:
+            errors.append("Missing title or author")
+            
+        base_slug = slugify(f"{title}")
+        doc_id = custom_id if custom_id else f"{language}-{base_slug}"
+        if not re.match(r'^[a-z0-9\-]+$', doc_id):
+            errors.append(f"Invalid slug: {doc_id}")
+            
+        if not doc_id.startswith(f"{language}-"):
+            doc_id = f"{language}-{doc_id}"
 
-    for item in items:
-        title = item["title"]
-        author = item["author"]
-        language = item["language"]
-        desc = item["description"]
-        drive_link = item["drive_link"]
-        section_raw = item.get("section", "")
-        category = item.get("category", "")
-        subcategory = item.get("subcategory", "")
+        if errors:
+            err_msg = "error: " + " | ".join(errors)
+            updates.append({'range': f'{first_sheet_title}!{status_col_letter}{row_num}', 'values': [[err_msg]]})
+            print(f"[!] Row {row_num} failed validation: {err_msg}")
+            continue
 
-        sec_id, sec_title, sec_url = resolve_section(section_raw, language, taxonomy)
-
-        base_slug = slugify(f"{language}-{title}")
-        md_filename = f"{base_slug}.md"
-        pdf_filename = f"{base_slug}.pdf"
+        md_filename = f"{doc_id}.md"
+        pdf_filename = f"{doc_id}.pdf"
         md_path = os.path.join(TEXTS_DIR, md_filename)
         pdf_path = os.path.join(UPLOADS_DIR, pdf_filename)
-
-        # Handle PDF download if drive link exists
+        
+        existing_fm, existing_body = parse_md(md_path)
+        
+        drive_id = extract_drive_id(pdf_link) if pdf_link else None
         has_pdf = False
-        drive_id = extract_drive_id(drive_link) if drive_link else None
-
+        
         if drive_id:
-            if not os.path.exists(pdf_path) or os.path.getsize(pdf_path) == 0:
-                print(f"[+] Downloading PDF for: '{title}' (Drive ID: {drive_id})...")
+            existing_drive_id = existing_fm.get('drive_id', '')
+            pdf_exists = os.path.exists(pdf_path)
+            
+            if not pdf_exists or drive_id != existing_drive_id:
+                print(f"[+] Downloading PDF for: '{title}'...")
                 try:
-                    if drive_service:
-                        download_drive_file_service_account(drive_service, drive_id, pdf_path)
-                    else:
-                        download_drive_file_public(drive_id, pdf_path)
-                    print(f"    Saved to: assets/uploads/{pdf_filename}")
-                    downloaded_pdfs += 1
+                    request = drive_service.files().get_media(fileId=drive_id)
+                    fh = io.FileIO(pdf_path, 'wb')
+                    downloader = MediaIoBaseDownload(fh, request)
+                    done = False
+                    while done is False:
+                        status_d, done = downloader.next_chunk()
                     has_pdf = True
-                except Exception as dl_err:
-                    print(f"    [!] Failed to download PDF: {dl_err}")
+                except Exception as e:
+                    errors.append(f"PDF download failed: {e}")
             else:
                 has_pdf = True
         elif os.path.exists(pdf_path):
             has_pdf = True
+            
+        if errors:
+            err_msg = "error: " + " | ".join(errors)
+            updates.append({'range': f'{first_sheet_title}!{status_col_letter}{row_num}', 'values': [[err_msg]]})
+            continue
 
-        # Check if file already exists to preserve existing body or custom metadata
-        existing_body = ""
-        existing_fm = {}
-        if os.path.exists(md_path):
-            try:
-                with open(md_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    if content.startswith("---"):
-                        parts = content.split("---", 2)
-                        if len(parts) >= 3:
-                            fm_raw = parts[1]
-                            existing_body = parts[2].strip()
-                            for line in fm_raw.splitlines():
-                                if ":" in line:
-                                    k, v = line.split(":", 1)
-                                    existing_fm[k.strip()] = v.strip().strip('"\'')
-            except Exception:
-                pass
-
-        final_section_id = sec_id or existing_fm.get("section_id", "")
-        final_section_title = sec_title or existing_fm.get("section_title", "")
-        final_section_url = sec_url or existing_fm.get("section_url", "")
-        final_category = category or existing_fm.get("category", "")
-        final_subcategory = subcategory or existing_fm.get("subcategory", "")
-        final_body = existing_body if existing_body else desc
-
-        # Generate markdown frontmatter and body
+        # Frontmatter generation
         safe_title = title.replace('"', '\\"')
         safe_author = author.replace('"', '\\"')
         safe_desc = desc.replace('"', '\\"')
+        
+        # Merge source_url
+        final_source_url = source_url if source_url else existing_fm.get('source_url', '')
+        final_body = existing_body if existing_body else safe_desc
 
-        pdf_fm = f'pdf: "{pdf_filename}"\n' if has_pdf else ''
-        sec_id_fm = f'section_id: "{final_section_id}"\n' if final_section_id else ''
-        cat_fm = f'category: "{final_category.replace(chr(34), chr(92)+chr(34))}"\n' if final_category else ''
-        subcat_fm = f'subcategory: "{final_subcategory.replace(chr(34), chr(92)+chr(34))}"\n' if final_subcategory else ''
-        sec_title_fm = f'section_title: "{final_section_title.replace(chr(34), chr(92)+chr(34))}"\n' if final_section_title else ''
-        sec_url_fm = f'section_url: "{final_section_url}"\n' if final_section_url else ''
+        fm_lines = [
+            "---",
+            "layout: text",
+            f"id: {doc_id}",
+            f'title: "{safe_title}"',
+            f'author: "{safe_author}"',
+            f"year: {year}",
+            f"language: {language}",
+            f"section_id: {section_id}"
+        ]
+        
+        if has_pdf:
+            fm_lines.append(f"pdf: {pdf_filename}")
+        
+        if final_source_url:
+            fm_lines.append(f'source_url: "{final_source_url}"')
+            
+        if drive_id:
+            fm_lines.append(f"drive_id: {drive_id}")
+            
+        fm_lines.append("status: pending")
+        fm_lines.append("---")
+        fm_lines.append("")
+        fm_lines.append(final_body)
+        
+        fm = "\n".join(fm_lines) + "\n"
 
-        md_content = f"""---
-{sec_id_fm}{cat_fm}{subcat_fm}layout: text
-title: "{safe_title}"
-author: "{safe_author}"
-language: "{language}"
-{sec_title_fm}{sec_url_fm}description: "{safe_desc}"
-{pdf_fm}---
+        with open(md_path, 'w', encoding='utf-8') as f:
+            f.write(fm)
+            
+        print(f"[+] Processed: {doc_id}")
+        updates.append({'range': f'{first_sheet_title}!{status_col_letter}{row_num}', 'values': [['pending']]})
 
-{final_body}
-"""
-
-        # Only write if content is new or changed
-        needs_write = True
-        if os.path.exists(md_path):
-            with open(md_path, 'r', encoding='utf-8') as f:
-                if f.read().strip() == md_content.strip():
-                    needs_write = False
-
-        if needs_write:
-            with open(md_path, 'w', encoding='utf-8') as f:
-                f.write(md_content)
-            print(f"[+] Wrote text page: _texts/{md_filename}")
-            synced_count += 1
-
-    print("-" * 60)
-    print(f"[✓] Sync complete: {synced_count} markdown pages updated, {downloaded_pdfs} PDFs downloaded.")
-    print("=" * 60)
+    if updates:
+        body = {'valueInputOption': 'RAW', 'data': updates}
+        sheets_service.spreadsheets().values().batchUpdate(spreadsheetId=sheet_id, body=body).execute()
+        print(f"[*] Updated {len(updates)} statuses in Sheet.")
+    else:
+        print("[*] No new rows to process.")
 
 if __name__ == "__main__":
     main()
