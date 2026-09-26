@@ -18,3 +18,4 @@ firebase-admin-key.json
 # Jekyll cache
 .jekyll-cache/
 .jekyll-metadata
+_site/

@@ -2,14 +2,7 @@
 layout: default
 ---
 
-{% assign relative_prefix = "" %}
-{% if page.url != "/" and page.url != "/index.html" %}
-  {% assign relative_prefix = "../" %}
-  {% assign url_parts = page.url | split: '/' %}
-  {% if url_parts.size > 3 %}
-    {% assign relative_prefix = "../../" %}
-  {% endif %}
-{% endif %}
+
 
 {% case page.language %}
   {% when 'pt' %}
@@ -44,7 +37,7 @@ layout: default
 
 <div class="chapter-container">
   <nav class="reader-breadcrumb">
-    <a href="{{ relative_prefix }}{% if page.language == 'en' %}index.html{% else %}{{ page.language }}/index.html{% endif %}">{{ library_label }}</a>
+    <a href="{{ site.baseurl }}/{% if page.language == 'en' %}index.html{% else %}{{ page.language }}/index.html{% endif %}">{{ library_label }}</a>
     <span class="sep">/</span>
     <span class="current">{{ page.numeral }}. {{ page.title }}</span>
   </nav>
@@ -77,7 +70,7 @@ layout: default
             {% if c == cat %}
               <li class="chapter-work-row">
                 <div class="chapter-work-main">
-                  <a href="{{ relative_prefix }}{{ t.url | remove_first: '/' }}" class="chapter-work-link">{{ t.title }}</a>
+                  <a href="{{ site.baseurl }}{{ t.url }}" class="chapter-work-link">{{ t.title }}</a>
                   {% if t.author %}
                     <span class="chapter-work-author">— {{ t.author }}</span>
                   {% endif %}
@@ -87,10 +80,10 @@ layout: default
                 </div>
                 <div class="chapter-work-actions">
                   {% if t.pdf %}
-                    <a href="{{ relative_prefix }}assets/uploads/{{ t.pdf }}" download class="format-link">PDF</a>
+                    <a href="{{ site.baseurl }}/assets/uploads/{{ t.pdf }}" download class="format-link">PDF</a>
                     <span class="format-sep">·</span>
                   {% endif %}
-                  <a href="{{ relative_prefix }}{{ t.url | remove_first: '/' }}" class="format-link">Read</a>
+                  <a href="{{ site.baseurl }}{{ t.url }}" class="format-link">Read</a>
                 </div>
               </li>
             {% endif %}

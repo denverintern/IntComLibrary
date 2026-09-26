@@ -63,6 +63,8 @@ def parse_md(filepath):
     return {}, content.strip()
 
 def main():
+    dry_run = os.environ.get('DRY_RUN', 'false').lower() == 'true'
+    if dry_run: print('--- DRY RUN MODE: No files or sheets will be modified ---')
     print("=" * 60)
     print("  ICL Ingest Pipeline")
     print("=" * 60)

@@ -2,14 +2,7 @@
 layout: default
 ---
 
-{% assign relative_prefix = "" %}
-{% if page.url != "/" and page.url != "/index.html" %}
-  {% assign relative_prefix = "../" %}
-  {% assign url_parts = page.url | split: '/' %}
-  {% if url_parts.size > 3 %}
-    {% assign relative_prefix = "../../" %}
-  {% endif %}
-{% endif %}
+
 
 {% case page.language %}
   {% when 'pt' %}
@@ -161,7 +154,7 @@ layout: default
 
   <!-- Archival Breadcrumb -->
   <nav class="reader-breadcrumb" aria-label="Breadcrumb">
-    <a href="{{ relative_prefix }}{{ back_url }}">{{ library_label }}</a>
+    <a href="{{ site.baseurl }}/{{ back_url }}">{{ library_label }}</a>
     {% if page.section_title %}
       <span class="sep">/</span>
       {% if page.section_url %}
@@ -170,7 +163,7 @@ layout: default
         {% if first_char == "/" %}
           {% assign target_sec_url = target_sec_url | remove_first: "/" %}
         {% endif %}
-        <a href="{{ relative_prefix }}{{ target_sec_url }}">{{ sec_roman }} {{ page.section_title }}</a>
+        <a href="{{ site.baseurl }}/{{ target_sec_url }}">{{ sec_roman }} {{ page.section_title }}</a>
       {% else %}
         <span>{{ sec_roman }} {{ page.section_title }}</span>
       {% endif %}
@@ -221,7 +214,7 @@ layout: default
   <button type="button" onclick="window.print()">{{ print_label }}</button>
 </div>
 
-<!-- Embedded PDF Document Viewer (if attached) -->
+<!-- Document Viewer / Source Actions -->
 {% if pdf_url %}
   <div class="reader-pdf-container">
     <object data="{{ pdf_url }}" type="application/pdf" class="reader-pdf-frame">
@@ -229,25 +222,28 @@ layout: default
       <p style="padding: 1rem; text-align: center; color: var(--text-dim);">
         This browser cannot display PDFs.
         <a href="{{ pdf_url }}" download>Download the file</a>
-        {% if page.source_url %}or <a href="{{ page.source_url }}" target="_blank" rel="noopener">read the HTML source</a>{% endif %}.
+        {% if page.source_url %}or <a href="{{ page.source_url }}" target="_blank" rel="noopener">read the source text</a>{% endif %}.
       </p>
     </object>
   </div>
+{% elsif page.source_url %}
+  <div style="padding: 3rem 1rem; text-align: center; border: 1px solid var(--border-color); background: var(--bg-secondary); margin-bottom: 2rem;">
+    <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">Read the Source Text</h3>
+    <a href="{{ page.source_url }}" target="_blank" rel="noopener" class="format-link" style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--accent-gold); text-decoration: none; font-family: var(--font-sans); color: var(--text-main);">Open External Link</a>
+  </div>
 {% else %}
-  {% if content == nil or content == "" or content contains "Historical Significance" or content contains "Concise summary" %}
-    <p style="padding: 2rem 1rem; text-align: center; color: var(--text-dim); font-style: italic; border: 1px solid var(--border-color); margin-bottom: 2rem;">
-      {{ no_pdf_label }}
-      {% if page.source_url %}
-        <a href="{{ page.source_url }}" target="_blank" rel="noopener">{{ read_source_label }}</a>.
-      {% endif %}
-    </p>
-  {% endif %}
+  <div style="padding: 3rem 1rem; text-align: center; border: 1px dashed var(--border-color); color: var(--text-dim); font-style: italic; margin-bottom: 2rem;">
+    No file yet. <a href="{{ site.baseurl }}/manage/{{ page.language | default: 'en' }}/index.html" style="color: var(--text-main);">Contribute this text</a>.
+  </div>
 {% endif %}
 
-  <!-- Transcribed Text Body (Readable measure ~38rem / 65-72ch) -->
+  <!-- Transcribed Text Body -->
   <div class="reader-body" id="transcription">
-    {{ content }}
+    {% if content.size > 10 %}
+      {{ content }}
+    {% endif %}
   </div>
+
 
   <!-- Sibling Works in Current Section -->
   {% assign sibling_texts = "" | split: "," %}
@@ -263,7 +259,7 @@ layout: default
       <ul class="reader-siblings-list">
         {% for sib in sibling_texts limit: 5 %}
           <li class="reader-sibling-item">
-            <a href="{{ relative_prefix }}{{ sib.url | remove_first: '/' }}">{{ sib.title }}</a>
+            <a href="{{ site.baseurl }}{{ sib.url }}">{{ sib.title }}</a>
             {% if sib.author %}
               <span class="reader-sibling-author">— {{ sib.author }}</span>
             {% endif %}

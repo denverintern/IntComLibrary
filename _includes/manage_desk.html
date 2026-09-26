@@ -1,11 +1,4 @@
-{% assign relative_prefix = "" %}
-{% if page.url != "/" and page.url != "/index.html" %}
-  {% assign relative_prefix = "../" %}
-  {% assign url_parts = page.url | split: '/' %}
-  {% if url_parts.size > 3 %}
-    {% assign relative_prefix = "../../" %}
-  {% endif %}
-{% endif %}
+
 
 <!-- Authentication Gate Modal (Displayed when locked) -->
 <style>
@@ -69,7 +62,7 @@
       <button type="button" id="btn-lock-session" class="btn btn-secondary btn-sm" title="Lock the editorial panel">
         Lock / Sign Out
       </button>
-      <a href="{{ relative_prefix }}index.html" class="btn btn-secondary btn-sm">
+      <a href="{{ site.baseurl }}/index.html" class="btn btn-secondary btn-sm">
         Return to Library
       </a>
     </div>
@@ -101,9 +94,7 @@
     </button>
 
     <!-- Lead Admin Only Tabs -->
-    <button type="button" class="admin-tab-btn role-lead-only" data-tab="tab-edit-book">
-      Edit Existing Work
-    </button>
+    
     <button type="button" class="admin-tab-btn role-lead-only" data-tab="tab-taxonomy">
       Sections & Taxonomy
     </button>
@@ -134,217 +125,6 @@
 
       <div id="queue-container">
         <!-- Rendered dynamically via JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: ADD / SUBMIT NEW BOOK -->
-  <div id="tab-add-book" class="admin-tab-content">
-    
-    <!-- Moderator Context Notice -->
-    <div id="mod-notice-banner" style="display: none; background: rgba(201, 158, 43, 0.1); border: 1px solid rgba(201, 158, 43, 0.3); border-left: 3px solid var(--accent-gold); padding: 0.85rem 1.25rem; border-radius: 2px; font-size: 0.86rem; color: var(--accent-gold); margin-bottom: 1.5rem;">
-      <strong>Editorial Notice:</strong> You are submitting as a Moderator. Once submitted, your text will be sent to the Lead Administrator review queue for approval before it can appear on the library website.
-    </div>
-
-    <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2rem; align-items: start;">
-      
-      <!-- Form Panel -->
-      <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 2px; padding: 2rem;">
-        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-          Work Entry Specifications
-        </h3>
-        
-        <form id="add-book-form" onsubmit="return false;">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-            <div>
-              <label class="metadata-label" for="add-title">Title *</label>
-              <input type="text" id="add-title" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Value, Price and Profit" required>
-            </div>
-            <div>
-              <label class="metadata-label" for="add-author">Author *</label>
-              <input type="text" id="add-author" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Karl Marx" required>
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-            <div>
-              <label class="metadata-label" for="add-lang">Language *</label>
-              <select id="add-lang" class="search-input" style="padding-left: 1rem;">
-                <option value="en">English</option>
-                <option value="es">Español</option>
-                <option value="pt">Português</option>
-                <option value="fr">Français</option>
-                <option value="it">Italiano</option>
-                <option value="de">Deutsch</option>
-                <option value="ru">Русский</option>
-                <option value="zh">中文</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-                <option value="ar">العربية</option>
-                <option value="hi">हिन्दी</option>
-                <option value="bn">বাংলা</option>
-                <option value="id">Bahasa Indonesia</option>
-                <option value="tr">Türkçe</option>
-                <option value="pl">Polski</option>
-                <option value="el">Ελληνικά</option>
-                <option value="nl">Nederlands</option>
-              </select>
-            </div>
-            <div>
-              <label class="metadata-label" for="add-section">Thematic Section</label>
-              <select id="add-section" class="search-input" style="padding-left: 1rem;">
-                <option value="critique-political-economy" data-title="Critique of Political Economy">I. Critique of Political Economy</option>
-                <option value="party-state-revolution" data-title="Party, State & Revolution">II. Party, State & Revolution</option>
-                <option value="historical-materialism" data-title="Historical Materialism & Method">III. Historical Materialism & Method</option>
-                <option value="history-communist-left" data-title="Tactics & History of Communist Left">IV. Tactics & History of Communist Left</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-            <div>
-              <label class="metadata-label" for="add-category">Category</label>
-              <input type="text" id="add-category" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Value, Surplus Value & Capital">
-            </div>
-            <div>
-              <label class="metadata-label" for="add-subcategory">Subcategory</label>
-              <input type="text" id="add-subcategory" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Labour Theory of Value">
-            </div>
-          </div>
-
-          <div style="margin-bottom: 1rem;">
-            <label class="metadata-label" for="add-pdf">PDF File Name (optional)</label>
-            <input type="text" id="add-pdf" class="search-input" style="padding-left: 1rem;" placeholder="e.g. wage-labour-and-capital.pdf">
-            <span style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.2rem; display: block;">Place corresponding PDF in assets/uploads/ or leave blank.</span>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <label class="metadata-label" for="add-desc">Short Archival Summary *</label>
-            <textarea id="add-desc" class="search-input" style="padding: 0.75rem 1rem; height: 95px; resize: vertical;" placeholder="Concise summary of theoretical and historical significance..." required></textarea>
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <label class="metadata-label" for="add-content">Theoretical Exposition / Markdown Body</label>
-            <textarea id="add-content" class="search-input" style="padding: 0.75rem 1rem; height: 130px; resize: vertical; font-family: monospace; font-size: 0.85rem;" placeholder="### Theoretical Overview&#10;&#10;Detailed commentary, thesis exposition, or reading notes..."></textarea>
-          </div>
-
-          <!-- Actions -->
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <!-- Lead Admin Actions -->
-            <button type="button" id="btn-download-book" class="btn btn-primary role-lead-only">
-              Download .md File
-            </button>
-            <button type="button" id="btn-copy-book" class="btn btn-secondary role-lead-only">
-              Copy Markdown
-            </button>
-
-            <!-- Moderator Action -->
-            <button type="button" id="btn-submit-for-approval" class="btn btn-primary role-mod-only" style="display: none; width: 100%;">
-              Submit for Lead Administrator Approval
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Live Preview Panel -->
-      <div style="position: sticky; top: 2rem;">
-        <h4 style="font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-gold); margin-bottom: 0.85rem;">
-          Card Preview (Archival Homogeneous)
-        </h4>
-        <div id="live-card-container">
-          <article class="text-card" style="margin-bottom: 1.5rem;">
-            <div class="card-top-meta">
-              <span id="prev-section-badge" class="card-section-tag">Critique of Political Economy</span>
-              <span id="prev-cat-badge" class="card-category-tag">Value, Surplus Value & Capital</span>
-            </div>
-            <div class="card-header">
-              <h3 class="card-title">
-                <a href="#" id="prev-title">Value, Price and Profit</a>
-              </h3>
-              <span class="card-author" id="prev-author">Karl Marx</span>
-            </div>
-            <p class="card-description" id="prev-desc">
-              Concise summary of theoretical and historical significance...
-            </p>
-            <div class="card-footer">
-              <span class="card-meta-tag" id="prev-lang-tag">English</span>
-              <span class="card-read-link">Read Text →</span>
-            </div>
-          </article>
-        </div>
-
-        <h4 style="font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-gold); margin-bottom: 0.75rem;">
-          Generated Markdown Frontmatter
-        </h4>
-        <pre id="code-preview" style="background: var(--bg-tertiary); padding: 1.25rem; border: 1px solid var(--border-color); border-radius: 2px; font-size: 0.78rem; overflow-x: auto; color: var(--text-main); max-height: 250px; font-family: monospace;"></pre>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: EDIT EXISTING BOOK (LEAD ADMIN ONLY) -->
-  <div id="tab-edit-book" class="admin-tab-content role-lead-only">
-    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 2px; padding: 2rem; max-width: 900px; margin: 0 auto;">
-      <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 1.5rem;">
-        Modify an Existing Archival Work
-      </h3>
-      
-      <div style="margin-bottom: 2rem;">
-        <label class="metadata-label" for="select-edit-book">Select Existing Work</label>
-        <select id="select-edit-book" class="search-input" style="padding-left: 1rem;">
-          <option value="">-- Choose a work from the library --</option>
-          {% for text in site.texts %}
-            <option value="{{ text.url }}" 
-              data-title="{{ text.title | escape }}"
-              data-author="{{ text.author | escape }}"
-              data-lang="{{ text.language }}"
-              data-secid="{{ text.section_id }}"
-              data-sectitle="{{ text.section_title | escape }}"
-              data-cat="{{ text.category | escape }}"
-              data-subcat="{{ text.subcategory | escape }}"
-              data-pdf="{{ text.pdf | escape }}"
-              data-desc="{{ text.description | escape }}">
-              [{{ text.language | upcase }}] {{ text.title }} — {{ text.author }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <div id="edit-form-wrapper" style="display: none; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-          <div>
-            <label class="metadata-label" for="edit-title">Title</label>
-            <input type="text" id="edit-title" class="search-input" style="padding-left: 1rem;">
-          </div>
-          <div>
-            <label class="metadata-label" for="edit-author">Author</label>
-            <input type="text" id="edit-author" class="search-input" style="padding-left: 1rem;">
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-          <div>
-            <label class="metadata-label" for="edit-category">Category</label>
-            <input type="text" id="edit-category" class="search-input" style="padding-left: 1rem;">
-          </div>
-          <div>
-            <label class="metadata-label" for="edit-subcategory">Subcategory</label>
-            <input type="text" id="edit-subcategory" class="search-input" style="padding-left: 1rem;">
-          </div>
-        </div>
-
-        <div style="margin-bottom: 1.5rem;">
-          <label class="metadata-label" for="edit-desc">Description / Summary</label>
-          <textarea id="edit-desc" class="search-input" style="padding: 0.75rem 1rem; height: 100px; resize: vertical;"></textarea>
-        </div>
-
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button type="button" id="btn-download-edited" class="btn btn-primary">
-            Download Updated .md File
-          </button>
-          <button type="button" id="btn-copy-edited" class="btn btn-secondary">
-            Copy Updated Markdown
-          </button>
-        </div>
       </div>
     </div>
   </div>

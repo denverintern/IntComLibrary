@@ -1,14 +1,7 @@
 {% assign lang = page.language | default: 'en' %}
 {% assign t = site.data.locales[lang] | default: site.data.locales['en'] %}
 
-{% assign relative_prefix = "" %}
-{% if page.url != "/" and page.url != "/index.html" %}
-  {% assign relative_prefix = "../" %}
-  {% assign url_parts = page.url | split: '/' %}
-  {% if url_parts.size > 3 %}
-    {% assign relative_prefix = "../../" %}
-  {% endif %}
-{% endif %}
+
 
 {% case page.language %}
   {% when 'pt' %}
@@ -153,13 +146,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title | default: site.title }} • {{ t.brand_title }}</title>
+<meta property="og:title" content="{{ page.title | default: 'Internationalist Communist Library' | escape }}">
+<meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+<meta property="og:description" content="Theoretical Archive of the Communist Left">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/favicon.png">
+
 <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
 <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ t.brand_title }}">
 
   
-  <link rel="icon" type="image/png" href="{{ relative_prefix }}favicon.png">
+  <link rel="icon" type="image/png" href="{{ site.baseurl }}/favicon.png">
 
   <!-- Inline compiled stylesheet for fail-safe rendering and offline file:// support -->
   <style>
@@ -170,7 +169,7 @@
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="{{ relative_prefix }}index.html" class="logo-link">
+      <a href="{{ site.baseurl }}/index.html" class="logo-link">
         <svg viewBox="0 0 100 100" class="logo-img" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Defs for reuse -->
           <defs>
@@ -226,59 +225,43 @@
 
   <div class="container main-layout">
     <aside class="sidebar">
-      <nav class="sidebar-nav">
-        {% assign current_lang = page.language | default: 'en' %}
-        {% assign all_count = 0 %}
+  <nav class="sidebar-nav">
+    {% assign current_lang = page.language | default: 'en' %}
+    {% assign all_count = 0 %}
+    {% for t in site.texts %}
+      {% if t.language == current_lang %}
+        {% assign all_count = all_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+
+    <a href="{{ site.baseurl }}/{{ home_path }}" class="sidebar-link active" id="sidebar-all-texts">
+      <span>{{ t.all_texts_text | default: 'All Texts' }}</span>
+      {% if all_count > 0 %}
+        <span class="sidebar-count">({{ all_count }})</span>
+      {% endif %}
+    </a>
+    
+    <div id="sidebar-sections-container">
+      <div class="sidebar-title" style="margin-top: 1.5rem">{{ sidebar_title | default: 'Thematic Sections' }}</div>
+      {% for s in site.data.taxonomy.sections %}
+        {% assign s_count = 0 %}
         {% for t in site.texts %}
-          {% if t.language == current_lang %}
-            {% assign all_count = all_count | plus: 1 %}
+          {% if t.language == current_lang and t.section_id == s.slug %}
+            {% assign s_count = s_count | plus: 1 %}
           {% endif %}
         {% endfor %}
 
-        <a href="{{ relative_prefix }}{{ home_path }}" class="sidebar-link {% if page.url == '/' or page.url == '/index.html' or page.url == '/pt/index.html' or page.url == '/es/index.html' or page.url == '/fr/index.html' or page.url == '/it/index.html' or page.url == '/nl/index.html' or page.url == '/de/index.html' or page.url == '/ru/index.html' or page.url == '/zh/index.html' or page.url == '/ja/index.html' or page.url == '/ko/index.html' or page.url == '/ar/index.html' or page.url == '/hi/index.html' or page.url == '/bn/index.html' or page.url == '/id/index.html' or page.url == '/tr/index.html' or page.url == '/pl/index.html' or page.url == '/el/index.html' %}active{% endif %}">
-          <span>{{ t.all_texts_text }}</span>
-          {% if all_count > 0 %}
-            <span class="sidebar-count">({{ all_count }})</span>
+        <a href="{{ site.baseurl }}/{{ home_path }}?section={{ s.slug }}" class="sidebar-link" data-section="{{ s.slug }}">
+          <span class="sidebar-link-title"><span class="sidebar-roman">{{ s.numeral }}.</span> {{ s.title[current_lang] | default: s.title['en'] }}</span>
+          {% if s_count > 0 %}
+            <span class="sidebar-count">({{ s_count }})</span>
           {% endif %}
         </a>
-        
-        <div id="sidebar-sections-container">
-          {% assign sections_list = "" | split: "," %}
-          {% for p in site.pages %}
-            {% if p.dir == "/sections/" and p.language == current_lang %}
-              {% assign sections_list = sections_list | push: p %}
-            {% endif %}
-          {% endfor %}
-          {% assign sorted_sections = sections_list | sort: "order" %}
-          
-          {% if sorted_sections.size > 0 %}
-            <div class="sidebar-title" style="margin-top: 1.5rem">{{ sidebar_title }}</div>
-            {% for s in sorted_sections %}
-              {% assign is_active = false %}
-              {% if page.url == s.url %}
-                {% assign is_active = true %}
-              {% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+</aside>
 
-              {% assign s_count = 0 %}
-              {% for t in site.texts %}
-                {% if t.language == current_lang and t.section_id == s.slug %}
-                  {% assign s_count = s_count | plus: 1 %}
-                {% endif %}
-              {% endfor %}
-
-              <a href="{{ relative_prefix }}{{ s.url | remove_first: '/' }}" class="sidebar-link {% if is_active %}active{% endif %}" data-sidebar-filter="{{ s.slug }}">
-                <span class="sidebar-link-title"><span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% when 5 %}V.{% else %}•{% endcase %}</span> {{ s.title }}</span>
-                {% if s_count > 0 %}
-                  <span class="sidebar-count">({{ s_count }})</span>
-                {% endif %}
-              </a>
-            {% endfor %}
-          {% endif %}
-
-          
-        </div>
-      </nav>
-    </aside>
 
     <main class="main-content">
       {{ content }}
@@ -289,11 +272,11 @@
     <p style="font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 0.5rem; letter-spacing: 0.05em">{{ t.unite_text }}</p>
     <p style="margin-bottom: 0.6rem; font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">{{ t.brand_title }} &middot; {{ t.updated_label | default: 'Updated' }} {{ site.time | date: "%Y-%m-%d" }}</p>
     <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: var(--font-sans);">
-      <a href="{{ relative_prefix }}{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">{{ t.library_index_text }}</a>
+      <a href="{{ site.baseurl }}/{{ home_path }}" style="color: var(--text-dim); text-decoration: none;">{{ t.library_index_text }}</a>
       <span style="color: var(--border-color);">·</span>
       <a href="https://github.com/denverintern/IntComLibrary" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: none;">{{ t.repository_text }}</a>
       <span style="color: var(--border-color);">·</span>
-      <a href="{{ relative_prefix }}manage/{{ page.language | default: 'en' }}/index.html" style="color: var(--text-dim); text-decoration: none;">{{ t.editorial_desk_text | default: 'Editorial &amp; Moderator Desk' }}</a>
+      <a href="{{ site.baseurl }}/manage/{{ page.language | default: 'en' }}/index.html" style="color: var(--text-dim); text-decoration: none;">{{ t.editorial_desk_text | default: 'Editorial &amp; Moderator Desk' }}</a>
     </div>
   </footer>
 
@@ -336,29 +319,39 @@
       // 2. Archive Views Control (Catalog | Index | Shelf)
       const btnCatalog = document.getElementById('view-btn-catalog');
       const btnIndex = document.getElementById('view-btn-index');
-      const btnShelf = document.getElementById('view-btn-shelf');
-      const viewCatalog = document.getElementById('view-catalog');
+            const viewCatalog = document.getElementById('view-catalog');
       const viewIndex = document.getElementById('view-index');
-      const viewShelf = document.getElementById('view-shelf');
+      
+      function updateUrlParams(params) {
+  const url = new URL(window.location);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      url.searchParams.set(key, value);
+    } else {
+      url.searchParams.delete(key);
+    }
+  });
+  window.history.replaceState({}, '', url);
+}
 
-      function setArchiveView(mode) {
-        if (!viewCatalog) return; // Not on archive page
-        if (viewCatalog) viewCatalog.style.display = (mode === 'catalog' ? 'block' : 'none');
-        if (viewIndex) viewIndex.style.display = (mode === 'index' ? 'flex' : 'none');
-        if (viewShelf) viewShelf.style.display = (mode === 'shelf' ? 'grid' : 'none');
+function setArchiveView(mode) {
+  if (!viewCatalog) return; // Not on archive page
+  if (mode === 'shelf') mode = 'index'; // Fallback for old links
+  if (viewCatalog) viewCatalog.style.display = (mode === 'catalog' ? 'block' : 'none');
+  if (viewIndex) viewIndex.style.display = (mode === 'index' ? 'flex' : 'none');
 
-        if (btnCatalog) btnCatalog.classList.toggle('active', mode === 'catalog');
-        if (btnIndex) btnIndex.classList.toggle('active', mode === 'index');
-        if (btnShelf) btnShelf.classList.toggle('active', mode === 'shelf');
+  if (btnCatalog) btnCatalog.classList.toggle('active', mode === 'catalog');
+  if (btnIndex) btnIndex.classList.toggle('active', mode === 'index');
 
-        try { localStorage.setItem('library-archive-view', mode); } catch (e) {}
-      }
+  try { localStorage.setItem('library-archive-view', mode); } catch (e) {}
+  updateUrlParams({ view: mode });
+}
 
-      if (btnCatalog && btnIndex && btnShelf) {
+
+      if (btnCatalog && btnIndex) {
         btnCatalog.addEventListener('click', () => setArchiveView('catalog'));
         btnIndex.addEventListener('click', () => setArchiveView('index'));
-        btnShelf.addEventListener('click', () => setArchiveView('shelf'));
-
+        
         const savedView = localStorage.getItem('library-archive-view') || 'index';
         setArchiveView(savedView);
       }
@@ -482,6 +475,7 @@ function toggleSort(key) {
     localStorage.setItem('catalog-sort-dir', sortDir);
   } catch (e) {}
   applyCatalogSort();
+  updateUrlParams({ sort: sortKey, dir: sortDir });
 }
 
 if (sortTitleBtn) sortTitleBtn.addEventListener('click', () => toggleSort('title'));
@@ -492,6 +486,7 @@ if (sortPdfBtn) {
     requirePdf = !requirePdf;
     try { localStorage.setItem('catalog-require-pdf', requirePdf); } catch (e) {}
     applyCatalogSort();
+  updateUrlParams({ sort: sortKey, dir: sortDir });
   });
 }
 
@@ -507,8 +502,10 @@ if (catalogTbody) {
   if (origSort === 'default') {
     // It's already in default order
     applyCatalogSort();
+  updateUrlParams({ sort: sortKey, dir: sortDir });
   } else {
     applyCatalogSort();
+  updateUrlParams({ sort: sortKey, dir: sortDir });
   }
 }
 
@@ -521,44 +518,64 @@ if (catalogTbody) {
       let currentSearchQuery = '';
 
       function applySearch() {
-        const rows = document.querySelectorAll('.catalog-row');
-        const indexItems = document.querySelectorAll('.index-item');
-        const bulletinItems = document.querySelectorAll('.bulletin-item');
-        const resultsBadge = document.getElementById('results-count');
-        let visibleCount = 0;
-        const totalCount = rows.length || indexItems.length;
+  const rows = document.querySelectorAll('.catalog-row');
+  const indexItems = document.querySelectorAll('.index-item');
+  const resultsBadge = document.getElementById('results-count');
+  let visibleCount = 0;
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const sectionFilter = urlParams.get('section');
 
-        rows.forEach(row => {
-          const title = row.getAttribute('data-title') || '';
-          const author = row.getAttribute('data-author') || '';
-          const desc = row.getAttribute('data-desc') || '';
-          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
-          row.style.display = (matches && !row.classList.contains('hide-by-pdf')) ? '' : 'none';
-          if (matches && !row.classList.contains('hide-by-pdf')) visibleCount++;
-        });
+  // Handle sidebar active state
+  document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+  if (sectionFilter) {
+    const activeLink = document.querySelector(`.sidebar-link[data-section="${sectionFilter}"]`);
+    if (activeLink) activeLink.classList.add('active');
+  } else {
+    const allLink = document.getElementById('sidebar-all-texts');
+    if (allLink) allLink.classList.add('active');
+  }
 
-        indexItems.forEach(item => {
-          const title = item.getAttribute('data-title') || '';
-          const author = item.getAttribute('data-author') || '';
-          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery));
-          item.style.display = matches ? 'grid' : 'none';
-        });
+  // Apply filters
+  rows.forEach(row => {
+    const title = row.getAttribute('data-title') || '';
+    const author = row.getAttribute('data-author') || '';
+    const desc = row.getAttribute('data-desc') || '';
+    const rowSection = row.getAttribute('data-section') || '';
+    
+    let matches = true;
+    if (currentSearchQuery && !title.includes(currentSearchQuery) && !author.includes(currentSearchQuery) && !desc.includes(currentSearchQuery)) {
+      matches = false;
+    }
+    if (sectionFilter && rowSection !== sectionFilter) {
+      matches = false;
+    }
+    
+    row.style.display = (matches && !row.classList.contains('hide-by-pdf')) ? '' : 'none';
+    if (matches && !row.classList.contains('hide-by-pdf')) visibleCount++;
+  });
 
-        bulletinItems.forEach(card => {
-          const title = card.getAttribute('data-title') || '';
-          const author = card.getAttribute('data-author') || '';
-          const desc = card.getAttribute('data-desc') || '';
-          const matches = (!currentSearchQuery || title.includes(currentSearchQuery) || author.includes(currentSearchQuery) || desc.includes(currentSearchQuery));
-          card.style.display = matches ? 'grid' : 'none';
-        });
+  indexItems.forEach(item => {
+    const title = item.getAttribute('data-title') || '';
+    const author = item.getAttribute('data-author') || '';
+    const rowSection = item.getAttribute('data-section') || '';
+    
+    let matches = true;
+    if (currentSearchQuery && !title.includes(currentSearchQuery) && !author.includes(currentSearchQuery)) {
+      matches = false;
+    }
+    if (sectionFilter && rowSection !== sectionFilter) {
+      matches = false;
+    }
+    
+    item.style.display = matches ? 'list-item' : 'none';
+    if (matches) visibleCount++;
+  });
 
-        if (resultsBadge) {
-          if (currentSearchQuery) {
-            resultsBadge.textContent = `${visibleCount} of ${totalCount} works`;
-          } else {
-            resultsBadge.textContent = `${totalCount} works`;
-          }
-        }
+  if (resultsBadge) {
+    resultsBadge.textContent = visibleCount;
+  }
+}
       }
 
       if (searchInput) {
@@ -567,8 +584,8 @@ if (catalogTbody) {
         if (queryParam) {
           searchInput.value = queryParam;
           currentSearchQuery = queryParam.toLowerCase().trim();
-          if (isHomepage) applySearch();
         }
+        if (isHomepage) applySearch();
 
         searchInput.addEventListener('input', (e) => {
           currentSearchQuery = e.target.value.toLowerCase().trim();
@@ -581,7 +598,7 @@ if (catalogTbody) {
           if (e.key === 'Enter') {
             const query = e.target.value.trim();
             if (!isHomepage) {
-              const homeUrl = "{{ relative_prefix }}{{ home_path }}?q=" + encodeURIComponent(query);
+              const homeUrl = "{{ site.baseurl }}/{{ home_path }}?q=" + encodeURIComponent(query);
               window.location.href = homeUrl;
             }
           }

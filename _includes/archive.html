@@ -4,14 +4,7 @@
   {% assign t = site.data.locales['en'] %}
 {% endif %}
 
-{% assign relative_prefix = "" %}
-{% if page.url != "/" and page.url != "/index.html" %}
-  {% assign relative_prefix = "../" %}
-  {% assign url_parts = page.url | split: '/' %}
-  {% if url_parts.size > 3 %}
-    {% assign relative_prefix = "../../" %}
-  {% endif %}
-{% endif %}
+
 
 {% case page.language %}
   {% when 'pt' %}
@@ -244,10 +237,10 @@
   <div class="archive-views-control">
     <span class="view-label">{{ view_label_text }}</span>
     <button type="button" class="view-btn active" id="view-btn-index" title="Dense Party Organ Column">{{ t.view_index_label | default: 'Index' }}</button>
-    <span class="view-sep">·</span>
+    
     <button type="button" class="view-btn" id="view-btn-catalog" title="Catalog Reading Room Spread">{{ t.view_catalog_label | default: 'Catalog' }}</button>
-    <span class="view-sep">·</span>
-    <button type="button" class="view-btn" id="view-btn-shelf" title="Single-column Bulletin List">{{ t.view_bulletin_label | default: 'Bulletin' }}</button>
+    
+    
   </div>
 </div>
 
@@ -272,19 +265,19 @@
         {% assign s_title = s_texts[0].section_title %}
         <section class="index-section-group">
           <h3 class="index-section-title">
-  <a href="{{ relative_prefix }}{% if s_texts[0].section_url %}{{ s_texts[0].section_url }}{% else %}sections/{{ s_texts[0].language }}-{{ s_texts[0].section_id }}.html{% endif %}" style="color: inherit; text-decoration: none;">
+  <a href="{{ site.baseurl }}/{% if s_texts[0].section_url %}{{ s_texts[0].section_url }}{% else %}sections/{{ s_texts[0].language }}-{{ s_texts[0].section_id }}.html{% endif %}" style="color: inherit; text-decoration: none;">
     <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
     {{ s_title }}
   </a>
 </h3>
           <ul class="index-list">
             {% for text in s_texts %}
-              <li class="index-item" 
+              <li class="index-item" data-section="{{ text.section_id }}" 
                 data-title="{{ text.title | downcase }}" 
                 data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}">
                 <div class="index-item-main">
                   <span class="index-num">{{ forloop.index }}.</span>
-                  <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="index-item-title">{{ text.title }}</a>
+                  <a href="{{ site.baseurl }}{{ text.url }}" class="index-item-title">{{ text.title }}</a>
                 </div>
                 <div class="index-item-author">
                   {% if text.author %}— {{ text.author }}{% endif %}
@@ -292,7 +285,7 @@
                 <div class="index-item-meta">
                   {% if text.year %}<span style="font-variant-numeric: oldstyle-nums;">{{ text.year }}</span>{% endif %}
                   {% if text.pdf %}
-                    <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
+                    <a href="{{ site.baseurl }}/assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
                   {% endif %}
                 </div>
               </li>
@@ -316,18 +309,18 @@
 </thead>
       <tbody>
         {% for text in lang_texts %}
-          <tr class="catalog-row" 
+          <tr class="catalog-row" data-section="{{ text.section_id }}" 
             data-title="{{ text.title | downcase }}" 
             data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
             data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
             <td class="col-work-title">
-              <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}">{{ text.title }}</a>
+              <a href="{{ site.baseurl }}{{ text.url }}">{{ text.title }}</a>
             </td>
             <td class="col-work-author">{{ text.author | default: '—' }}</td>
             <td class="col-work-year">{{ text.year | default: '—' }}</td>
             <td class="col-work-pdf">
               {% if text.pdf %}
-                <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
+                <a href="{{ site.baseurl }}/assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
               {% endif %}
             </td>
           </tr>
@@ -344,7 +337,7 @@
         data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
         data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
         <div class="bulletin-main">
-          <a href="{{ relative_prefix }}{{ text.url | remove_first: '/' }}" class="bulletin-title">{{ text.title }}</a>
+          <a href="{{ site.baseurl }}{{ text.url }}" class="bulletin-title">{{ text.title }}</a>
           {% if text.section_title %}
             <span class="bulletin-section">{{ text.section_title }}</span>
           {% endif %}
@@ -355,7 +348,7 @@
         <div class="bulletin-meta">
           {% if text.year %}<span style="font-variant-numeric: oldstyle-nums;">{{ text.year }}</span>{% endif %}
           {% if text.pdf %}
-            <a href="{{ relative_prefix }}assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
+            <a href="{{ site.baseurl }}/assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
           {% endif %}
         </div>
       </article>
