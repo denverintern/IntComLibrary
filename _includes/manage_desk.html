@@ -8,6 +8,14 @@
 {% endif %}
 
 <!-- Authentication Gate Modal (Displayed when locked) -->
+<style>
+  [data-role="center"] .btn-approve,
+  [data-role="center"] .btn-edit-submission,
+  [data-role="center"] .btn-reject {
+    display: none !important;
+  }
+</style>
+
 <div id="auth-gate-modal" class="auth-gate-backdrop" style="display: flex;">
   <div class="auth-gate-box">
     <h2 class="auth-gate-title">Editorial Desk Access</h2>
@@ -525,6 +533,7 @@
     // ----------------------------------------------------
     const DEFAULT_ADMIN_PASS = 'lead-admin-1917';
     const DEFAULT_MOD_PASS = 'mod-desk-1921';
+    const DEFAULT_CENTER_PASS = 'center-desk-1926';
 
     function getAdminPasscode() {
       return localStorage.getItem('lib_admin_passcode') || DEFAULT_ADMIN_PASS;
@@ -532,6 +541,10 @@
 
     function getModPasscode() {
       return localStorage.getItem('lib_mod_passcode') || DEFAULT_MOD_PASS;
+    }
+
+    function getCenterPasscode() {
+      return localStorage.getItem('lib_center_passcode') || DEFAULT_CENTER_PASS;
     }
 
     const authModal = document.getElementById('auth-gate-modal');
@@ -559,12 +572,16 @@
       }
     });
 
-    function applyRolePermissions(role) {
-      currentRole = role;
-      sessionStorage.setItem('lib_auth_role', role);
+function applyRolePermissions(role) {
+  currentRole = role;
+  sessionStorage.setItem('lib_auth_role', role);
 
-      authModal.style.display = 'none';
-      adminPanel.style.display = 'block';
+  authModal.style.display = 'none';
+  adminPanel.style.display = 'block';
+  
+  // Update data attribute for CSS targeting
+  adminPanel.setAttribute('data-role', role);
+
 
       if (role === 'lead_admin') {
         // Full Lead Admin Access
@@ -589,24 +606,48 @@
         roleDescText.textContent = 'Draft submission mode. All works require Lead Administrator approval prior to publication.';
         
         // Hide admin-only tabs
-        document.querySelectorAll('.role-lead-only').forEach(el => el.style.display = 'none');
-        
-        // Switch to Add Book tab
-        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById('tab-btn-add').classList.add('active');
-        document.getElementById('tab-add-book').classList.add('active');
+document.querySelectorAll('.role-lead-only').forEach(el => el.style.display = 'none');
 
-        // Form buttons
-        btnDownloadBook.style.display = 'none';
-        btnCopyBook.style.display = 'none';
-        btnSubmitApproval.style.display = 'block';
-        modNoticeBanner.style.display = 'block';
-      }
+// Show the approvals tab for Center
+const approvalTabBtn = document.querySelector('[data-tab="tab-approvals"]');
+if (approvalTabBtn) approvalTabBtn.style.display = '';
+const approvalTabContent = document.getElementById('tab-approvals');
+if (approvalTabContent) approvalTabContent.style.display = 'block';
+
+document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+
+if (approvalTabBtn) approvalTabBtn.classList.add('active');
+if (approvalTabContent) approvalTabContent.classList.add('active');
+
+// Hide "Add Book" tab button explicitly
+const addBtn = document.getElementById('tab-btn-add');
+if (addBtn) addBtn.style.display = 'none';
+
+
+  if (btnDownloadBook) btnDownloadBook.style.display = 'none';
+  if (btnCopyBook) btnCopyBook.style.display = 'none';
+  if (btnSubmitApproval) btnSubmitApproval.style.display = 'none';
+  if (modNoticeBanner) modNoticeBanner.style.display = 'none';
+
+  renderSubmissionsQueue();
+  
+  // Hide edit/dismiss buttons in queue
+  setTimeout(() => {
+    document.querySelectorAll('.btn-sm').forEach(b => {
+       if (b.textContent.includes('Dismiss') || b.textContent.includes('Approve') || b.textContent.includes('Load into Editor')) {
+         b.style.display = 'none';
+       }
+    });
+  }, 50);
+}
+
     }
 
     // Check existing session
-    if (currentRole === 'lead_admin' || currentRole === 'moderator') {
+    // Check existing session
+if (currentRole === 'lead_admin' || currentRole === 'moderator' || currentRole === 'center') {
+
       applyRolePermissions(currentRole);
     } else {
       authModal.style.display = 'flex';
@@ -618,17 +659,23 @@
       e.preventDefault();
       const entered = passInput.value.trim();
       const adminPass = getAdminPasscode();
-      const modPass = getModPasscode();
+const modPass = getModPasscode();
+const centerPass = getCenterPasscode();
 
-      if (entered === adminPass) {
-        authError.style.display = 'none';
-        passInput.value = '';
-        applyRolePermissions('lead_admin');
-      } else if (entered === modPass) {
-        authError.style.display = 'none';
-        passInput.value = '';
-        applyRolePermissions('moderator');
-      } else {
+if (entered === adminPass) {
+  authError.style.display = 'none';
+  passInput.value = '';
+  applyRolePermissions('lead_admin');
+} else if (entered === modPass) {
+  authError.style.display = 'none';
+  passInput.value = '';
+  applyRolePermissions('moderator');
+} else if (entered === centerPass) {
+  authError.style.display = 'none';
+  passInput.value = '';
+  applyRolePermissions('center');
+} else {
+
         authError.style.display = 'block';
       }
     });
@@ -1195,26 +1242,41 @@ The State and Revolution,V. I. Lenin,en,Party State & Revolution,State & Proleta
     // ----------------------------------------------------
     // PASSCODE MANAGEMENT (LEAD ADMIN ONLY)
     // ----------------------------------------------------
-    const cfgAdminPass = document.getElementById('cfg-admin-pass');
-    const cfgModPass = document.getElementById('cfg-mod-pass');
+const cfgAdminPass = document.getElementById('cfg-admin-pass');
+const cfgModPass = document.getElementById('cfg-mod-pass');
+const cfgCenterPass = document.getElementById('cfg-center-pass');
 
-    cfgAdminPass.value = getAdminPasscode();
-    cfgModPass.value = getModPasscode();
+cfgAdminPass.value = getAdminPasscode();
+cfgModPass.value = getModPasscode();
+cfgCenterPass.value = getCenterPasscode();
 
-    document.getElementById('btn-save-passcodes').addEventListener('click', () => {
-      const newAdmin = cfgAdminPass.value.trim();
-      const newMod = cfgModPass.value.trim();
+document.getElementById('btn-save-passcodes').addEventListener('click', () => {
+  const newAdmin = cfgAdminPass.value.trim();
+  const newMod = cfgModPass.value.trim();
+  const newCenter = cfgCenterPass.value.trim();
 
-      if (!newAdmin || !newMod) {
-        alert('Passcodes cannot be empty.');
-        return;
-      }
+  if (!newAdmin || !newMod || !newCenter) {
+    alert('Passcodes cannot be empty.');
+    return;
+  }
 
-      localStorage.setItem('lib_admin_passcode', newAdmin);
-      localStorage.setItem('lib_mod_passcode', newMod);
-      alert('Editorial passcodes updated successfully!');
-    });
+  localStorage.setItem('lib_admin_passcode', newAdmin);
+  localStorage.setItem('lib_mod_passcode', newMod);
+  localStorage.setItem('lib_center_passcode', newCenter);
+  alert('Editorial passcodes updated successfully!');
+});
 
+document.getElementById('btn-reset-passcodes').addEventListener('click', () => {
+  if (confirm('Reset passcodes to initial factory defaults?')) {
+    localStorage.removeItem('lib_admin_passcode');
+    localStorage.removeItem('lib_mod_passcode');
+    localStorage.removeItem('lib_center_passcode');
+    cfgAdminPass.value = DEFAULT_ADMIN_PASS;
+    cfgModPass.value = DEFAULT_MOD_PASS;
+    cfgCenterPass.value = DEFAULT_CENTER_PASS;
+    alert(`Passcodes reset:\nLead Admin: ${DEFAULT_ADMIN_PASS}\nModerator: ${DEFAULT_MOD_PASS}\nCenter: ${DEFAULT_CENTER_PASS}`);
+  }
+});
     document.getElementById('btn-reset-passcodes').addEventListener('click', () => {
       if (confirm('Reset passcodes to initial factory defaults?')) {
         localStorage.removeItem('lib_admin_passcode');
