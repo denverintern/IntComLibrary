@@ -142,6 +142,9 @@ def main():
         source_url = row_dict.get('source_url', '')
         desc = row_dict.get('description', '')
         custom_id = row_dict.get('id', '')
+        category = row_dict.get('category', '')
+        subcategory = row_dict.get('subcategory', '')
+
         
         errors = []
         if language not in VALID_LANGS:
