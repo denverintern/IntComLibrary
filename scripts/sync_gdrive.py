@@ -139,6 +139,14 @@ def main():
         language = row_dict.get('language', '').lower()
         section_id = row_dict.get('section_id', '')
         pdf_link = row_dict.get('pdf_link', '')
+        if pdf_link.lower().strip() == "n/a":
+            pdf_link = ""
+        if not pdf_link:
+            for k, v in row_dict.items():
+                if ("file" in k or "upload" in k or "submission" in k) and "drive.google.com" in v:
+                    pdf_link = v
+                    break
+
         source_url = row_dict.get('source_url', '')
         desc = row_dict.get('description', '')
         custom_id = row_dict.get('id', '')
