@@ -1231,9 +1231,9 @@ ${pdfLine}---
     // CSV TEMPLATE DOWNLOAD
     // ----------------------------------------------------
     document.getElementById('btn-download-csv-template').addEventListener('click', () => {
-      const csvContent = `Title,Author,Language,Section,Category,Subcategory,PDF_Link,Description
-Wage Labour and Capital,Karl Marx,en,Critique of Political Economy,Value Surplus Value & Capital,Wages & Exploitation,wage-labour-and-capital.pdf,"Lectures detailing the anatomy of capitalist wage labour and surplus value."
-The State and Revolution,V. I. Lenin,en,Party State & Revolution,State & Proletarian Dictatorship,Smashing Bourgeois State,the-state-and-revolution.pdf,"Marxist doctrine on the nature of the state and the proletarian dictatorship."
+      const csvContent = `ID,Title,Author,Year,Language,Section_ID,Category,Subcategory,PDF_Link,Source_URL,Description,Status
+,Wage Labour and Capital,Karl Marx,1847,en,critique-political-economy,Value Surplus Value & Capital,Wages & Exploitation,wage-labour-and-capital.pdf,https://marxists.org/...,"Lectures detailing the anatomy of capitalist wage labour and surplus value.",pending
+,The State and Revolution,V. I. Lenin,1917,en,party-state-revolution,State & Proletarian Dictatorship,Smashing Bourgeois State,the-state-and-revolution.pdf,,"Marxist doctrine on the nature of the state...",pending
 `;
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
       const a = document.createElement('a');
