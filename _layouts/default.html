@@ -513,7 +513,7 @@ if (catalogTbody) {
       // 3. Live Search Filtering
       const searchInput = document.getElementById('global-search');
       const pageUrl = "{{ page.url }}";
-      const isHomepage = pageUrl === "/" || pageUrl === "/index.html" || pageUrl.includes("/index.html");
+      const isHomepage = !!document.getElementById('view-index') || !!document.getElementById('view-catalog');
 
       let currentSearchQuery = '';
 
@@ -572,10 +572,55 @@ if (catalogTbody) {
     if (matches) visibleCount++;
   });
 
+// Hide empty section groups in index view
+document.querySelectorAll('.index-section-group').forEach(group => {
+  const groupSection = group.getAttribute('data-section-group');
+  let hasVisible = false;
+  group.querySelectorAll('.index-item').forEach(item => {
+    if (item.style.display !== 'none') hasVisible = true;
+  });
+  group.style.display = hasVisible ? 'block' : 'none';
+});
+
   if (resultsBadge) {
     resultsBadge.textContent = visibleCount;
   }
 }
+
+document.querySelectorAll('.sidebar-link[data-section]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (isHomepage) {
+      e.preventDefault();
+      const section = link.getAttribute('data-section');
+      updateUrlParams({ section: section });
+      applySearch();
+    }
+  });
+});
+document.querySelectorAll('.index-section-title a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (isHomepage) {
+      e.preventDefault();
+      const section = link.closest('.index-section-group').getAttribute('data-section-group');
+      updateUrlParams({ section: section });
+      applySearch();
+    }
+  });
+});
+
+const allTextsLink = document.getElementById('sidebar-all-texts');
+if (allTextsLink) {
+  allTextsLink.addEventListener('click', (e) => {
+    if (isHomepage) {
+      e.preventDefault();
+      updateUrlParams({ section: null });
+      applySearch();
+    }
+  });
+}
+
+
+      if (isHomepage) applySearch();
 
       if (searchInput) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -584,8 +629,6 @@ if (catalogTbody) {
           searchInput.value = queryParam;
           currentSearchQuery = queryParam.toLowerCase().trim();
         }
-        if (isHomepage) applySearch();
-
         searchInput.addEventListener('input', (e) => {
           currentSearchQuery = e.target.value.toLowerCase().trim();
           if (isHomepage) {

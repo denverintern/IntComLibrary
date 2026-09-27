@@ -163,7 +163,7 @@ layout: default
         {% if first_char == "/" %}
           {% assign target_sec_url = target_sec_url | remove_first: "/" %}
         {% endif %}
-        <a href="{{ site.baseurl }}/{{ target_sec_url }}">{{ sec_roman }} {{ page.section_title }}</a>
+        <a href="{{ site.baseurl }}/{{ back_url }}?section={{ page.section_id }}">{{ sec_roman }} {{ page.section_title }}</a>
       {% else %}
         <span>{{ sec_roman }} {{ page.section_title }}</span>
       {% endif %}
