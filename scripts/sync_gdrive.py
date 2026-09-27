@@ -193,17 +193,21 @@ def main():
             pdf_exists = os.path.exists(pdf_path)
             
             if not pdf_exists or drive_id != existing_drive_id:
-                print(f"[+] Downloading PDF for: '{title}'...")
-                try:
-                    request = drive_service.files().get_media(fileId=drive_id)
-                    fh = io.FileIO(pdf_path, 'wb')
-                    downloader = MediaIoBaseDownload(fh, request)
-                    done = False
-                    while done is False:
-                        status_d, done = downloader.next_chunk()
-                    has_pdf = True
-                except Exception as e:
-                    errors.append(f"PDF download failed: {e}")
+print(f"[+] Downloading PDF for: '{title}'...")
+if not dry_run:
+    try:
+        request = drive_service.files().get_media(fileId=drive_id)
+        fh = io.FileIO(pdf_path, 'wb')
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status_d, done = downloader.next_chunk()
+        has_pdf = True
+    except Exception as e:
+        errors.append(f"PDF download failed: {e}")
+else:
+    print("    (DRY RUN: skipping download)")
+    has_pdf = True
             else:
                 has_pdf = True
         elif os.path.exists(pdf_path):
@@ -250,16 +254,19 @@ def main():
         
         fm = "\n".join(fm_lines) + "\n"
 
-        with open(md_path, 'w', encoding='utf-8') as f:
-            f.write(fm)
-            
-        print(f"[+] Processed: {doc_id}")
+        if not dry_run:
+            with open(md_path, 'w', encoding='utf-8') as f:
+                f.write(fm)
+        print(f"[+] Processed{' (DRY RUN)' if dry_run else ''}: {doc_id}")
         updates.append({'range': f'{first_sheet_title}!{status_col_letter}{row_num}', 'values': [['pending']]})
 
-    if updates:
+if updates:
+    if not dry_run:
         body = {'valueInputOption': 'RAW', 'data': updates}
         sheets_service.spreadsheets().values().batchUpdate(spreadsheetId=sheet_id, body=body).execute()
         print(f"[*] Updated {len(updates)} statuses in Sheet.")
+    else:
+        print(f"[*] DRY RUN: Would have updated {len(updates)} statuses in Sheet.")
     else:
         print("[*] No new rows to process.")
 

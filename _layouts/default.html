@@ -146,16 +146,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title | default: site.title }} • {{ t.brand_title }}</title>
-<meta property="og:title" content="{{ page.title | default: 'Internationalist Communist Library' | escape }}">
-<meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
-<meta property="og:description" content="Theoretical Archive of the Communist Left">
-<meta property="og:type" content="website">
-<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/favicon.png">
 
 <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
 <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ t.brand_title }}">
+<meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/favicon.png">
 
   
   <link rel="icon" type="image/png" href="{{ site.baseurl }}/favicon.png">
@@ -558,10 +555,11 @@ if (catalogTbody) {
   indexItems.forEach(item => {
     const title = item.getAttribute('data-title') || '';
     const author = item.getAttribute('data-author') || '';
+    const desc = item.getAttribute('data-desc') || '';
     const rowSection = item.getAttribute('data-section') || '';
     
     let matches = true;
-    if (currentSearchQuery && !title.includes(currentSearchQuery) && !author.includes(currentSearchQuery)) {
+    if (currentSearchQuery && !title.includes(currentSearchQuery) && !author.includes(currentSearchQuery) && !desc.includes(currentSearchQuery)) {
       matches = false;
     }
     if (sectionFilter && rowSection !== sectionFilter) {

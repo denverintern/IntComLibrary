@@ -272,8 +272,8 @@
           <ul class="index-list">
             {% for text in s_texts %}
               <li class="index-item" data-section="{{ text.section_id }}" 
-                data-title="{{ text.title | downcase }}" 
-                data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}">
+                data-title="{{ text.title | downcase | escape }}" 
+                data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
                 <div class="index-item-main">
                   <span class="index-num">{{ forloop.index }}.</span>
                   <a href="{{ site.baseurl }}{{ text.url }}" class="index-item-title">{{ text.title }}</a>
@@ -309,9 +309,9 @@
       <tbody>
         {% for text in lang_texts %}
           <tr class="catalog-row" data-section="{{ text.section_id }}" 
-            data-title="{{ text.title | downcase }}" 
-            data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
-            data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
+            data-title="{{ text.title | downcase | escape }}" 
+            data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}" 
+            data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
             <td class="col-work-title">
               <a href="{{ site.baseurl }}{{ text.url }}">{{ text.title }}</a>
             </td>
@@ -332,9 +332,9 @@
   <div class="bulletin-list" id="view-shelf" style="display: none;">
     {% for text in lang_texts %}
       <article class="bulletin-item" 
-        data-title="{{ text.title | downcase }}" 
-        data-author="{% if text.author %}{{ text.author | downcase }}{% endif %}" 
-        data-desc="{% if text.description %}{{ text.description | downcase }}{% endif %}">
+        data-title="{{ text.title | downcase | escape }}" 
+        data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}" 
+        data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
         <div class="bulletin-main">
           <a href="{{ site.baseurl }}{{ text.url }}" class="bulletin-title">{{ text.title }}</a>
           {% if text.section_title %}

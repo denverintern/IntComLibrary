@@ -2,11 +2,18 @@
 import os
 import sys
 import json
+import re
 try:
     from google.oauth2 import service_account
     from googleapiclient.discovery import build
 except ImportError:
     sys.exit(0)
+
+def slugify(text):
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9\-]+', '-', text)
+    return text.strip('-')
+
 
 def parse_md_id(filepath):
     if not os.path.exists(filepath): return None
@@ -76,10 +83,19 @@ def main():
     status_letter = col_num_to_letter(status_col)
     updates = []
     
-    for row_num, row in enumerate(values[1:], start=2):
-        row_id = row[id_col].strip() if id_col < len(row) else ""
-        if row_id in published_ids:
-            updates.append({'range': f'{first_sheet_title}!{status_letter}{row_num}', 'values': [['published']]})
+title_col = headers.index('title') if 'title' in headers else -1
+lang_col = headers.index('language') if 'language' in headers else -1
+
+for row_num, row in enumerate(values[1:], start=2):
+    row_id = row[id_col].strip() if id_col < len(row) else ""
+    if not row_id and title_col >= 0 and lang_col >= 0:
+        title = row[title_col].strip() if title_col < len(row) else ""
+        lang = row[lang_col].strip() if lang_col < len(row) else ""
+        if title and lang:
+            row_id = f"{lang.lower()}-{slugify(title)}"
+            
+    if row_id in published_ids:
+        updates.append({'range': f'{first_sheet_title}!{status_letter}{row_num}', 'values': [['published']]})
 
     if updates:
         body = {'valueInputOption': 'RAW', 'data': updates}
