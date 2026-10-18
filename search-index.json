@@ -1,0 +1,21 @@
+---
+layout: null
+permalink: /search-index.json
+---
+{% assign media_prefix = site.media_base_url | default: '/assets/uploads' %}{% assign published_texts = site.texts | where_exp: "t", "t.status != 'draft'" %}[
+{% for text in published_texts %}{% assign text_id = text.slug | default: text.id | split: '/' | last %}{% assign has_pdf = false %}{% if text.pdf and text.pdf != '' %}{% assign has_pdf = true %}{% endif %}  {
+    "id": {{ text_id | jsonify }},
+    "title": {{ text.title | jsonify }},
+    "author": {{ text.author | default: "" | jsonify }},
+    "year": {{ text.year | default: "" | jsonify }},
+    "language": {{ text.language | default: "en" | jsonify }},
+    "section_id": {{ text.section_id | default: "" | jsonify }},
+    "edition": {{ text.edition | default: "" | jsonify }},
+    "translators": {{ text.translators | default: "" | jsonify }},
+    "has_pdf": {{ has_pdf }},
+    "url": {{ text.url | relative_url | jsonify }},
+    "pdf_url": {% if has_pdf %}{% if text.pdf contains '://' %}{{ text.pdf | jsonify }}{% else %}{{ media_prefix | append: '/' | append: text_id | append: '.pdf' | relative_url | jsonify }}{% endif %}{% else %}null{% endif %},
+    "source_url": {{ text.source_url | default: "" | jsonify }},
+    "description": {{ text.description | default: "" | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}]

@@ -1,0 +1,108 @@
+# Canonical Record Schema for the Internationalist Communist Library (_texts/*.md)
+# Enforced identically across:
+#   1. Decap / Sveltia CMS (/admin/config.yml)
+#   2. Google Form / Sheet Ingest (scripts/sync_gdrive.py)
+#   3. PR Automated Validator (scripts/pr_editorial_check.py)
+
+version: 1
+collection: texts
+folder: "_texts"
+extension: "md"
+media_folder: "assets/uploads"
+media_path_pattern: "assets/uploads/{id}.pdf"
+
+fields:
+  id:
+    type: string
+    required: true
+    immutable: true
+    pattern: "^[a-z]{2}-[a-z0-9\\-]+$"
+    description: "Stable identifier ({lang}-{slug}) matching the filename stem _texts/{id}.md."
+  layout:
+    type: string
+    required: true
+    default: "text"
+  title:
+    type: string
+    required: true
+    description: "Full title of the theoretical work."
+  author:
+    type: string
+    required: true
+    description: "Author or collective party organ attribution."
+  year:
+    type: integer
+    required: true
+    pattern: "^\\d{4}$"
+    description: "4-digit year of composition or publication."
+  language:
+    type: string
+    required: true
+    allowed:
+      - en
+      - es
+      - pt
+      - it
+      - fr
+      - de
+      - nl
+      - ru
+      - zh
+      - ja
+      - ko
+      - ar
+      - hi
+      - bn
+      - id
+      - tr
+      - pl
+      - el
+  section_id:
+    type: string
+    required: true
+    allowed:
+      - critique-political-economy
+      - party-state-revolution
+      - historical-materialism
+      - history-communist-left
+  pdf:
+    type: string
+    required: false
+    description: "Filename in assets/uploads/ addressable by id ({id}.pdf). Never a raw GitHub URL."
+  source_url:
+    type: string
+    required: false
+    description: "Canonical external source URL."
+  edition:
+    type: string
+    required: false
+    description: "Source edition, publication organ, or imprint."
+  translators:
+    type: string
+    required: false
+    description: "Translator attribution(s), if applicable."
+  category:
+    type: string
+    required: false
+    description: "Optional thematic category within section_id."
+  subcategory:
+    type: string
+    required: false
+    description: "Optional subcategory focus."
+  description:
+    type: string
+    required: false
+    description: "Concise archival summary."
+  status:
+    type: string
+    required: true
+    default: "draft"
+    allowed:
+      - draft
+      - published
+    description: "Publication state. 'draft' records are built at /texts/{id}.html for preview but excluded from public catalogs."
+  body:
+    type: markdown
+    required: false
+    preserve_on_sync: true
+    description: "Optional transcribed text or study notes; never silently overwritten by metadata sync."

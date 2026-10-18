@@ -1,15 +1,15 @@
 ---
-section_id: "history-communist-left"
-category: "Struggle Against Degeneration"
-subcategory: "Lyon Theses (1926)"
 layout: text
+id: "en-the-lyon-theses"
 title: "The Lyon Theses"
 author: "Left Faction of the Communist Party of Italy"
 year: 1926
 language: "en"
-section_title: "Tactics & History of the Communist Left"
-section_url: "sections/en-history-communist-left.html"
+section_id: "history-communist-left"
+category: "Struggle Against Degeneration"
+subcategory: "Lyon Theses (1926)"
 description: "Drafted by Amadeo Bordiga and the Left Faction of the PCd'I for the 3rd Congress in Lyon, France (1926). A resolute defense of programmatic invariance, organic centralism, and communist discipline against Stalinist opportunism and democratic dilution."
+status: published
 ---
 
 ### The Defense of Invariant Marxism

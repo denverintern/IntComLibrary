@@ -1,15 +1,15 @@
 ---
-section_id: "party-state-revolution"
-category: "Vanguard Party & Organic Centralism"
-subcategory: "Party & Class"
 layout: text
+id: "en-the-democratic-principle"
 title: "The Democratic Principle (1922)"
 author: "Amadeo Bordiga"
 year: 1922
 language: "en"
-section_title: "Party, State & Revolution"
-section_url: "sections/en-party-state-revolution.html"
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 description: "A profound Marxist critique of bourgeois and inner-party democracy, demonstrating that communism rejects democracy as an eternal principle or moral fetish, subordinating organizational forms strictly to the historic programme and tasks of the proletarian revolution."
+status: published
 ---
 
 ### Historical Context

@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "it-elementi-dell-economia-marxista"
 title: "Elementi dell'Economia Marxista"
 author: "Amadeo Bordiga"
 year: 1949
 language: "it"
-section_title: "Critica dell'Economia Politica"
-section_url: "sections/it-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Sintesi programmatica della Sinistra Comunista sull'economia marxista, confutando le deviazioni mercantiliste e stataliste e ribadendo il carattere non-monetario della società comunista."
+status: published
 ---
 
 ### La Sinistra Comunista e la Critica dell'Economia

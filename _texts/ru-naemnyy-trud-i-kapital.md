@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "ru-naemnyy-trud-i-kapital"
 title: "Наемный труд и капитал"
 author: "Карл Маркс"
 year: 1849
 language: "ru"
-section_title: "Критика Политической Экономии"
-section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "Классическая работа Карла Маркса, раскрывающая сущность капиталистической эксплуатации, товарную форму рабочей силы и производство прибавочной стоимости."
+status: published
 ---
 
 ### Исторический очерк

@@ -1,15 +1,15 @@
 ---
-section_id: "party-state-revolution"
-category: "State & Proletarian Dictatorship"
-subcategory: "Transition Period"
 layout: text
+id: "es-critica-del-programa-de-gotha"
 title: "Crítica del Programa de Gotha"
 author: "Karl Marx"
 year: 1875
 language: "es"
-section_title: "Crítica General de la Economía Política"
-section_url: "sections/es-critica-economia-politica.html"
+section_id: "party-state-revolution"
+category: "State & Proletarian Dictatorship"
+subcategory: "Transition Period"
 description: "Obra cumbre de Marx de 1875 que sienta las bases del materialismo histórico sobre el período de transición revolucionaria, la dictadura del proletariado y las dos fases de la sociedad comunista."
+status: published
 ---
 
 ### Trascendencia Teórica

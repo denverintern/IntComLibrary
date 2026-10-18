@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Labour Theory of Value"
 layout: text
+id: "it-salario-prezzo-e-profitto"
 title: "Salario, Prezzo e Profitto"
 author: "Karl Marx"
 year: 1865
 language: "it"
-section_title: "Critica dell'Economia Politica"
-section_url: "sections/it-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Labour Theory of Value"
 description: "Discorso tenuto alla Prima Internazionale contro il riformismo di Weston, con l'esposizione della teoria del valore e la parola d'ordine dell'abolizione del sistema salariale."
+status: published
 ---
 
 ### Contenuto Politico

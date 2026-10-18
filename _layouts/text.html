@@ -1,162 +1,47 @@
 ---
 layout: default
 ---
+{% assign lang = page.language | default: 'en' %}
+{% assign en = site.data.locales['en'] %}
+{% assign t = site.data.locales[lang] | default: en %}
 
+{% assign back_url = lang | append: '/index.html' %}
+{% assign library_label = t.library_label | default: en.library_label %}
+{% assign download_text = t.download_text | default: en.download_text %}
+{% assign transcription_label = t.transcription_label | default: en.transcription_label %}
+{% assign print_label = t.print_label | default: en.print_label %}
+{% assign in_this_section_label = t.in_this_section_label | default: en.in_this_section_label %}
+{% assign source_label = t.source_label | default: en.source_label %}
+{% assign pdf_local_label = t.pdf_local_label | default: en.pdf_local_label %}
+{% assign html_external_label = t.html_external_label | default: en.html_external_label %}
+{% assign open_pdf_label = t.open_pdf_label | default: en.open_pdf_label %}
 
+{% assign sec_roman = '' %}
+{% assign resolved_sec_title = page.section_title %}
+{% for sec_def in site.data.taxonomy.sections %}
+  {% if sec_def.slug == page.section_id %}
+    {% assign sec_roman = sec_def.numeral | append: '.' %}
+    {% if resolved_sec_title == nil or resolved_sec_title == "" %}
+      {% assign resolved_sec_title = sec_def.title[lang] | default: sec_def.title['en'] %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
 
-{% case page.language %}
-  {% when 'pt' %}
-    {% assign back_url = 'pt/index.html' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign download_text = 'Baixar PDF' %}
-    {% assign transcription_label = 'Texto Transcrito' %}
-    {% assign print_label = 'Imprimir' %}
-    {% assign in_this_section_label = 'Nesta Seção' %}
-  {% when 'es' %}
-    {% assign back_url = 'es/index.html' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign download_text = 'Descargar PDF' %}
-    {% assign transcription_label = 'Texto Transcrito' %}
-    {% assign print_label = 'Imprimir' %}
-    {% assign in_this_section_label = 'En esta Sección' %}
-  {% when 'fr' %}
-    {% assign back_url = 'fr/index.html' %}
-    {% assign library_label = 'Bibliothèque' %}
-    {% assign download_text = 'Télécharger le PDF' %}
-    {% assign transcription_label = 'Texte Transcrit' %}
-    {% assign print_label = 'Imprimer' %}
-    {% assign in_this_section_label = 'Dans cette Section' %}
-  {% when 'it' %}
-    {% assign back_url = 'it/index.html' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign download_text = 'Scarica PDF' %}
-    {% assign transcription_label = 'Testo Trascritto' %}
-    {% assign print_label = 'Stampa' %}
-    {% assign in_this_section_label = 'In questa Sezione' %}
-  {% when 'de' %}
-    {% assign back_url = 'de/index.html' %}
-    {% assign library_label = 'Bibliothek' %}
-    {% assign download_text = 'PDF Herunterladen' %}
-    {% assign transcription_label = 'Transkribierter Text' %}
-    {% assign print_label = 'Drucken' %}
-    {% assign in_this_section_label = 'In diesem Bereich' %}
-  {% when 'nl' %}
-    {% assign back_url = 'nl/index.html' %}
-    {% assign library_label = 'Bibliotheek' %}
-    {% assign download_text = 'PDF Downloaden' %}
-    {% assign transcription_label = 'Getranscribeerde Tekst' %}
-    {% assign print_label = 'Afdrukken' %}
-    {% assign in_this_section_label = 'In deze Sectie' %}
-  {% when 'ru' %}
-    {% assign back_url = 'ru/index.html' %}
-    {% assign library_label = 'Библиотека' %}
-    {% assign download_text = 'Скачать PDF' %}
-    {% assign transcription_label = 'Текст Документа' %}
-    {% assign print_label = 'Печать' %}
-    {% assign in_this_section_label = 'В этом Разделе' %}
-  {% when 'zh' %}
-    {% assign back_url = 'zh/index.html' %}
-    {% assign library_label = '图书馆' %}
-    {% assign download_text = '下载 PDF' %}
-    {% assign transcription_label = '文献正文' %}
-    {% assign print_label = '打印' %}
-    {% assign in_this_section_label = '本专题文献' %}
-  {% when 'ja' %}
-    {% assign back_url = 'ja/index.html' %}
-    {% assign library_label = '図書館' %}
-    {% assign download_text = 'PDFをダウンロード' %}
-    {% assign transcription_label = '翻刻テキスト' %}
-    {% assign print_label = '印刷' %}
-    {% assign in_this_section_label = 'このセクションの文献' %}
-  {% when 'ko' %}
-    {% assign back_url = 'ko/index.html' %}
-    {% assign library_label = '도서관' %}
-    {% assign download_text = 'PDF 다운로드' %}
-    {% assign transcription_label = '전문 텍스트' %}
-    {% assign print_label = '인쇄' %}
-    {% assign in_this_section_label = '이 섹션의 다른 문서' %}
-  {% when 'ar' %}
-    {% assign back_url = 'ar/index.html' %}
-    {% assign library_label = 'المكتبة' %}
-    {% assign download_text = 'تحميل PDF' %}
-    {% assign transcription_label = 'النص المكتوب' %}
-    {% assign print_label = 'طباعة' %}
-    {% assign in_this_section_label = 'في هذا القسم' %}
-  {% when 'hi' %}
-    {% assign back_url = 'hi/index.html' %}
-    {% assign library_label = 'पुस्तकालय' %}
-    {% assign download_text = 'PDF डाउनलोड करें' %}
-    {% assign transcription_label = 'प्रतिलिपि पाठ' %}
-    {% assign print_label = 'प्रिंट' %}
-    {% assign in_this_section_label = 'इस अनुभाग में' %}
-  {% when 'bn' %}
-    {% assign back_url = 'bn/index.html' %}
-    {% assign library_label = 'লাইব্রেরি' %}
-    {% assign download_text = 'PDF ডাউনলোড করুন' %}
-    {% assign transcription_label = 'অনুলিপিকৃত পাঠ' %}
-    {% assign print_label = 'প্রিন্ট' %}
-    {% assign in_this_section_label = 'এই বিভাগে' %}
-  {% when 'id' %}
-    {% assign back_url = 'id/index.html' %}
-    {% assign library_label = 'Perpustakaan' %}
-    {% assign download_text = 'Unduh PDF' %}
-    {% assign transcription_label = 'Teks Transkripsi' %}
-    {% assign print_label = 'Cetak' %}
-    {% assign in_this_section_label = 'Di Bagian Ini' %}
-  {% when 'tr' %}
-    {% assign back_url = 'tr/index.html' %}
-    {% assign library_label = 'Kütüphane' %}
-    {% assign download_text = 'PDF İndir' %}
-    {% assign transcription_label = 'Metin' %}
-    {% assign print_label = 'Yazdır' %}
-    {% assign in_this_section_label = 'Bu Bölümde' %}
-  {% when 'pl' %}
-    {% assign back_url = 'pl/index.html' %}
-    {% assign library_label = 'Biblioteka' %}
-    {% assign download_text = 'Pobierz PDF' %}
-    {% assign transcription_label = 'Tekst Dzieła' %}
-    {% assign print_label = 'Drukuj' %}
-    {% assign in_this_section_label = 'W tej Sekcji' %}
-  {% when 'el' %}
-    {% assign back_url = 'el/index.html' %}
-    {% assign library_label = 'Βιβλιοθήκη' %}
-    {% assign download_text = 'Λήψη PDF' %}
-    {% assign transcription_label = 'Κείμενο' %}
-    {% assign print_label = 'Εκτύπωση' %}
-    {% assign in_this_section_label = 'Σε αυτήν την Ενότητα' %}
-  {% else %}
-    {% assign back_url = 'index.html' %}
-    {% assign library_label = 'Library' %}
-    {% assign download_text = 'Download PDF' %}
-    {% assign transcription_label = 'Transcribed Text' %}
-    {% assign print_label = 'Print' %}
-    {% assign in_this_section_label = 'In this section' %}
-{% endcase %}
+{% assign media_cfg = site.media_base_url | default: '/assets/uploads' %}
+{% if media_cfg contains "://" %}
+  {% assign media_prefix = media_cfg %}
+{% else %}
+  {% assign media_prefix = site.baseurl | append: media_cfg %}
+{% endif %}
 
-{% case page.section_id %}
-  {% when 'critique-political-economy' %}{% assign sec_roman = 'I.' %}
-  {% when 'party-state-revolution' %}{% assign sec_roman = 'II.' %}
-  {% when 'historical-materialism' %}{% assign sec_roman = 'III.' %}
-  {% when 'history-communist-left' %}{% assign sec_roman = 'IV.' %}
-  {% else %}{% assign sec_roman = '' %}
-{% endcase %}
-
+{% assign rec_id = page.slug | default: page.id | split: '/' | last %}
 {% assign pdf_url = nil %}
 {% if page.pdf %}
   {% if page.pdf contains "://" %}
     {% assign pdf_url = page.pdf %}
   {% else %}
-    {% assign pdf_url = site.baseurl | append: "/assets/uploads/" | append: page.pdf %}
+    {% assign pdf_url = media_prefix | append: "/" | append: rec_id | append: ".pdf" %}
   {% endif %}
-{% endif %}
-
-{% assign resolved_sec_title = page.section_title %}
-{% if resolved_sec_title == nil or resolved_sec_title == "" %}
-  {% for sec_def in site.data.taxonomy.sections %}
-    {% if sec_def.slug == page.section_id %}
-      {% assign resolved_sec_title = sec_def.title[page.language] | default: sec_def.title['en'] %}
-    {% endif %}
-  {% endfor %}
 {% endif %}
 
 <article class="reader-frame">
@@ -170,7 +55,9 @@ layout: default
 
   <!-- Archival Breadcrumb -->
   <nav class="reader-breadcrumb" aria-label="Breadcrumb">
-    <a href="{{ site.baseurl }}/{{ back_url }}">{{ library_label }}</a>
+    <a href="{{ site.baseurl }}/index.html">Portal</a>
+    <span class="sep">/</span>
+    <a href="{{ site.baseurl }}/{{ back_url }}">{{ library_label }} ({{ lang | upcase }})</a>
     {% if page.section_id or resolved_sec_title %}
       <span class="sep">/</span>
       {% if page.section_id %}
@@ -185,67 +72,68 @@ layout: default
 
   <!-- Running Header -->
   <header class="reader-header">
-  <h1 class="reader-title">{{ page.title }}</h1>
-  {% if page.author %}
-    <div class="reader-author">
-      {{ page.author }}{% if page.year %}, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">{{ page.year }}</span>{% endif %}
-    </div>
-  {% endif %}
-  <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; font-style: italic;">
-    {{ source_label | default: 'Source:' }} 
-    {% if page.source_name %}
-      {{ page.source_name }}
-    {% elsif page.source_url contains 'marxists.org' %}
-      Marxists Internet Archive
-    {% elsif page.source_url contains 'international-communist-party.org' %}
-      International Communist Party
-    {% else %}
-      Original Archive
+    <h1 class="reader-title">{{ page.title }}</h1>
+    {% if page.author %}
+      <div class="reader-author">
+        {{ page.author }}{% if page.year %}, <span style="font-variant-numeric: oldstyle-nums; font-style: normal; color: var(--text-dim);">{{ page.year }}</span>{% endif %}
+        {% if page.translators %}<span style="font-size: 0.88rem; color: var(--text-dim); font-style: normal;"> &middot; Trans. {{ page.translators }}</span>{% endif %}
+      </div>
     {% endif %}
-    {% if page.edition %} &middot; {{ page.edition }}{% endif %}
-    {% if pdf_url %} &middot; {{ pdf_local_label | default: 'Local Archive PDF' }}{% elsif page.source_url %} &middot; {{ html_external_label | default: 'External HTML' }}{% endif %}
-  </div>
-</header>
+    <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; font-style: italic;">
+      {{ source_label | default: 'Source:' }}
+      {% if page.source_name %}
+        {{ page.source_name }}
+      {% elsif page.source_url contains 'marxists.org' %}
+        Marxists Internet Archive
+      {% elsif page.source_url contains 'international-communist-party.org' %}
+        International Communist Party
+      {% else %}
+        Original Archive
+      {% endif %}
+      {% if page.edition %} &middot; {{ page.edition }}{% endif %}
+      {% if pdf_url %} &middot; {{ pdf_local_label | default: 'Local Archive PDF' }}{% elsif page.source_url %} &middot; {{ html_external_label | default: 'External HTML' }}{% endif %}
+    </div>
+  </header>
 
   <!-- Text Actions (Dignified print links, no icon soup) -->
-<div class="reader-actions">
-  {% if pdf_url %}
-    <a href="{{ pdf_url }}" download>{{ download_text }}</a>
+  <div class="reader-actions">
+    {% if pdf_url %}
+      <a href="{{ pdf_url }}" download>{{ download_text }}</a>
+      <span class="sep">·</span>
+      <a href="{{ pdf_url }}" target="_blank" rel="noopener">{{ open_pdf_label | default: 'Open in Browser' }}</a>
+      <span class="sep">·</span>
+    {% endif %}
+    {% if page.source_url %}
+      <a href="{{ page.source_url }}" target="_blank" rel="noopener">{{ t.read_source_label | default: 'Source text' }}</a>
+      <span class="sep">·</span>
+    {% endif %}
+    <a href="#transcription">{{ transcription_label }}</a>
     <span class="sep">·</span>
-    <a href="{{ pdf_url }}" target="_blank" rel="noopener">{{ open_pdf_label | default: 'Open in Browser' }}</a>
-    <span class="sep">·</span>
-  {% endif %}
-  {% if page.source_url %}
-    <a href="{{ page.source_url }}" target="_blank" rel="noopener">Source text</a>
-    <span class="sep">·</span>
-  {% endif %}
-  <a href="#transcription">{{ transcription_label }}</a>
-  <span class="sep">·</span>
-  <button type="button" onclick="window.print()">{{ print_label }}</button>
-</div>
+    <button type="button" onclick="window.print()">{{ print_label }}</button>
+  </div>
 
-<!-- Document Viewer / Source Actions -->
-{% if pdf_url %}
-  <div class="reader-pdf-container">
-    <object data="{{ pdf_url }}" type="application/pdf" class="reader-pdf-frame">
-      <iframe src="{{ pdf_url }}" title="{{ page.title }} PDF" class="reader-pdf-frame" allowfullscreen></iframe>
-      <p style="padding: 1rem; text-align: center; color: var(--text-dim);">
-        This browser cannot display PDFs.
-        <a href="{{ pdf_url }}" download>Download the file</a>
-        {% if page.source_url %}or <a href="{{ page.source_url }}" target="_blank" rel="noopener">read the source text</a>{% endif %}.
-      </p>
-    </object>
-  </div>
-{% elsif page.source_url %}
-  <div style="padding: 3rem 1rem; text-align: center; border: 1px solid var(--border-color); background: var(--bg-secondary); margin-bottom: 2rem;">
-    <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">Read the Source Text</h3>
-    <a href="{{ page.source_url }}" target="_blank" rel="noopener" class="format-link" style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--accent-gold); text-decoration: none; font-family: var(--font-sans); color: var(--text-main);">Open External Link</a>
-  </div>
-{% else %}
-  <div style="padding: 3rem 1rem; text-align: center; border: 1px dashed var(--border-color); color: var(--text-dim); font-style: italic; margin-bottom: 2rem;">
-    No file yet. <a href="{{ site.baseurl }}/manage/{{ page.language | default: 'en' }}/index.html" style="color: var(--text-main);">Contribute this text</a>.
-  </div>
-{% endif %}
+  <!-- Document Viewer / Source Actions -->
+  {% if pdf_url %}
+    <div class="reader-pdf-container">
+      <object data="{{ pdf_url }}" type="application/pdf" class="reader-pdf-frame">
+        <iframe src="{{ pdf_url }}" title="{{ page.title }} PDF" class="reader-pdf-frame" allowfullscreen></iframe>
+        <p style="padding: 1rem; text-align: center; color: var(--text-dim);">
+          This browser cannot display PDFs.
+          <a href="{{ pdf_url }}" download>Download the file</a>
+          {% if page.source_url %}or <a href="{{ page.source_url }}" target="_blank" rel="noopener">read the source text</a>{% endif %}.
+        </p>
+      </object>
+    </div>
+  {% elsif page.source_url %}
+    <div style="padding: 3rem 1rem; text-align: center; border: 1px solid var(--border-color); background: var(--bg-secondary); margin-bottom: 2rem;">
+      <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">{{ t.read_source_label | default: 'Read the Source Text' }}</h3>
+      <a href="{{ page.source_url }}" target="_blank" rel="noopener" class="format-link" style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--accent-gold); text-decoration: none; font-family: var(--font-sans); color: var(--text-main);">{{ page.source_url }}</a>
+    </div>
+  {% else %}
+    <div style="padding: 3rem 1rem; text-align: center; border: 1px dashed var(--border-color); color: var(--text-dim); font-style: italic; margin-bottom: 2rem;">
+      No file yet. <a href="{{ site.baseurl }}/admin/" style="color: var(--text-main);">Contribute via Editorial CMS</a> or <a href="{{ site.baseurl }}/manage/{{ lang }}/index.html" style="color: var(--text-main);">Ingest Queue</a>.
+    </div>
+  {% endif %}
 
   <!-- Transcribed Text Body -->
   <div class="reader-body" id="transcription">
@@ -254,12 +142,11 @@ layout: default
     {% endif %}
   </div>
 
-
   <!-- Sibling Works in Current Section -->
   {% assign sibling_texts = "" | split: "," %}
-  {% for t in site.texts %}
-    {% if t.language == page.language and t.section_id == page.section_id and t.url != page.url and t.status != 'draft' %}
-      {% assign sibling_texts = sibling_texts | push: t %}
+  {% for t_item in site.texts %}
+    {% if t_item.language == lang and t_item.section_id == page.section_id and t_item.url != page.url and t_item.status != 'draft' %}
+      {% assign sibling_texts = sibling_texts | push: t_item %}
     {% endif %}
   {% endfor %}
 

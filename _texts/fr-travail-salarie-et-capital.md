@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "fr-travail-salarie-et-capital"
 title: "Travail Salarié et Capital"
 author: "Karl Marx"
 year: 1849
 language: "fr"
-section_title: "Critique de l'Économie Politique"
-section_url: "sections/fr-critique-economie-politique.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "Exposé limpide et rigoureux de Marx démontrant comment la force de travail est vendue comme marchandise et comment le capital accumule la plus-value aux dépens des prolétaires."
+status: published
 ---
 
 ### Présentation Générale

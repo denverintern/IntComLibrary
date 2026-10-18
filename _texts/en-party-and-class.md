@@ -1,15 +1,15 @@
 ---
-section_id: "party-state-revolution"
-category: "Vanguard Party & Organic Centralism"
-subcategory: "Party & Class"
 layout: text
+id: "en-party-and-class"
 title: "Party and Class (1921)"
 author: "Amadeo Bordiga"
 year: 1921
 language: "en"
-section_title: "Party, State & Revolution"
-section_url: "sections/en-party-state-revolution.html"
+section_id: "party-state-revolution"
+category: "Vanguard Party & Organic Centralism"
+subcategory: "Party & Class"
 description: "Seminal theoretical text of the Italian Communist Left defining the revolutionary party as the conscious organ of the proletariat, refuting both bourgeois parliamentarism and syndicalist/workerist illusions of economic immediacy."
+status: published
 ---
 
 ### Theoretical Context

@@ -1,15 +1,15 @@
 ---
-section_id: "history-communist-left"
-category: "Struggle Against Degeneration"
-subcategory: "Tactics of Communist Left"
 layout: text
+id: "en-the-rome-theses"
 title: "The Rome Theses"
 author: "Communist Party of Italy (PCd'I)"
 year: 1922
 language: "en"
-section_title: "Tactics & History of the Communist Left"
-section_url: "sections/en-history-communist-left.html"
+section_id: "history-communist-left"
+category: "Struggle Against Degeneration"
+subcategory: "Tactics of Communist Left"
 description: "Theses on the Tactics of the Communist Party of Italy presented at the Second National Congress (Rome, March 1922). Synthesizes the Left's critique of democratic dilution, united-front maneuvers with social democracy, and opportunist compromises in the Third International."
+status: published
 ---
 
 ### Tactical Theses of the Communist Left

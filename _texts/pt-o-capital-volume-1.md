@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "pt-o-capital-volume-1"
 title: "O Capital, Volume 1"
 author: "Karl Marx"
 year: 1867
 language: "pt"
-section_title: "Crítica Geral da Economia Política"
-section_url: "sections/pt-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "O Processo de Produção do Capital (1867). A mais profunda e rigorosa dissecação científica da mecânica interna do modo de produção capitalista."
+status: published
 ---
 
 ### Obra Central da Teoria Revolucionária

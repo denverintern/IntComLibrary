@@ -1,16 +1,16 @@
-source_url: "https://www.marxists.org/archive/marx/works/1865/value-price-profit/"
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Labour Theory of Value"
 layout: text
+id: "en-value-price-and-profit"
 title: "Value, Price and Profit"
 author: "Karl Marx"
 year: 1865
 language: "en"
-section_title: "Critique of Political Economy"
-section_url: "sections/en-critique-political-economy.html"
+section_id: "critique-political-economy"
+source_url: "https://www.marxists.org/archive/marx/works/1865/value-price-profit/"
+category: "Value, Surplus Value & Capital"
+subcategory: "Labour Theory of Value"
 description: "Marx's 1865 address to the First International confronting the reformist arguments of John Weston. A definitive exposition of the labour theory of value, the distinction between value and price, and the necessity of militant class struggle over the rate of surplus value."
+status: published
 ---
 
 ### Historical Context

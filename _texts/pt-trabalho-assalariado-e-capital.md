@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "pt-trabalho-assalariado-e-capital"
 title: "Trabalho Assalariado e Capital"
 author: "Karl Marx"
 year: 1849
 language: "pt"
-section_title: "Crítica Geral da Economia Política"
-section_url: "sections/pt-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "Estudo fundamental sobre a natureza do trabalho assalariado e a dinâmica da exploração capitalista através da extração de mais-valia da classe trabalhadora."
+status: published
 ---
 
 ### Visão Geral

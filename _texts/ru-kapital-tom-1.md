@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "ru-kapital-tom-1"
 title: "Капитал, Том 1"
 author: "Карл Маркс"
 year: 1867
 language: "ru"
-section_title: "Критика Политической Экономии"
-section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Процесс производства капитала. Главный труд Маркса, детально раскрывающий анатомию буржуазного способа производства, товарный фетишизм и историческую неизбежность коммунизма."
+status: published
 ---
 
 ### Главный труд научного коммунизма

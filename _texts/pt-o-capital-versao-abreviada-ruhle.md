@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "pt-o-capital-versao-abreviada-ruhle"
 title: "O Capital vol. 1: Uma Versão Abreviada"
 author: "Otto Rühle"
 year: 1939
 language: "pt"
-section_title: "Crítica Geral da Economia Política"
-section_url: "sections/pt-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Edição condensada da obra fundamental de Marx elaborada pelo teórico comunista de conselhos Otto Rühle, com ensaio introdutório sobre o pensamento vivo de Karl Marx."
+status: published
 ---
 
 ### Apresentação da Obra

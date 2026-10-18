@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "ru-imperializm-kak-vysshaya-stadiya-kapitalizma"
 title: "Империализм как высшая стадия капитализма"
 author: "В. И. Ленин"
 year: 1916
 language: "ru"
-section_title: "Критика Политической Экономии"
-section_url: "sections/ru-kritika-politicheskoy-ekonomii.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Фундаментальный труд В. И. Ленина, анализирующий господство монополий, слияние банковского и промышленного капитала в финансовый и эпоху пролетарских революций."
+status: published
 ---
 
 ### Ленинский анализ империализма

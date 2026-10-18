@@ -1,15 +1,15 @@
 ---
-section_id: "party-state-revolution"
-category: "State & Proletarian Dictatorship"
-subcategory: "Transition Period"
 layout: text
+id: "pt-critica-do-programa-de-gotha"
 title: "Crítica do Programa de Gotha"
 author: "Karl Marx"
 year: 1875
 language: "pt"
-section_title: "Crítica Geral da Economia Política"
-section_url: "sections/pt-critica-economia-politica.html"
+section_id: "party-state-revolution"
+category: "State & Proletarian Dictatorship"
+subcategory: "Transition Period"
 description: "Documento teórico programático que detalha a transição do capitalismo ao comunismo, refuta ilusões reformistas distributivas e define a ditadura revolucionária do proletariado."
+status: published
 ---
 
 ### Fundamento do Marxismo Revolucionário

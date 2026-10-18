@@ -1,16 +1,16 @@
-source_url: "https://www.marxists.org/archive/marx/works/1847/wage-labour/"
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "en-wage-labour-and-capital"
 title: "Wage Labour and Capital"
 author: "Karl Marx"
 year: 1849
 language: "en"
-section_title: "Critique of Political Economy"
-section_url: "sections/en-critique-political-economy.html"
+section_id: "critique-political-economy"
+source_url: "https://www.marxists.org/archive/marx/works/1847/wage-labour/"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "An essential foundational critique of bourgeois political economy based on lectures delivered by Karl Marx to the German Workingmen's Club of Brussels in 1847. Explains the relationship between wages, labour-power as a commodity, capital accumulation, and the extraction of surplus value."
+status: published
 ---
 
 ### Historical Overview

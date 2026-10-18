@@ -101,78 +101,15 @@ title: Internationalist Communist Library
     {% assign public_texts = public_texts | push: item %}
   {% endif %}
 {% endfor %}
-{% assign ar_count = public_texts | where: "language", "ar" | size %}
-{% assign bn_count = public_texts | where: "language", "bn" | size %}
-{% assign de_count = public_texts | where: "language", "de" | size %}
-{% assign el_count = public_texts | where: "language", "el" | size %}
-{% assign en_count = public_texts | where: "language", "en" | size %}
-{% assign es_count = public_texts | where: "language", "es" | size %}
-{% assign fr_count = public_texts | where: "language", "fr" | size %}
-{% assign hi_count = public_texts | where: "language", "hi" | size %}
-{% assign id_count = public_texts | where: "language", "id" | size %}
-{% assign it_count = public_texts | where: "language", "it" | size %}
-{% assign ja_count = public_texts | where: "language", "ja" | size %}
-{% assign ko_count = public_texts | where: "language", "ko" | size %}
-{% assign nl_count = public_texts | where: "language", "nl" | size %}
-{% assign pl_count = public_texts | where: "language", "pl" | size %}
-{% assign pt_count = public_texts | where: "language", "pt" | size %}
-{% assign ru_count = public_texts | where: "language", "ru" | size %}
-{% assign tr_count = public_texts | where: "language", "tr" | size %}
-{% assign zh_count = public_texts | where: "language", "zh" | size %}
 
 <div class="lang-grid">
-  <a href="en/index.html" class="lang-card">
-  English <span>EN &middot; {% if en_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="es/index.html" class="lang-card">
-  Español <span>ES &middot; {% if es_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="pt/index.html" class="lang-card">
-  Português <span>PT &middot; {% if pt_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="it/index.html" class="lang-card">
-  Italiano <span>IT &middot; {% if it_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="fr/index.html" class="lang-card">
-  Français <span>FR &middot; {% if fr_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="de/index.html" class="lang-card">
-  Deutsch <span>DE &middot; {% if de_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="nl/index.html" class="lang-card">
-  Nederlands <span>NL &middot; {% if nl_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="ru/index.html" class="lang-card">
-  Русский <span>RU &middot; {% if ru_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="ar/index.html" class="lang-card">
-  العربية <span>AR &middot; {% if ar_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="zh/index.html" class="lang-card">
-  简体中文 <span>ZH &middot; {% if zh_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="ja/index.html" class="lang-card">
-  日本語 <span>JA &middot; {% if ja_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="ko/index.html" class="lang-card">
-  한국어 <span>KO &middot; {% if ko_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="hi/index.html" class="lang-card">
-  हिन्दी <span>HI &middot; {% if hi_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="bn/index.html" class="lang-card">
-  বাংলা <span>BN &middot; {% if bn_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="id/index.html" class="lang-card">
-  Bahasa Indonesia <span>ID &middot; {% if id_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="tr/index.html" class="lang-card">
-  Türkçe <span>TR &middot; {% if tr_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="pl/index.html" class="lang-card">
-  Polski <span>PL &middot; {% if pl_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
-  <a href="el/index.html" class="lang-card">
-  Ελληνικά <span>EL &middot; {% if el_count > 0 %}Catalog{% else %}Contribute{% endif %}</span>
-</a>
+  {% for locale_pair in site.data.locales %}
+    {% assign l_code = locale_pair[0] %}
+    {% assign l_data = locale_pair[1] %}
+    {% assign l_count = public_texts | where: "language", l_code | size %}
+    <a href="{{ l_code }}/index.html" class="lang-card">
+      {{ l_data.native_name | default: l_code }}
+      <span>{{ l_code | upcase }} &middot; {% if l_count > 0 %}Catalog ({{ l_count }}){% else %}Contribute{% endif %}</span>
+    </a>
+  {% endfor %}
 </div>

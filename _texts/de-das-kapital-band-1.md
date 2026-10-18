@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "de-das-kapital-band-1"
 title: "Das Kapital, Band 1"
 author: "Karl Marx"
 year: 1867
 language: "de"
-section_title: "Kritik der politischen Ökonomie"
-section_url: "sections/de-kritik-politische-oekonomie.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Der Produktionsprozess des Kapitals (1867). Marx' theoretisches Hauptwerk über Warenfetischismus, absoluten und relativen Mehrwert und das Gesetz der Akkumulation."
+status: published
 ---
 
 ### Das Hauptwerk des wissenschaftlichen Sozialismus

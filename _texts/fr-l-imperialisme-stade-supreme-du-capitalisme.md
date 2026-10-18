@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Imperialism & Monopoly Capitalism"
-subcategory: "Finance Capital"
 layout: text
+id: "fr-l-imperialisme-stade-supreme-du-capitalisme"
 title: "L'Impérialisme, Stade Suprême du Capitalisme"
 author: "V. I. Lénine"
 year: 1916
 language: "fr"
-section_title: "Critique de l'Économie Politique"
-section_url: "sections/fr-critique-economie-politique.html"
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 description: "L'ouvrage fondamental de Lénine démontrant la domination des monopoles et du capital financier et qualifiant l'impérialisme de prélude à la révolution socialiste mondiale."
+status: published
 ---
 
 ### Analyse de l'Époque Impérialiste

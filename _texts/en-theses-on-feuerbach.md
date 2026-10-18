@@ -1,15 +1,15 @@
 ---
-section_id: "historical-materialism"
-category: "Marxist Epistemology & Dialectics"
-subcategory: "Materialist Method"
 layout: text
+id: "en-theses-on-feuerbach"
 title: "Theses on Feuerbach"
 author: "Karl Marx"
 year: 1845
 language: "en"
-section_title: "Historical Materialism & Method"
-section_url: "sections/en-historical-materialism.html"
+section_id: "historical-materialism"
+category: "Marxist Epistemology & Dialectics"
+subcategory: "Materialist Method"
 description: "Eleven foundational aphorisms drafted by Marx in 1845 outlining the departure of historical materialism from contemplative bourgeois materialism, culminating in the famous Thesis XI: 'The philosophers have only interpreted the world in various ways; the point is to change it.'"
+status: published
 ---
 
 ### The Active Side of Materialism

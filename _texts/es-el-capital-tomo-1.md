@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "es-el-capital-tomo-1"
 title: "El Capital, Tomo 1"
 author: "Karl Marx"
 year: 1867
 language: "es"
-section_title: "Crítica General de la Economía Política"
-section_url: "sections/es-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "El proceso de producción del capital. La obra magna de Karl Marx que descompone analíticamente la mercancía, el fetichismo, la ley general de la acumulación capitalista y la génesis histórica del proletariado."
+status: published
 ---
 
 ### Obra Cumbre del Comunismo Científico

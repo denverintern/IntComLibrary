@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Imperialism & Monopoly Capitalism"
-subcategory: "Finance Capital"
 layout: text
+id: "es-el-imperialismo-fase-superior-del-capitalismo"
 title: "El Imperialismo, Fase Superior del Capitalismo"
 author: "V. I. Lenin"
 year: 1916
 language: "es"
-section_title: "Crítica General de la Economía Política"
-section_url: "sections/es-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 description: "Análisis fundamental de Lenin sobre la etapa monopolista del capitalismo, el dominio del capital financiero, el reparto del mundo entre las potencias imperialistas y el carácter de época de guerras y revoluciones proletarias."
+status: published
 ---
 
 ### Contexto Histórico

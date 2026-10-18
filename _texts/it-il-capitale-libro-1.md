@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "it-il-capitale-libro-1"
 title: "Il Capitale, Libro I"
 author: "Karl Marx"
 year: 1867
 language: "it"
-section_title: "Critica dell'Economia Politica"
-section_url: "sections/it-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Il processo di produzione del capitale. Il capolavoro scientifico di Karl Marx che svela la logica intrinseca, le contraddizioni e la condanna storica del modo di produzione borghese."
+status: published
 ---
 
 ### La Critica Scientifica del Capitale

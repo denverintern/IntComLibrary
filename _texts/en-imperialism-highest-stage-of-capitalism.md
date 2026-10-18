@@ -1,16 +1,16 @@
-source_url: "https://www.marxists.org/archive/lenin/works/1916/imp-hsc/"
 ---
-section_id: "critique-political-economy"
-category: "Imperialism & Monopoly Capitalism"
-subcategory: "Finance Capital"
 layout: text
+id: "en-imperialism-highest-stage-of-capitalism"
 title: "Imperialism, the Highest Stage of Capitalism"
 author: "V. I. Lenin"
 year: 1916
 language: "en"
-section_title: "Critique of Political Economy"
-section_url: "sections/en-critique-political-economy.html"
+section_id: "critique-political-economy"
+source_url: "https://www.marxists.org/archive/lenin/works/1916/imp-hsc/"
+category: "Imperialism & Monopoly Capitalism"
+subcategory: "Finance Capital"
 description: "Written in Zurich in 1916 amidst the horrors of the First World War, Lenin analyzes the transformation of competitive industrial capitalism into monopoly finance capitalism, the global export of capital, the division of the earth among imperialist monopolies, and the epoch of proletarian revolution."
+status: published
 ---
 
 ### Historical Milestone

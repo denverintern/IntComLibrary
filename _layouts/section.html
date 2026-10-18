@@ -1,43 +1,18 @@
 ---
 layout: default
 ---
-
-
-
-{% case page.language %}
-  {% when 'pt' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign section_label = 'Secção' %}
-    {% assign preparing_label = 'As obras fundamentais para esta secção estão atualmente a ser transcritas e preparadas para o catálogo.' %}
-  {% when 'es' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign section_label = 'Sección' %}
-    {% assign preparing_label = 'Las obras fundamentales para esta sección se están transcribiendo y preparando para el catálogo.' %}
-  {% when 'fr' %}
-    {% assign library_label = 'Bibliothèque' %}
-    {% assign section_label = 'Section' %}
-    {% assign preparing_label = 'Les œuvres fondamentales de cette section sont actuellement transcrites et préparées pour le catalogue.' %}
-  {% when 'it' %}
-    {% assign library_label = 'Biblioteca' %}
-    {% assign section_label = 'Sezione' %}
-    {% assign preparing_label = 'Le opere fondamentali per questa sezione sono attualmente in fase di trascrizione e preparazione per il catalogo.' %}
-  {% when 'de' %}
-    {% assign library_label = 'Bibliothek' %}
-    {% assign section_label = 'Abschnitt' %}
-    {% assign preparing_label = 'Grundlegende Werke für diesen Abschnitt werden derzeit transkribiert und für den Katalog vorbereitet.' %}
-  {% when 'ru' %}
-    {% assign library_label = 'Библиотека' %}
-    {% assign section_label = 'Раздел' %}
-    {% assign preparing_label = 'Фундаментальные работы для этого раздела в настоящее время транскрибируются и готовятся для каталога.' %}
-  {% else %}
-    {% assign library_label = 'Library' %}
-    {% assign section_label = 'Section' %}
-    {% assign preparing_label = '{{ preparing_label }}' %}
-{% endcase %}
+{% assign page_lang = page.language | default: 'en' %}
+{% assign loc = site.data.locales[page_lang] %}
+{% assign en_loc = site.data.locales['en'] %}
+{% assign library_label = loc.library_label | default: en_loc.library_label %}
+{% assign section_label = loc.section_label | default: en_loc.section_label %}
+{% assign preparing_label = loc.preparing_label | default: en_loc.preparing_label %}
+{% assign read_label = loc.read_label | default: en_loc.read_label %}
+{% assign media_prefix = site.media_base_url | default: '/assets/uploads' %}
 
 <div class="chapter-container">
   <nav class="reader-breadcrumb">
-    <a href="{{ site.baseurl }}/{% if page.language == 'en' %}index.html{% else %}{{ page.language }}/index.html{% endif %}">{{ library_label }}</a>
+    <a href="{{ site.baseurl }}/{{ page_lang }}/index.html">{{ library_label }}</a>
     <span class="sep">/</span>
     <span class="current">{{ page.numeral }}. {{ page.title }}</span>
   </nav>
@@ -50,7 +25,7 @@ layout: default
     {% endif %}
   </header>
 
-  {% assign raw_section_texts = site.texts | where: "section_id", page.slug | where: "language", page.language | sort: "title" %}
+  {% assign raw_section_texts = site.texts | where: "section_id", page.slug | where: "language", page_lang | sort: "title" %}
   {% assign section_texts = "" | split: "," %}
   {% for item in raw_section_texts %}
     {% if item.status != 'draft' %}
@@ -74,6 +49,15 @@ layout: default
           {% for t in section_texts %}
             {% assign c = t.category | default: "General" %}
             {% if c == cat %}
+              {% assign t_id = t.id | default: t.slug %}
+              {% assign t_pdf = '' %}
+              {% if t.pdf and t.pdf != '' %}
+                {% if t.pdf contains '://' %}
+                  {% assign t_pdf = t.pdf %}
+                {% else %}
+                  {% assign t_pdf = site.baseurl | append: media_prefix | append: '/' | append: t.pdf %}
+                {% endif %}
+              {% endif %}
               <li class="chapter-work-row">
                 <div class="chapter-work-main">
                   <a href="{{ site.baseurl }}{{ t.url }}" class="chapter-work-link">{{ t.title }}</a>
@@ -85,11 +69,11 @@ layout: default
                   {% endif %}
                 </div>
                 <div class="chapter-work-actions">
-                  {% if t.pdf %}
-                    <a href="{{ site.baseurl }}/assets/uploads/{{ t.pdf }}" download class="format-link">PDF</a>
+                  {% if t_pdf != '' %}
+                    <a href="{{ t_pdf }}" download class="format-link">PDF</a>
                     <span class="format-sep">·</span>
                   {% endif %}
-                  <a href="{{ site.baseurl }}{{ t.url }}" class="format-link">Read</a>
+                  <a href="{{ site.baseurl }}{{ t.url }}" class="format-link">{{ read_label }}</a>
                 </div>
               </li>
             {% endif %}
@@ -99,7 +83,7 @@ layout: default
     {% endfor %}
   {% else %}
     <div style="padding: 2.5rem 0; border-top: 1px solid var(--border-color); color: var(--text-muted); font-style: italic;">
-      <p>Foundational works for this section are currently being transcribed and prepared for the catalog.</p>
+      <p>{{ preparing_label }}</p>
     </div>
   {% endif %}
 

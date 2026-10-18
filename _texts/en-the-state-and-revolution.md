@@ -1,16 +1,16 @@
-source_url: "https://www.marxists.org/archive/lenin/works/1917/staterev/"
 ---
-section_id: "party-state-revolution"
-category: "State & Proletarian Dictatorship"
-subcategory: "Party & Class"
 layout: text
+id: "en-the-state-and-revolution"
 title: "The State and Revolution"
 author: "V. I. Lenin"
 year: 1917
 language: "en"
-section_title: "Party, State & Revolution"
-section_url: "sections/en-party-state-revolution.html"
+section_id: "party-state-revolution"
+source_url: "https://www.marxists.org/archive/lenin/works/1917/staterev/"
+category: "State & Proletarian Dictatorship"
+subcategory: "Party & Class"
 description: "Written in hiding during August-September 1917, restoring the revolutionary Marxist doctrine of the state as an organ of class rule, the necessity of the dictatorship of the proletariat, the violent smashing of the bourgeois state apparatus, and the eventual withering away of the state under communism."
+status: published
 ---
 
 ### Historical Significance

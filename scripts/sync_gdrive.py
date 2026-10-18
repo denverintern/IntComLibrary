@@ -347,6 +347,8 @@ def main():
                     break
 
         source_url = row_dict.get("source_url", "")
+        edition = row_dict.get("edition", "")
+        translators = row_dict.get("translators", "")
         desc = row_dict.get("description", "")
         custom_id = row_dict.get("id", "")
         category = row_dict.get("category", "")
@@ -402,7 +404,7 @@ def main():
             pdf_exists = os.path.exists(pdf_path)
 
             if not pdf_exists or drive_id != existing_drive_id:
-                print(f"[+] Downloading PDF for: '{title}'...")
+                print(f"[+] Downloading PDF for: '{title}' -> assets/uploads/{pdf_filename}...")
                 if not dry_run and drive_service is not None:
                     try:
                         request = drive_service.files().get_media(fileId=drive_id)
@@ -419,7 +421,7 @@ def main():
                     has_pdf = True
             else:
                 has_pdf = True
-        elif os.path.exists(pdf_path):
+        elif os.path.exists(pdf_path) or existing_fm.get("pdf"):
             has_pdf = True
 
         if errors:
@@ -433,26 +435,20 @@ def main():
             print(f"[!] Row {row_num} failed PDF step: {err_msg}")
             continue
 
-        # Resolve section_title from taxonomy
-        sec_titles = taxonomy_sections.get(section_id, {})
-        section_title = (
-            existing_fm.get("section_title")
-            or sec_titles.get(language)
-            or sec_titles.get("en")
-            or ""
-        )
-
-        # Frontmatter generation (notes & assignee are strictly excluded from public markdown!)
+        # Canonical frontmatter generation matching _data/schema.yml
+        # (notes, assignee, priority are strictly excluded from public markdown!)
         safe_title = title.replace('"', '\\"')
         safe_author = author.replace('"', '\\"')
-        safe_desc = desc.replace('"', '\\"')
+        safe_desc = (desc or existing_fm.get("description", "")).replace('"', '\\"')
+        safe_edition = (edition or existing_fm.get("edition", "")).replace('"', '\\"')
+        safe_translators = (translators or existing_fm.get("translators", "")).replace('"', '\\"')
         safe_cat = (category or existing_fm.get("category", "")).replace('"', '\\"')
         safe_subcat = (subcategory or existing_fm.get("subcategory", "")).replace('"', '\\"')
 
         final_source_url = source_url if source_url else existing_fm.get("source_url", "")
-        final_body = existing_body if existing_body else safe_desc
+        final_body = existing_body if existing_body else desc
 
-        target_fm_status = "draft" if (force_draft or raw_status == "draft") else "pending"
+        target_fm_status = "draft" if (force_draft or raw_status == "draft") else "published"
 
         fm_lines = [
             "---",
@@ -460,30 +456,31 @@ def main():
             f'id: "{doc_id}"',
             f'title: "{safe_title}"',
             f'author: "{safe_author}"',
-            f"year: {year}",
+            f"year: {int(year)}",
             f'language: "{language}"',
             f'section_id: "{section_id}"',
         ]
 
-        if section_title:
-            fm_lines.append(f'section_title: "{section_title.replace(chr(34), chr(92) + chr(34))}"')
+        if has_pdf:
+            fm_lines.append(f'pdf: "{pdf_filename}"')
+        if final_source_url:
+            fm_lines.append(f'source_url: "{final_source_url}"')
+        if safe_edition:
+            fm_lines.append(f'edition: "{safe_edition}"')
+        if safe_translators:
+            fm_lines.append(f'translators: "{safe_translators}"')
         if safe_cat:
             fm_lines.append(f'category: "{safe_cat}"')
         if safe_subcat:
             fm_lines.append(f'subcategory: "{safe_subcat}"')
         if safe_desc:
             fm_lines.append(f'description: "{safe_desc}"')
-        if has_pdf:
-            fm_lines.append(f'pdf: "{pdf_filename}"')
-        if final_source_url:
-            fm_lines.append(f'source_url: "{final_source_url}"')
-        if drive_id:
-            fm_lines.append(f'drive_id: "{drive_id}"')
 
         fm_lines.append(f"status: {target_fm_status}")
         fm_lines.append("---")
         fm_lines.append("")
-        fm_lines.append(final_body)
+        if final_body:
+            fm_lines.append(final_body)
 
         fm = "\n".join(fm_lines) + "\n"
 

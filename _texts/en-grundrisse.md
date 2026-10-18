@@ -1,16 +1,16 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "en-grundrisse"
 title: "Grundrisse: Outlines of the Critique of Political Economy"
 author: "Karl Marx"
 year: 1857
 language: "en"
-section_title: "Critique of Political Economy"
-section_url: "sections/en-critique-political-economy.html"
+section_id: "critique-political-economy"
+pdf: "en-grundrisse.pdf"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Marx's sprawling 1857-1858 research manuscripts for Capital. Explores the methodological dialectics of political economy, the historical specificity of bourgeois categories, the nature of money, and the contradictions of automated machinery and free time under communism."
-pdf: "grundrisse.pdf"
+status: published
 ---
 
 ### Introduction to the Grundrisse

@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "de-lohnarbeit-und-kapital"
 title: "Lohnarbeit und Kapital"
 author: "Karl Marx"
 year: 1849
 language: "de"
-section_title: "Kritik der politischen Ökonomie"
-section_url: "sections/de-kritik-politische-oekonomie.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "Klassische Darlegung von Karl Marx über das antagonistische Verhältnis zwischen Kapital und Lohnarbeit, die Ware Arbeitskraft und die Entstehung des Mehrwerts."
+status: published
 ---
 
 ### Historische Einordnung

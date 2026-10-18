@@ -4,9 +4,14 @@ description: Official shared theoretical library of the internationalist communi
 baseurl: "/IntComLibrary"
 url: "https://denverintern.github.io"
 
+# Single URL prefix for addressable media ({id}.pdf).
+# Can be pointed at object storage or a CDN later without touching _texts/*.md.
+media_base_url: "/assets/uploads"
+
 collections:
   texts:
     output: true
+    permalink: /texts/:name.html
 
 defaults:
   - scope:
@@ -18,6 +23,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - DOCUMENTATION.md
   - .gitignore
   - .nojekyll
   - scripts

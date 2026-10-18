@@ -1,15 +1,15 @@
 ---
-section_id: "historical-materialism"
-category: "Marxist Epistemology & Dialectics"
-subcategory: "Materialist Method"
 layout: text
+id: "en-preface-contribution-critique-political-economy"
 title: "Preface to A Contribution to the Critique of Political Economy"
 author: "Karl Marx"
 year: 1859
 language: "en"
-section_title: "Historical Materialism & Method"
-section_url: "sections/en-historical-materialism.html"
+section_id: "historical-materialism"
+category: "Marxist Epistemology & Dialectics"
+subcategory: "Materialist Method"
 description: "The classic summary of the materialist conception of history. Formulates the relationship between the economic base (relations of production corresponding to a given stage of the material forces) and the legal, political, and ideological superstructure."
+status: published
 ---
 
 ### The Guiding Principle of Historical Materialism

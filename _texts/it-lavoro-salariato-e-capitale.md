@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Wages & Exploitation"
 layout: text
+id: "it-lavoro-salariato-e-capitale"
 title: "Lavoro Salariato e Capitale"
 author: "Karl Marx"
 year: 1849
 language: "it"
-section_title: "Critica dell'Economia Politica"
-section_url: "sections/it-critica-economia-politica.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Wages & Exploitation"
 description: "Testo fondamentale di Marx sul rapporto economico tra il capitale e il lavoro salariato, spiegando la genesi del plusvalore e l'antagonismo insanabile fra le classi."
+status: published
 ---
 
 ### Inquadramento Storico

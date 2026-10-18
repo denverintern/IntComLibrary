@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Labour Theory of Value"
 layout: text
+id: "fr-salaire-prix-et-profit"
 title: "Salaire, Prix et Profit"
 author: "Karl Marx"
 year: 1865
 language: "fr"
-section_title: "Critique de l'Économie Politique"
-section_url: "sections/fr-critique-economie-politique.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Labour Theory of Value"
 description: "Réfutation historique des arguments réformistes au sein de la Première Internationale, établissant la théorie de la valeur-travail et l'urgence révolutionnaire d'abolir le salariat."
+status: published
 ---
 
 ### Contexte Historique

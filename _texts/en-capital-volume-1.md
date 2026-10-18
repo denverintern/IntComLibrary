@@ -1,15 +1,15 @@
 ---
-section_id: "critique-political-economy"
-category: "Value, Surplus Value & Capital"
-subcategory: "Capital Accumulation"
 layout: text
+id: "en-capital-volume-1"
 title: "Capital, Volume 1"
 author: "Karl Marx"
 year: 1867
 language: "en"
-section_title: "Critique of Political Economy"
-section_url: "sections/en-critique-political-economy.html"
+section_id: "critique-political-economy"
+category: "Value, Surplus Value & Capital"
+subcategory: "Capital Accumulation"
 description: "Marx's magnum opus: A Critical Analysis of Capitalist Production (1867). Unveils the fundamental laws of motion of the capitalist mode of production, the fetishism of commodities, absolute and relative surplus value, the general law of capitalist accumulation, and the historical inevitability of proletarian revolution."
+status: published
 ---
 
 ### Scientific Foundation of Scientific Socialism

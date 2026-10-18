@@ -30,6 +30,17 @@ en:
   print_label: Print
   in_this_section_label: In This Section
   updated_label: Updated
+  native_name: English
+  sidebar_title: Thematic Sections
+  archive_title: Theoretical Archive
+  archive_desc: Key theoretical texts, theses, and historical manifestos of the communist
+    left.
+  no_texts_label: No texts available in this language yet.
+  view_label_text: 'View:'
+  col_title_label: Work / Title
+  col_author_label: Author
+  col_year_label: Year
+  col_format_label: PDF
 es:
   brand_title: Biblioteca Comunista Internacionalista
   motto_text: Archivo Teórico de la Izquierda Comunista
@@ -61,6 +72,17 @@ es:
   print_label: Imprimir
   in_this_section_label: En esta sección
   updated_label: Actualizado
+  native_name: Español
+  sidebar_title: Secciones Temáticas
+  archive_title: Archivo Teórico
+  archive_desc: Textos teóricos esenciales, tesis y manifiestos históricos de la izquierda
+    comunista.
+  no_texts_label: No hay textos disponibles en este idioma todavía.
+  view_label_text: 'Vista:'
+  col_title_label: Obra / Título
+  col_author_label: Autor
+  col_year_label: Año
+  col_format_label: PDF
 pt:
   brand_title: Biblioteca Comunista Internacionalista
   motto_text: Arquivo Teórico da Esquerda Comunista
@@ -92,37 +114,17 @@ pt:
   print_label: Imprimir
   in_this_section_label: Nesta Secção
   updated_label: Atualizado
-fr:
-  brand_title: Bibliothèque Communiste Internationaliste
-  motto_text: Archives Théoriques de la Gauche Communiste
-  search_label: RECHERCHE
-  search_placeholder: Titre, auteur, terme...
-  night_label: Nuit
-  paper_label: Papier
-  more_langs_label: PLUS
-  view_index_label: Index
-  view_catalog_label: Catalogue
-  view_bulletin_label: Bulletin
-  all_texts_text: Toutes les Œuvres
-  library_index_text: Index de la Bibliothèque
-  unite_text: PROLÉTAIRES DE TOUS LES PAYS, UNISSEZ-VOUS !
-  editorial_desk_text: Bureau Éditorial
-  repository_text: Dépôt
-  no_pdf_label: Aucun PDF local joint.
-  read_source_label: Lire sur le site source
-  source_label: 'Source :'
-  pdf_local_label: PDF (local)
-  html_external_label: HTML (externe)
-  open_pdf_label: Ouvrir le PDF
-  library_label: Bibliothèque
-  section_label: Section
-  preparing_label: Les œuvres fondamentales de cette section sont actuellement transcrites
-    et préparées pour le catalogue.
-  download_text: Télécharger PDF
-  transcription_label: Aller à la transcription
-  print_label: Imprimer
-  in_this_section_label: Dans cette section
-  updated_label: Mis à jour
+  native_name: Português
+  sidebar_title: Seções Temáticas
+  archive_title: Arquivo Teórico
+  archive_desc: Textos teóricos essenciais, teses e manifestos históricos da esquerda
+    comunista.
+  no_texts_label: Nenhum texto disponível neste idioma ainda.
+  view_label_text: 'Exibição:'
+  col_title_label: Obra / Título
+  col_author_label: Autor
+  col_year_label: Ano
+  col_format_label: PDF
 it:
   brand_title: Biblioteca Comunista Internazionalista
   motto_text: Archivio Teorico della Sinistra Comunista
@@ -154,6 +156,59 @@ it:
   print_label: Stampa
   in_this_section_label: In questa sezione
   updated_label: Aggiornato
+  native_name: Italiano
+  sidebar_title: Sezioni Tematiche
+  archive_title: Archivio Teorico
+  archive_desc: Testi teorici essenziali, tesi e manifesti storici della sinistra
+    comunista.
+  no_texts_label: Nessun testo ancora disponibile in questa lingua.
+  view_label_text: 'Vista:'
+  col_title_label: Opera / Titolo
+  col_author_label: Autore
+  col_year_label: Anno
+  col_format_label: PDF
+fr:
+  brand_title: Bibliothèque Communiste Internationaliste
+  motto_text: Archives Théoriques de la Gauche Communiste
+  search_label: RECHERCHE
+  search_placeholder: Titre, auteur, terme...
+  night_label: Nuit
+  paper_label: Papier
+  more_langs_label: PLUS
+  view_index_label: Index
+  view_catalog_label: Catalogue
+  view_bulletin_label: Bulletin
+  all_texts_text: Toutes les Œuvres
+  library_index_text: Index de la Bibliothèque
+  unite_text: PROLÉTAIRES DE TOUS LES PAYS, UNISSEZ-VOUS !
+  editorial_desk_text: Bureau Éditorial
+  repository_text: Dépôt
+  no_pdf_label: Aucun PDF local joint.
+  read_source_label: Lire sur le site source
+  source_label: 'Source :'
+  pdf_local_label: PDF (local)
+  html_external_label: HTML (externe)
+  open_pdf_label: Ouvrir le PDF
+  library_label: Bibliothèque
+  section_label: Section
+  preparing_label: Les œuvres fondamentales de cette section sont actuellement transcrites
+    et préparées pour le catalogue.
+  download_text: Télécharger PDF
+  transcription_label: Aller à la transcription
+  print_label: Imprimer
+  in_this_section_label: Dans cette section
+  updated_label: Mis à jour
+  native_name: Français
+  sidebar_title: Sections Thématiques
+  archive_title: Archives Théoriques
+  archive_desc: Textes théoriques essentiels, thèses et manifestes historiques de
+    la gauche communiste.
+  no_texts_label: Aucun texte disponible dans cette langue pour le moment.
+  view_label_text: 'Affichage :'
+  col_title_label: Titre
+  col_author_label: Auteur
+  col_year_label: Année
+  col_format_label: PDF
 de:
   brand_title: Internationalistische Kommunistische Bibliothek
   motto_text: Theoretisches Archiv der Kommunistischen Linken
@@ -185,6 +240,17 @@ de:
   print_label: Drucken
   in_this_section_label: In diesem Abschnitt
   updated_label: Aktualisiert
+  native_name: Deutsch
+  sidebar_title: Thematische Bereiche
+  archive_title: Theoretisches Archiv
+  archive_desc: Zentrale theoretische Texte, Thesen und Manifeste der kommunistischen
+    Linken.
+  no_texts_label: In dieser Sprache sind noch keine Texte verfügbar.
+  view_label_text: 'Ansicht:'
+  col_title_label: Werk / Titel
+  col_author_label: Autor
+  col_year_label: Jahr
+  col_format_label: PDF
 nl:
   brand_title: Internationalistische Communistische Bibliotheek
   motto_text: Theoretisch Archief van de Communistische Linkerzijde
@@ -216,6 +282,17 @@ nl:
   print_label: Afdrukken
   in_this_section_label: In deze sectie
   updated_label: Bijgewerkt
+  native_name: Nederlands
+  sidebar_title: Thematische Secties
+  archive_title: Theoretisch Archief
+  archive_desc: Belangrijke theoretische teksten en stellingen van de communistische
+    linkerzijde.
+  no_texts_label: Nog geen teksten beschikbaar in deze taal.
+  view_label_text: 'Weergave:'
+  col_title_label: Werk / Titel
+  col_author_label: Auteur
+  col_year_label: Jaar
+  col_format_label: PDF
 ru:
   brand_title: Интернационалистическая Коммунистическая Библиотека
   motto_text: Теоретический Архив Коммунистической Левой
@@ -247,96 +324,17 @@ ru:
   print_label: Печать
   in_this_section_label: В этом разделе
   updated_label: Обновлено
-zh:
-  brand_title: 国际主义共产主义图书馆
-  motto_text: 共产主义左派的理论档案
-  search_label: 搜索
-  search_placeholder: 标题、作者、词语...
-  night_label: 夜间
-  paper_label: 纸张
-  more_langs_label: 更多
-  view_index_label: 索引
-  view_catalog_label: 目录
-  view_bulletin_label: 公报
-  all_texts_text: 所有作品
-  library_index_text: 图书馆索引
-  unite_text: 全世界无产者，联合起来！
-  editorial_desk_text: 编辑部
-  repository_text: 代码库
-  no_pdf_label: 没有附带本地PDF。
-  read_source_label: 在源网站上阅读
-  source_label: 来源：
-  pdf_local_label: PDF (本地)
-  html_external_label: HTML (外部)
-  open_pdf_label: 打开 PDF
-  library_label: 图书馆
-  section_label: 部分
-  preparing_label: 此部分的基础作品目前正在转录和准备编目。
-  download_text: 下载 PDF
-  transcription_label: 跳转到正文
-  print_label: 打印
-  in_this_section_label: 在本节中
-  updated_label: 更新于
-ja:
-  brand_title: 国際主義共産主義図書館
-  motto_text: 共産主義左派の理論的アーカイブ
-  search_label: 検索
-  search_placeholder: タイトル、著者、用語...
-  night_label: 夜
-  paper_label: 紙
-  more_langs_label: もっと
-  view_index_label: インデックス
-  view_catalog_label: カタログ
-  view_bulletin_label: 紀要
-  all_texts_text: すべての作品
-  library_index_text: 図書館インデックス
-  unite_text: 万国の労働者よ、団結せよ！
-  editorial_desk_text: 編集デスク
-  repository_text: リポジトリ
-  no_pdf_label: ローカルPDFは添付されていません。
-  read_source_label: 元のサイトで読む
-  source_label: ソース：
-  pdf_local_label: PDF (ローカル)
-  html_external_label: HTML (外部)
-  open_pdf_label: PDFを開く
-  library_label: 図書館
-  section_label: セクション
-  preparing_label: このセクションの基本的な作品は、現在書き起こされ、カタログの準備が進められています。
-  download_text: PDFをダウンロード
-  transcription_label: テキストへ移動
-  print_label: 印刷
-  in_this_section_label: このセクション内
-  updated_label: 更新
-ko:
-  brand_title: 국제주의 공산주의 도서관
-  motto_text: 공산주의 좌파의 이론적 아카이브
-  search_label: 검색
-  search_placeholder: 제목, 저자, 용어...
-  night_label: 밤
-  paper_label: 종이
-  more_langs_label: 더 보기
-  view_index_label: 색인
-  view_catalog_label: 카탈로그
-  view_bulletin_label: 회보
-  all_texts_text: 모든 저작
-  library_index_text: 도서관 색인
-  unite_text: 만국의 노동자여, 단결하라!
-  editorial_desk_text: 편집 데스크
-  repository_text: 저장소
-  no_pdf_label: 첨부된 로컬 PDF가 없습니다.
-  read_source_label: 원본 사이트에서 읽기
-  source_label: '출처:'
-  pdf_local_label: PDF (로컬)
-  html_external_label: HTML (외부)
-  open_pdf_label: PDF 열기
-  library_label: 도서관
-  section_label: 섹션
-  preparing_label: 이 섹션의 기본 저작물은 현재 카탈로그를 위해 필사 및 준비 중입니다.
-  download_text: PDF 다운로드
-  transcription_label: 텍스트로 이동
-  print_label: 인쇄
-  in_this_section_label: 이 섹션의 내용
-  updated_label: 업데이트
+  native_name: Русский
+  sidebar_title: Тематические Разделы
+  archive_title: Теоретический Архив
+  archive_desc: Ключевые теоретические труды, тезисы и манифесты коммунистического
+    левого крыла.
+  no_texts_label: На этом языке пока нет доступных текстов.
+  view_label_text: 'Вид:'
+  col_title_label: Труд / Название
+  col_author_label: Автор
+  col_year_label: Год
+  col_format_label: PDF
 ar:
   brand_title: المكتبة الشيوعية الأممية
   motto_text: الأرشيف النظري لليسار الشيوعي
@@ -367,6 +365,136 @@ ar:
   print_label: طباعة
   in_this_section_label: في هذا القسم
   updated_label: تحديث
+  native_name: العربية
+  sidebar_title: الأقسام الموضوعية
+  archive_title: الأرشيف النظري
+  archive_desc: النصوص النظرية الأساسية والأطروحات التاريخية لليسار الشيوعي.
+  no_texts_label: لا توجد نصوص متاحة بهذه اللغة بعد.
+  view_label_text: 'العرض:'
+  col_title_label: العمل / العنوان
+  col_author_label: المؤلف
+  col_year_label: السنة
+  col_format_label: PDF
+zh:
+  brand_title: 国际主义共产主义图书馆
+  motto_text: 共产主义左派的理论档案
+  search_label: 搜索
+  search_placeholder: 标题、作者、词语...
+  night_label: 夜间
+  paper_label: 纸张
+  more_langs_label: 更多
+  view_index_label: 索引
+  view_catalog_label: 目录
+  view_bulletin_label: 公报
+  all_texts_text: 所有作品
+  library_index_text: 图书馆索引
+  unite_text: 全世界无产者，联合起来！
+  editorial_desk_text: 编辑部
+  repository_text: 代码库
+  no_pdf_label: 没有附带本地PDF。
+  read_source_label: 在源网站上阅读
+  source_label: 来源：
+  pdf_local_label: PDF (本地)
+  html_external_label: HTML (外部)
+  open_pdf_label: 打开 PDF
+  library_label: 图书馆
+  section_label: 部分
+  preparing_label: 此部分的基础作品目前正在转录和准备编目。
+  download_text: 下载 PDF
+  transcription_label: 跳转到正文
+  print_label: 打印
+  in_this_section_label: 在本节中
+  updated_label: 更新于
+  native_name: 简体中文
+  sidebar_title: 专题板块
+  archive_title: 理论档案
+  archive_desc: 共产主义左翼传统的核心理论文献、提纲与历史宣言。
+  no_texts_label: 此语言下暂无文献。
+  view_label_text: 视图：
+  col_title_label: 文献 / 标题
+  col_author_label: 作者
+  col_year_label: 年份
+  col_format_label: PDF
+ja:
+  brand_title: 国際主義共産主義図書館
+  motto_text: 共産主義左派の理論的アーカイブ
+  search_label: 検索
+  search_placeholder: タイトル、著者、用語...
+  night_label: 夜
+  paper_label: 紙
+  more_langs_label: もっと
+  view_index_label: インデックス
+  view_catalog_label: カタログ
+  view_bulletin_label: 紀要
+  all_texts_text: すべての作品
+  library_index_text: 図書館インデックス
+  unite_text: 万国の労働者よ、団結せよ！
+  editorial_desk_text: 編集デスク
+  repository_text: リポジトリ
+  no_pdf_label: ローカルPDFは添付されていません。
+  read_source_label: 元のサイトで読む
+  source_label: ソース：
+  pdf_local_label: PDF (ローカル)
+  html_external_label: HTML (外部)
+  open_pdf_label: PDFを開く
+  library_label: 図書館
+  section_label: セクション
+  preparing_label: このセクションの基本的な作品は、現在書き起こされ、カタログの準備が進められています。
+  download_text: PDFをダウンロード
+  transcription_label: テキストへ移動
+  print_label: 印刷
+  in_this_section_label: このセクション内
+  updated_label: 更新
+  native_name: 日本語
+  sidebar_title: テーマ別セクション
+  archive_title: 理論アーカイブ
+  archive_desc: 共産主義左翼の主要な理論的テキスト、テーゼ、歴史的宣言。
+  no_texts_label: この言語の文献はまだありません。
+  view_label_text: '表示:'
+  col_title_label: 文献 / 表題
+  col_author_label: 著者
+  col_year_label: 年
+  col_format_label: PDF
+ko:
+  brand_title: 국제주의 공산주의 도서관
+  motto_text: 공산주의 좌파의 이론적 아카이브
+  search_label: 검색
+  search_placeholder: 제목, 저자, 용어...
+  night_label: 밤
+  paper_label: 종이
+  more_langs_label: 더 보기
+  view_index_label: 색인
+  view_catalog_label: 카탈로그
+  view_bulletin_label: 회보
+  all_texts_text: 모든 저작
+  library_index_text: 도서관 색인
+  unite_text: 만국의 노동자여, 단결하라!
+  editorial_desk_text: 편집 데스크
+  repository_text: 저장소
+  no_pdf_label: 첨부된 로컬 PDF가 없습니다.
+  read_source_label: 원본 사이트에서 읽기
+  source_label: '출처:'
+  pdf_local_label: PDF (로컬)
+  html_external_label: HTML (외부)
+  open_pdf_label: PDF 열기
+  library_label: 도서관
+  section_label: 섹션
+  preparing_label: 이 섹션의 기본 저작물은 현재 카탈로그를 위해 필사 및 준비 중입니다.
+  download_text: PDF 다운로드
+  transcription_label: 텍스트로 이동
+  print_label: 인쇄
+  in_this_section_label: 이 섹션의 내용
+  updated_label: 업데이트
+  native_name: 한국어
+  sidebar_title: 주제별 섹션
+  archive_title: 이론 아카이브
+  archive_desc: 공산주의 좌파 전통의 핵심 이론 문헌, 테제 및 선언문.
+  no_texts_label: 이 언어로 등록된 문서가 아직 없습니다.
+  view_label_text: '보기:'
+  col_title_label: 문서 / 제목
+  col_author_label: 저자
+  col_year_label: 연도
+  col_format_label: PDF
 hi:
   brand_title: अंतर्राष्ट्रीयतावादी कम्युनिस्ट पुस्तकालय
   motto_text: कम्युनिस्ट वामपंथ का सैद्धांतिक संग्रह
@@ -398,6 +526,16 @@ hi:
   print_label: प्रिंट करें
   in_this_section_label: इस अनुभाग में
   updated_label: अद्यतन
+  native_name: हिन्दी
+  sidebar_title: विषयगत अनुभाग
+  archive_title: सैद्धांतिक अभिलेखागार
+  archive_desc: साम्यवादी वाम के प्रमुख सैद्धांतिक ग्रंथ, थीसिस और ऐतिहासिक घोषणापत्र।
+  no_texts_label: इस भाषा में अभी कोई ग्रंथ उपलब्ध नहीं है।
+  view_label_text: 'दृश्य:'
+  col_title_label: ग्रंथ / शीर्षक
+  col_author_label: लेखक
+  col_year_label: वर्ष
+  col_format_label: PDF
 bn:
   brand_title: আন্তর্জাতিকতাবাদী কমিউনিস্ট গ্রন্থাগার
   motto_text: কমিউনিস্ট বামপন্থার তাত্ত্বিক আর্কাইভ
@@ -429,6 +567,16 @@ bn:
   print_label: প্রিন্ট করুন
   in_this_section_label: এই বিভাগে
   updated_label: আপডেট করা হয়েছে
+  native_name: বাংলা
+  sidebar_title: বিষয়ভিত্তিক বিভাগ
+  archive_title: তাত্ত্বিক আর্কাইভ
+  archive_desc: কমিউনিস্ট বাম ঐতিহ্যের গুরুত্বপূর্ণ তাত্ত্বিক রচনা ও ঐতিহাসিক ঘোষণাপত্র।
+  no_texts_label: এই ভাষায় এখনও কোনো লেখা উপলব্ধ নেই।
+  view_label_text: 'প্রদর্শন:'
+  col_title_label: রচনা / শিরোনাম
+  col_author_label: লেখক
+  col_year_label: বছর
+  col_format_label: PDF
 id:
   brand_title: Perpustakaan Komunis Internasionalis
   motto_text: Arsip Teoretis Kiri Komunis
@@ -460,6 +608,16 @@ id:
   print_label: Cetak
   in_this_section_label: Di Bagian Ini
   updated_label: Diperbarui
+  native_name: Bahasa Indonesia
+  sidebar_title: Bagian Tematik
+  archive_title: Arsip Teoretis
+  archive_desc: Teks teoretis penting, tesis, dan manifesto historis dari kiri komunis.
+  no_texts_label: Belum ada teks yang tersedia dalam bahasa ini.
+  view_label_text: 'Tampilan:'
+  col_title_label: Karya / Judul
+  col_author_label: Penulis
+  col_year_label: Tahun
+  col_format_label: PDF
 tr:
   brand_title: Enternasyonalist Komünist Kütüphane
   motto_text: Komünist Solun Teorik Arşivi
@@ -491,6 +649,16 @@ tr:
   print_label: Yazdır
   in_this_section_label: Bu Bölümde
   updated_label: Güncellendi
+  native_name: Türkçe
+  sidebar_title: Tematik Bölümler
+  archive_title: Teorik Arşiv
+  archive_desc: Komünist sol geleneğin temel teorik metinleri, tezleri ve manifestoları.
+  no_texts_label: Bu dilde henüz metin bulunmamaktadır.
+  view_label_text: 'Görünüm:'
+  col_title_label: Eser / Başlık
+  col_author_label: Yazar
+  col_year_label: Yıl
+  col_format_label: PDF
 pl:
   brand_title: Międzynarodowa Biblioteka Komunistyczna
   motto_text: Archiwum Teoretyczne Lewicy Komunistycznej
@@ -522,6 +690,17 @@ pl:
   print_label: Drukuj
   in_this_section_label: W tej sekcji
   updated_label: Zaktualizowano
+  native_name: Polski
+  sidebar_title: Sekcje Tematyczne
+  archive_title: Archiwum Teoretyczne
+  archive_desc: Kluczowe teksty teoretyczne, tezy i historyczne manifesty komunistycznej
+    lewicy.
+  no_texts_label: Brak dostępnych tekstów w tym języku.
+  view_label_text: 'Widok:'
+  col_title_label: Dzieło / Tytuł
+  col_author_label: Autor
+  col_year_label: Rok
+  col_format_label: PDF
 el:
   brand_title: Διεθνιστική Κομμουνιστική Βιβλιοθήκη
   motto_text: Θεωρητικό Αρχείο της Κομμουνιστικής Αριστεράς
@@ -553,3 +732,14 @@ el:
   print_label: Εκτύπωση
   in_this_section_label: Σε αυτήν την ενότητα
   updated_label: Ενημερώθηκε
+  native_name: Ελληνικά
+  sidebar_title: Θεματικές Ενότητες
+  archive_title: Θεωρητικό Αρχείο
+  archive_desc: Θεμελιώδη θεωρητικά κείμενα, θέσεις και ιστορικά μανιφέστα της κομμουνιστικής
+    αριστεράς.
+  no_texts_label: Δεν υπάρχουν ακόμα διαθέσιμα κείμενα σε αυτήν τη γλώσσα.
+  view_label_text: 'Προβολή:'
+  col_title_label: Έργο / Τίτλος
+  col_author_label: Συγγραφέας
+  col_year_label: Έτος
+  col_format_label: PDF

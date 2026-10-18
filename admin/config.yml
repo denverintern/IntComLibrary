@@ -1,0 +1,221 @@
+# Decap CMS / Sveltia CMS Configuration
+# Enforces editorial_workflow (all edits create/update a branch + GitHub Pull Request;
+# only merging to `main` publishes to the live archive) and the _data/schema.yml contract.
+
+backend:
+  name: github
+  repo: denverintern/IntComLibrary
+  branch: main
+  squash_merges: true
+  commit_messages:
+    create: "Ingest {{collection}} '{{slug}}' via Editorial CMS"
+    update: "Update {{collection}} '{{slug}}' via Editorial CMS"
+    delete: "Remove {{collection}} '{{slug}}' via Editorial CMS"
+    uploadMedia: "Upload media '{{path}}' via Editorial CMS"
+    deleteMedia: "Delete media '{{path}}' via Editorial CMS"
+    openAuthoring: "{{message}}"
+
+publish_mode: editorial_workflow
+
+media_folder: "assets/uploads"
+public_folder: "/IntComLibrary/assets/uploads"
+
+site_url: "https://denverintern.github.io/IntComLibrary"
+display_url: "https://denverintern.github.io/IntComLibrary"
+
+collections:
+  - name: "texts"
+    label: "Theoretical Works (_texts)"
+    label_singular: "Theoretical Work"
+    folder: "_texts"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{language}}-{{slug}}"
+    identifier_field: "title"
+    summary: "[{{language | upper}}] {{title}} — {{author}} ({{year}}) · {{status}}"
+    sortable_fields: ["title", "author", "year", "language", "section_id", "status"]
+    view_filters:
+      - label: "Drafts"
+        field: "status"
+        pattern: "draft"
+      - label: "Published"
+        field: "status"
+        pattern: "published"
+      - label: "English (EN)"
+        field: "language"
+        pattern: "en"
+      - label: "Español (ES)"
+        field: "language"
+        pattern: "es"
+      - label: "Português (PT)"
+        field: "language"
+        pattern: "pt"
+      - label: "Italiano (IT)"
+        field: "language"
+        pattern: "it"
+      - label: "Français (FR)"
+        field: "language"
+        pattern: "fr"
+      - label: "Deutsch (DE)"
+        field: "language"
+        pattern: "de"
+      - label: "Русский (RU)"
+        field: "language"
+        pattern: "ru"
+    view_groups:
+      - label: "Language"
+        field: "language"
+      - label: "Thematic Section"
+        field: "section_id"
+      - label: "Status"
+        field: "status"
+    fields:
+      - label: "Layout"
+        name: "layout"
+        widget: "hidden"
+        default: "text"
+
+      - label: "Stable Record ID ({lang}-{slug})"
+        name: "id"
+        widget: "string"
+        required: true
+        pattern:
+          - "^[a-z]{2}-[a-z0-9\\-]+$"
+          - "Must match {lang}-{slug} using lowercase ASCII letters, digits, and hyphens only."
+        hint: "Canonical ID matching the filename stem (_texts/{id}.md) and PDF (assets/uploads/{id}.pdf). Never change once published."
+
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        required: true
+        hint: "Author or party organ attribution (e.g., Karl Marx, V. I. Lenin, Amadeo Bordiga, PCd'I)."
+
+      - label: "Year"
+        name: "year"
+        widget: "number"
+        value_type: "int"
+        min: 1500
+        max: 2100
+        required: true
+        hint: "4-digit year of composition or publication."
+
+      - label: "Language"
+        name: "language"
+        widget: "select"
+        required: true
+        options:
+          - { label: "English (en)", value: "en" }
+          - { label: "Español (es)", value: "es" }
+          - { label: "Português (pt)", value: "pt" }
+          - { label: "Italiano (it)", value: "it" }
+          - { label: "Français (fr)", value: "fr" }
+          - { label: "Deutsch (de)", value: "de" }
+          - { label: "Nederlands (nl)", value: "nl" }
+          - { label: "Русский (ru)", value: "ru" }
+          - { label: "简体中文 (zh)", value: "zh" }
+          - { label: "日本語 (ja)", value: "ja" }
+          - { label: "한국어 (ko)", value: "ko" }
+          - { label: "العربية (ar)", value: "ar" }
+          - { label: "हिन्दी (hi)", value: "hi" }
+          - { label: "বাংলা (bn)", value: "bn" }
+          - { label: "Bahasa Indonesia (id)", value: "id" }
+          - { label: "Türkçe (tr)", value: "tr" }
+          - { label: "Polski (pl)", value: "pl" }
+          - { label: "Ελληνικά (el)", value: "el" }
+
+      - label: "Thematic Section"
+        name: "section_id"
+        widget: "select"
+        required: true
+        options:
+          - { label: "I. Critique of Political Economy (critique-political-economy)", value: "critique-political-economy" }
+          - { label: "II. Party, State & Revolution (party-state-revolution)", value: "party-state-revolution" }
+          - { label: "III. Historical Materialism & Method (historical-materialism)", value: "historical-materialism" }
+          - { label: "IV. Tactics & History of Communist Left (history-communist-left)", value: "history-communist-left" }
+
+      - label: "Local PDF Filename ({id}.pdf)"
+        name: "pdf"
+        widget: "string"
+        required: false
+        hint: "Filename in assets/uploads/ addressable by ID (e.g., en-grundrisse.pdf). Do not paste raw GitHub URLs."
+
+      - label: "External Source URL"
+        name: "source_url"
+        widget: "string"
+        required: false
+        hint: "Canonical external source link (e.g., marxists.org or international-communist-party.org)."
+
+      - label: "Edition / Publication Organ"
+        name: "edition"
+        widget: "string"
+        required: false
+        hint: "Optional imprint, issue, or historical edition note."
+
+      - label: "Translators"
+        name: "translators"
+        widget: "string"
+        required: false
+        hint: "Optional translator attribution(s)."
+
+      - label: "Category"
+        name: "category"
+        widget: "string"
+        required: false
+        hint: "Optional thematic category within the section."
+
+      - label: "Subcategory"
+        name: "subcategory"
+        widget: "string"
+        required: false
+        hint: "Optional subcategory focus."
+
+      - label: "Archival Summary / Description"
+        name: "description"
+        widget: "text"
+        required: false
+        hint: "Brief theoretical overview."
+
+      - label: "Publication Status"
+        name: "status"
+        widget: "select"
+        required: true
+        default: "draft"
+        options:
+          - { label: "Draft (builds preview at /texts/{id}.html, hidden from public catalogs)", value: "draft" }
+          - { label: "Published (visible in public catalogs upon PR merge)", value: "published" }
+
+      - label: "Transcribed Text / Study Notes (Body)"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  - name: "governance"
+    label: "Taxonomy & Locales (_data)"
+    files:
+      - name: "taxonomy"
+        label: "Thematic Taxonomy (_data/taxonomy.json)"
+        file: "_data/taxonomy.json"
+        format: "json"
+        fields:
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string" }
+              - { label: "Roman Numeral", name: "numeral", widget: "string" }
+              - { label: "Order", name: "order", widget: "number", value_type: "int" }
+              - { label: "Localized Titles", name: "title", widget: "object", collapsed: false }
+              - label: "Categories"
+                name: "categories"
+                widget: "list"
+                fields:
+                  - { label: "ID", name: "id", widget: "string" }
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Subcategories", name: "subcategories", widget: "list" }
