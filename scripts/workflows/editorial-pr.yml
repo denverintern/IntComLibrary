@@ -1,0 +1,118 @@
+name: Editorial PR Check, Labels & Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      configure_branch_protection:
+        description: "Ensure canonical PR labels exist and apply 1-reviewer branch protection on main"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  editorial-desk-check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ensure Canonical Editorial Labels Exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "ingest" --color "0E8A16" --description "Automated or manual text ingestion" --force || true
+          gh label create "needs-review" --color "FBCA04" --description "Requires moderator checklist verification" --force || true
+          gh label create "has-pdf" --color "1D76DB" --description "Includes local PDF in assets/uploads/" --force || true
+          gh label create "empty-source" --color "D93F0B" --description "Missing external source_url in frontmatter" --force || true
+
+      - name: Detect Changed Text Files & Run Editorial Check
+        id: check
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+        run: |
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- '_texts/*.md' | tr '\n' ' ')
+          echo "Changed texts: $CHANGED"
+          python3 scripts/pr_editorial_check.py $CHANGED
+
+      - name: Sync PR Labels (ingest, needs-review, has-pdf, empty-source)
+        if: always() && (steps.check.outputs.labels_add != '' || steps.check.outputs.labels_remove != '')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "${{ steps.check.outputs.labels_add }}" ]; then
+            gh pr edit "${{ github.event.pull_request.number }}" --add-label "${{ steps.check.outputs.labels_add }}" || true
+          fi
+          if [ -n "${{ steps.check.outputs.labels_remove }}" ]; then
+            IFS=',' read -ra REM <<< "${{ steps.check.outputs.labels_remove }}"
+            for lbl in "${REM[@]}"; do
+              if [ -n "$lbl" ]; then
+                gh pr edit "${{ github.event.pull_request.number }}" --remove-label "$lbl" || true
+              fi
+            done
+          fi
+
+      - name: Setup Ruby & Build Preview Site
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Build Jekyll Preview
+        run: |
+          bundle exec jekyll build
+
+      - name: Upload PR Preview Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-preview-${{ github.event.pull_request.number }}
+          path: _site/
+          retention-days: 14
+
+      - name: Post / Update Editorial Review Summary on PR
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/pr_editorial_summary.md ]; then
+            cat << 'EOF' >> /tmp/pr_editorial_summary.md
+
+          **🔍 Preview Artifact:** Built `_site/` uploaded as artifact `pr-preview-${{ github.event.pull_request.number }}` on [this workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+          EOF
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/pr_editorial_summary.md --edit-last || \
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/pr_editorial_summary.md || true
+          fi
+
+  configure-repo-governance:
+    if: github.event_name == 'workflow_dispatch' && inputs.configure_branch_protection == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create Canonical Labels & Configure Branch Protection
+        env:
+          GH_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          bash scripts/setup_branch_protection.sh

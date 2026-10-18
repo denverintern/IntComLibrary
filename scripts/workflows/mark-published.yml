@@ -1,0 +1,41 @@
+name: Mark Published in Google Sheet
+
+on:
+  pull_request:
+    types: [closed]
+  push:
+    branches: ["main"]
+    paths:
+      - "_texts/*.md"
+
+jobs:
+  mark-published:
+    if: (github.event_name == 'push') || (github.event.pull_request.merged == true && startsWith(github.head_ref, 'ingest/'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install Google Dependencies
+        run: pip install -r requirements.txt
+      - name: Get Changed Files
+        id: changed-files
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            FILES=$(git diff-tree --no-commit-id --name-only -r "${{ github.event.pull_request.merge_commit_sha || github.sha }}" | grep '^_texts/.*\.md$' | tr '\n' ' ' || true)
+          else
+            FILES=$(git diff-tree --no-commit-id --name-only -r "${{ github.sha }}" | grep '^_texts/.*\.md$' | tr '\n' ' ' || true)
+          fi
+          echo "FILES=$FILES" >> $GITHUB_ENV
+      - name: Run Mark Published
+        if: env.FILES != ''
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_SHEET_ID: ${{ secrets.GDRIVE_SHEET_ID }}
+        run: |
+          python scripts/mark_published.py ${{ env.FILES }}

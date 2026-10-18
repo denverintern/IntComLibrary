@@ -150,22 +150,33 @@ layout: default
   {% endif %}
 {% endif %}
 
+{% assign resolved_sec_title = page.section_title %}
+{% if resolved_sec_title == nil or resolved_sec_title == "" %}
+  {% for sec_def in site.data.taxonomy.sections %}
+    {% if sec_def.slug == page.section_id %}
+      {% assign resolved_sec_title = sec_def.title[page.language] | default: sec_def.title['en'] %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 <article class="reader-frame">
+
+  {% if page.status == 'draft' %}
+    <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; border: 1px solid var(--accent-gold); background: var(--bg-secondary); font-family: var(--font-sans); font-size: 0.82rem; color: var(--text-main);">
+      <strong style="color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.05em;">Draft Preview:</strong>
+      This work carries <code>status: draft</code> and is excluded from public catalog listings until reviewed and flipped to <code>published</code>.
+    </div>
+  {% endif %}
 
   <!-- Archival Breadcrumb -->
   <nav class="reader-breadcrumb" aria-label="Breadcrumb">
     <a href="{{ site.baseurl }}/{{ back_url }}">{{ library_label }}</a>
-    {% if page.section_title %}
+    {% if page.section_id or resolved_sec_title %}
       <span class="sep">/</span>
-      {% if page.section_url %}
-        {% assign target_sec_url = page.section_url %}
-        {% assign first_char = target_sec_url | slice: 0, 1 %}
-        {% if first_char == "/" %}
-          {% assign target_sec_url = target_sec_url | remove_first: "/" %}
-        {% endif %}
-        <a href="{{ site.baseurl }}/{{ back_url }}?section={{ page.section_id }}">{{ sec_roman }} {{ page.section_title }}</a>
+      {% if page.section_id %}
+        <a href="{{ site.baseurl }}/{{ back_url }}?section={{ page.section_id }}">{{ sec_roman }} {{ resolved_sec_title }}</a>
       {% else %}
-        <span>{{ sec_roman }} {{ page.section_title }}</span>
+        <span>{{ sec_roman }} {{ resolved_sec_title }}</span>
       {% endif %}
     {% endif %}
     <span class="sep">/</span>
@@ -196,7 +207,6 @@ layout: default
   </div>
 </header>
 
-  <!-- Text Actions (Dignified print links, no icon soup) -->
   <!-- Text Actions (Dignified print links, no icon soup) -->
 <div class="reader-actions">
   {% if pdf_url %}
@@ -248,14 +258,14 @@ layout: default
   <!-- Sibling Works in Current Section -->
   {% assign sibling_texts = "" | split: "," %}
   {% for t in site.texts %}
-    {% if t.language == page.language and t.section_id == page.section_id and t.url != page.url %}
+    {% if t.language == page.language and t.section_id == page.section_id and t.url != page.url and t.status != 'draft' %}
       {% assign sibling_texts = sibling_texts | push: t %}
     {% endif %}
   {% endfor %}
 
   {% if sibling_texts.size > 0 %}
     <section class="reader-siblings-box">
-      <div class="reader-siblings-title">{{ in_this_section_label }}: {{ sec_roman }} {{ page.section_title }}</div>
+      <div class="reader-siblings-title">{{ in_this_section_label }}: {{ sec_roman }} {{ resolved_sec_title }}</div>
       <ul class="reader-siblings-list">
         {% for sib in sibling_texts limit: 5 %}
           <li class="reader-sibling-item">

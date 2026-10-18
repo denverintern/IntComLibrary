@@ -50,7 +50,13 @@ layout: default
     {% endif %}
   </header>
 
-  {% assign section_texts = site.texts | where: "section_id", page.slug | where: "language", page.language | sort: "title" %}
+  {% assign raw_section_texts = site.texts | where: "section_id", page.slug | where: "language", page.language | sort: "title" %}
+  {% assign section_texts = "" | split: "," %}
+  {% for item in raw_section_texts %}
+    {% if item.status != 'draft' %}
+      {% assign section_texts = section_texts | push: item %}
+    {% endif %}
+  {% endfor %}
   
   {% if section_texts.size > 0 %}
     {% assign cat_names = "" | split: "," %}

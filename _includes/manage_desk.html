@@ -1,1074 +1,267 @@
+<!-- Read-Only Editorial & Ingest Queue Desk -->
+<div class="admin-wrapper" style="max-width: 1100px; margin: 0 auto; padding: 1.5rem 0;">
 
-
-<!-- Authentication Gate Modal (Displayed when locked) -->
-<style>
-  .admin-tab-content { display: none; }
-  .admin-tab-content.active { display: block; }
-
-  [data-role="center"] .btn-approve,
-  [data-role="center"] .btn-edit-submission,
-  [data-role="center"] .btn-reject {
-    display: none !important;
-  }
-</style>
-
-<div id="auth-gate-modal" class="auth-gate-backdrop" style="display: flex;">
-  <div class="auth-gate-box">
-    <h2 class="auth-gate-title">Editorial Desk Access</h2>
-    <p class="auth-gate-desc">
-      Restricted portal for archival governance and theoretical submissions. Please enter your designated passcode to proceed.
-    </p>
-
-    <div id="auth-error-msg" class="auth-error">
-      Invalid passcode. Please verify your editorial credentials.
-    </div>
-
-    <form id="auth-form" onsubmit="return false;">
-      <div style="margin-bottom: 1.25rem;">
-        <label class="metadata-label" for="passcode-input">Editorial Passcode</label>
-        <div style="position: relative; display: flex; align-items: center;">
-          <input type="password" id="passcode-input" class="search-input" style="padding-left: 1rem; padding-right: 3rem;" placeholder="Enter passcode..." autocomplete="current-password" required>
-          <button type="button" id="btn-toggle-passcode" style="position: absolute; right: 10px; background: none; border: none; color: var(--text-dim); font-size: 0.8rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;">Show</button>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 1.5rem; background: var(--bg-primary); border: 1px solid var(--border-color); padding: 0.9rem; border-radius: 2px; font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">
-        <div style="color: var(--accent-gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;">Access Tiers & Hierarchy</div>
-        <div><strong>Lead Administrator</strong>: Unrestricted authority. Direct publishing, text approval queue, catalog editing, taxonomy modifications, and security settings.</div>
-        <div style="margin-top: 0.35rem;"><strong>Moderator</strong>: Restricted editorial contributor. Can draft and submit new works. All moderator submissions require Lead Administrator review and approval before inclusion in the archive.</div>
-      </div>
-
-      <button type="submit" id="btn-authenticate" class="btn btn-primary btn-block">
-        Authenticate & Access Desk
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- Main Management Panel (Visible after authentication) -->
-<div id="admin-main-panel" class="admin-wrapper" style="max-width: 1300px; margin: 0 auto; padding: 1rem 0; display: none;">
-  
   <!-- Header Bar -->
-  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
     <div>
-      <h1 style="font-family: var(--font-display); font-size: 1.85rem; color: var(--accent-red); letter-spacing: 0.03em; margin-bottom: 0.4rem;">
-        Editorial & Archives Management Desk
+      <h1 style="font-family: var(--font-display); font-size: 1.75rem; color: var(--accent-red); letter-spacing: 0.03em; margin-bottom: 0.4rem;">
+        Editorial Ingest Queue (Read-Only)
       </h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 800px; line-height: 1.5;">
-        Archival governance system: Review text submissions, draft new theoretical works, and manage catalog taxonomy.
+      <p style="color: var(--text-muted); font-size: 0.92rem; max-width: 740px; line-height: 1.55; margin: 0;">
+        All moderation, checklist verification, and approvals take place in the GitHub Pull Request queue on standing branch <code>ingest/gdrive-sync</code> and the Google Sheet assignment ledger.
       </p>
     </div>
-    <div style="display: flex; gap: 0.75rem; align-items: center;">
-      <button type="button" id="btn-lock-session" class="btn btn-secondary btn-sm" title="Lock the editorial panel">
-        Lock / Sign Out
-      </button>
-      <a href="{{ site.baseurl }}/index.html" class="btn btn-secondary btn-sm">
+    <div style="display: flex; gap: 0.65rem; align-items: center; flex-wrap: wrap;">
+      <a href="https://github.com/denverintern/IntComLibrary/pulls?q=is%3Apr+is%3Aopen" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="text-decoration: none;">
+        Open GitHub PR Queue
+      </a>
+      <a href="https://github.com/denverintern/IntComLibrary/actions/workflows/sync-gdrive.yml" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="text-decoration: none;">
+        Trigger Sync / Dry-Run
+      </a>
+      <a href="{{ site.baseurl }}/assets/library_ingestion_template.csv" download class="btn btn-secondary btn-sm" style="text-decoration: none;">
+        Sheet CSV Template
+      </a>
+      <a href="{{ site.baseurl }}/index.html" class="btn btn-secondary btn-sm" style="text-decoration: none;">
         Return to Library
       </a>
     </div>
   </div>
 
-  <!-- Role Hierarchy Status Banner -->
-  <div id="hierarchy-status-bar" class="hierarchy-status-bar">
-    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-      <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 600;">Current Authority:</span>
-      <span id="role-display-badge" class="role-badge lead-admin">Lead Administrator</span>
-      <span id="role-desc-text" style="font-size: 0.82rem; color: var(--text-muted);">Full archival control and text approval privileges enabled.</span>
+  <!-- SECTION 1: LIVE OPEN GITHUB INGEST PRS -->
+  <section style="margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+      <h2 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-gold); letter-spacing: 0.04em; margin: 0;">
+        I. Open Ingest Pull Requests
+      </h2>
+      <button type="button" id="btn-refresh-prs" class="btn btn-secondary btn-sm">
+        Refresh PRs
+      </button>
     </div>
-    <div id="pending-counter-wrap" style="display: flex; align-items: center; gap: 0.5rem;">
-      <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-gold); font-weight: 600;">Queue Status:</span>
-      <span id="queue-status-text" style="font-size: 0.82rem; color: var(--text-main);">0 submissions pending review</span>
+
+    <div id="open-prs-container" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 2px;">
+      <p style="color: var(--text-dim); font-style: italic; margin: 0;">Loading open pull requests from GitHub...</p>
     </div>
-  </div>
+  </section>
 
-  <!-- Tab Navigation Bar -->
-  <div class="admin-tabs" style="display: flex; gap: 0.35rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; overflow-x: auto;">
-    <!-- Lead Admin Only Tab: Approvals Queue -->
-    <button type="button" class="admin-tab-btn active role-lead-only" data-tab="tab-approvals">
-      Submissions Queue <span id="tab-pending-badge" class="pending-badge" style="display: none;">0</span>
-    </button>
-    
-    <!-- Shared Tab: Add/Submit New Book -->
-    <button type="button" class="admin-tab-btn" id="tab-btn-add" data-tab="tab-add-book">
-      Add New Work
-    </button>
+  <!-- SECTION 2: DRAFTS & PENDING WORKS IN REPOSITORY -->
+  <section style="margin-bottom: 2.5rem;">
+    <h2 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 0.85rem;">
+      II. Draft &amp; Pending Works in Repository
+    </h2>
+    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+      Works with <code>status: draft</code> in frontmatter are built for preview at their direct URLs below but are excluded from all public catalog listings until flipped to <code>published</code>.
+    </p>
 
-    <!-- Lead Admin Only Tabs -->
-    
-    <button type="button" class="admin-tab-btn role-lead-only" data-tab="tab-taxonomy">
-      Sections & Taxonomy
-    </button>
-    <button type="button" class="admin-tab-btn role-lead-only" data-tab="tab-sheets">
-      Google Sheets Sync
-    </button>
-    <button type="button" class="admin-tab-btn role-lead-only" data-tab="tab-security">
-      Passcodes & Security
-    </button>
-  </div>
+    {% assign queue_texts = "" | split: "," %}
+    {% for t in site.texts %}
+      {% if t.status == 'draft' or t.status == 'pending' %}
+        {% assign queue_texts = queue_texts | push: t %}
+      {% endif %}
+    {% endfor %}
 
-  <!-- TAB: APPROVALS QUEUE (LEAD ADMIN ONLY) -->
-  <div id="tab-approvals" class="admin-tab-content active role-lead-only">
-    <div style="max-width: 980px; margin: 0 auto;">
-      <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--accent-gold); letter-spacing: 0.04em;">
-            Submissions Pending Administrator Approval
-          </h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.25rem;">
-            Works submitted by moderators must be inspected and approved here before being committed to the catalog.
-          </p>
-        </div>
-        <button type="button" id="btn-refresh-queue" class="btn btn-secondary btn-sm">
-          Refresh Queue
-        </button>
+    {% if queue_texts.size == 0 %}
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-dim); font-style: italic;">
+        No works currently marked <code>status: draft</code> or <code>status: pending</code> on this branch.
       </div>
-
-      <div id="queue-container">
-        <!-- Rendered dynamically via JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: SECTIONS & TAXONOMY (LEAD ADMIN ONLY) -->
-  <div id="tab-taxonomy" class="admin-tab-content role-lead-only">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
-      <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 2px; padding: 2rem;">
-        <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-          Add Section or Category
-        </h3>
-        
-        <div style="margin-bottom: 1rem;">
-          <label class="metadata-label" for="tax-type">Entry Type</label>
-          <select id="tax-type" class="search-input" style="padding-left: 1rem;">
-            <option value="category">Category (under existing Section)</option>
-            <option value="subcategory">Subcategory (under existing Category)</option>
-            <option value="section">New Top-Level Thematic Section</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-          <label class="metadata-label" for="tax-parent">Parent Section</label>
-          <select id="tax-parent" class="search-input" style="padding-left: 1rem;">
-            <option value="critique-political-economy">I. Critique of Political Economy</option>
-            <option value="party-state-revolution">II. Party, State & Revolution</option>
-            <option value="historical-materialism">III. Historical Materialism & Method</option>
-            <option value="history-communist-left">IV. Tactics & History of Communist Left</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1.5rem;">
-          <label class="metadata-label" for="tax-name">Name / Title</label>
-          <input type="text" id="tax-name" class="search-input" style="padding-left: 1rem;" placeholder="e.g. Agrarian Question & Rent">
-        </div>
-
-        <button type="button" id="btn-add-taxonomy" class="btn btn-primary btn-block">
-          Update Taxonomy Structure
-        </button>
-      </div>
-
-      <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <h4 style="font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-gold);">
-            Active taxonomy.json Definition
-          </h4>
-          <button type="button" id="btn-download-tax" class="btn btn-secondary btn-sm">
-            Download taxonomy.json
-          </button>
-        </div>
-        <pre id="taxonomy-json-display" style="background: var(--bg-tertiary); padding: 1.25rem; border: 1px solid var(--border-color); border-radius: 2px; font-size: 0.75rem; max-height: 480px; overflow: auto; color: var(--text-main); font-family: monospace;"></pre>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: GOOGLE SHEETS SYNC (LEAD ADMIN ONLY) -->
-  <div id="tab-sheets" class="admin-tab-content role-lead-only">
-    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 2px; padding: 2rem; max-width: 900px; margin: 0 auto;">
-      <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 1.5rem;">
-        Google Sheets & Collaborative Ingestion
-      </h3>
-      <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.5rem;">
-        Moderators can also submit batches of theoretical texts via Google Sheets or a linked Google Form. The automated synchronizer (<code style="color: var(--accent-gold);">scripts/sync_gdrive.py</code>) parses these entries and extracts frontmatter attributes.
-      </p>
-
-      <div style="margin-bottom: 2rem; border: 1px solid var(--border-color); border-radius: 2px; overflow: hidden;">
+    {% else %}
+      <div class="catalog-table-wrap">
         <table class="catalog-table">
           <thead>
             <tr>
-              <th>Expected Column Header</th>
-              <th>Accepted Variations</th>
-              <th>Description</th>
+              <th>ID (<code>lang-slug</code>)</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Lang</th>
+              <th>Section</th>
+              <th>Status</th>
+              <th style="text-align: right;">Preview</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Title</strong></td>
-              <td>title, título, titulo, livro, book</td>
-              <td>Full title of theoretical work.</td>
-            </tr>
-            <tr>
-              <td><strong>Author</strong></td>
-              <td>author, autor, escritor</td>
-              <td>Author or collective committee name.</td>
-            </tr>
-            <tr>
-              <td><strong>Language</strong></td>
-              <td>language, idioma, lingua, lang</td>
-              <td>2-letter ISO code or full language name.</td>
-            </tr>
-            <tr>
-              <td><strong>Section</strong></td>
-              <td>section, sección, seccion, seção</td>
-              <td>Canonical thematic section name.</td>
-            </tr>
-            <tr>
-              <td><strong>Category</strong></td>
-              <td>category, categoría, categoria, theme</td>
-              <td>Thematic grouping name.</td>
-            </tr>
-            <tr>
-              <td><strong>Subcategory</strong></td>
-              <td>subcategory, subcat, subseção</td>
-              <td>Specific sub-topic or chapter focus.</td>
-            </tr>
-            <tr>
-              <td><strong>PDF Link / Upload</strong></td>
-              <td>pdf, file, archivo, drive, upload</td>
-              <td>Google Drive sharing URL or direct PDF name.</td>
-            </tr>
-            <tr>
-              <td><strong>Description</strong></td>
-              <td>desc, description, resumo, synopsis</td>
-              <td>Theoretical overview or brief historical note.</td>
-            </tr>
+            {% for item in queue_texts %}
+              <tr>
+                <td style="font-family: monospace; font-size: 0.82rem;">{{ item.id | default: item.title | slugify }}</td>
+                <td class="col-work-title"><a href="{{ site.baseurl }}{{ item.url }}">{{ item.title }}</a></td>
+                <td class="col-work-author">{{ item.author | default: '—' }}</td>
+                <td><code>{{ item.language | upcase }}</code></td>
+                <td style="font-size: 0.82rem; color: var(--text-dim);">{{ item.section_id }}</td>
+                <td><code>{{ item.status }}</code></td>
+                <td style="text-align: right;">
+                  <a href="{{ site.baseurl }}{{ item.url }}" class="pdf-tag">Preview</a>
+                </td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
+    {% endif %}
+  </section>
 
-      <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-        <button type="button" id="btn-download-csv-template" class="btn btn-primary">
-          Download Formatted CSV Template
-        </button>
-        <span style="font-size: 0.8rem; color: var(--text-dim);">Import this CSV directly into Google Sheets.</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: PASSCODES & SECURITY (LEAD ADMIN ONLY) -->
-  <div id="tab-security" class="admin-tab-content role-lead-only">
-    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 2px; padding: 2rem; max-width: 800px; margin: 0 auto;">
-      <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-        Passcode Configuration & Editorial Permissions
-      </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">
-        Manage the temporary passcodes used to unlock editorial access. You can update both your Lead Administrator passcode and the Moderator passcode at any time. Changes are stored in browser storage.
-      </p>
-
-      <form id="passcode-config-form" onsubmit="return false;">
-        <div style="margin-bottom: 1.5rem;">
-          <label class="metadata-label" for="cfg-admin-pass">Lead Administrator Passcode</label>
-          <input type="text" id="cfg-admin-pass" class="search-input" style="padding-left: 1rem; font-family: monospace;" required>
-          <span style="font-size: 0.74rem; color: var(--text-dim); margin-top: 0.25rem; display: block;">
-            Grants full unrestricted access (Approvals, Direct Publishing, Editing Existing Works, Taxonomy, Security).
-          </span>
-        </div>
-
-        <div style="margin-bottom: 1.75rem;">
-          <label class="metadata-label" for="cfg-mod-pass">Moderator Passcode</label>
-          <input type="text" id="cfg-mod-pass" class="search-input" style="padding-left: 1rem; font-family: monospace;" required>
-          <span style="font-size: 0.74rem; color: var(--text-dim); margin-top: 0.25rem; display: block;">
-            Restricted to submitting drafts. All submissions are placed into your review queue for approval before publication.
-          </span>
-        </div>
-
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button type="button" id="btn-save-passcodes" class="btn btn-primary">
-            Save Passcodes
-          </button>
-          <button type="button" id="btn-reset-passcodes" class="btn btn-secondary">
-            Reset to Default Passcodes
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-</div>
-
-<!-- Moderator Submission Confirmation Notice Modal -->
-<div id="submission-success-modal" class="auth-gate-backdrop" style="display: none;">
-  <div class="auth-gate-box" style="max-width: 440px;">
-    <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 0.75rem; text-align: center;">
-      Submission Sent for Review
-    </h3>
-    <p style="font-size: 0.88rem; color: var(--text-main); line-height: 1.6; text-align: center; margin-bottom: 1.5rem;">
-      Your proposed work has been successfully stored in the review queue. The Lead Administrator will inspect the text, verify the theoretical frontmatter, and approve it for inclusion in the library catalog.
+  <!-- SECTION 3: GOOGLE SHEET ASSIGNMENT LEDGER SCHEMA -->
+  <section>
+    <h2 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-gold); letter-spacing: 0.04em; margin-bottom: 0.85rem;">
+      III. Google Sheet Assignment Ledger &amp; Column Map
+    </h2>
+    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+      <code>scripts/sync_gdrive.py</code> reads rows where <code>status</code> is empty, <code>new</code>, or <code>draft</code>, validates metadata, opens/updates the standing PR on <code>ingest/gdrive-sync</code>, and pings Discord/email with the PR link and title. Internal <code>notes</code> are included in the PR review table and never written to the public markdown body.
     </p>
-    <button type="button" id="btn-close-sub-modal" class="btn btn-primary btn-block">
-      Continue
-    </button>
-  </div>
+
+    <div class="catalog-table-wrap">
+      <table class="catalog-table">
+        <thead>
+          <tr>
+            <th>Column Header</th>
+            <th>Required</th>
+            <th>Role in Pipeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>Optional</td>
+            <td>Canonical <code>{lang}-{slug}</code> identifier. Auto-generated from <code>language</code> and <code>title</code> if blank.</td>
+          </tr>
+          <tr>
+            <td><code>title</code></td>
+            <td>Required</td>
+            <td>Full title of the theoretical work.</td>
+          </tr>
+          <tr>
+            <td><code>author</code></td>
+            <td>Required</td>
+            <td>Author or party organ attribution.</td>
+          </tr>
+          <tr>
+            <td><code>year</code></td>
+            <td>Required</td>
+            <td>4-digit year of composition or publication (<code>^\d{4}$</code>).</td>
+          </tr>
+          <tr>
+            <td><code>language</code></td>
+            <td>Required</td>
+            <td>Allowed 2-letter ISO code (<code>en</code>, <code>es</code>, <code>pt</code>, <code>it</code>, <code>fr</code>, <code>de</code>, <code>nl</code>, <code>ru</code>, <code>zh</code>, <code>ja</code>, <code>ko</code>, <code>ar</code>, <code>hi</code>, <code>bn</code>, <code>id</code>, <code>tr</code>, <code>pl</code>, <code>el</code>).</td>
+          </tr>
+          <tr>
+            <td><code>section_id</code></td>
+            <td>Required</td>
+            <td>Canonical taxonomy slug (<code>critique-political-economy</code>, <code>party-state-revolution</code>, <code>historical-materialism</code>, <code>history-communist-left</code>).</td>
+          </tr>
+          <tr>
+            <td><code>pdf_link</code></td>
+            <td>Optional</td>
+            <td>Google Drive file URL (or <code>N/A</code> if submitted via Form File Upload or external HTML only). Sets <code>has-pdf</code> label on PR.</td>
+          </tr>
+          <tr>
+            <td><code>source_url</code></td>
+            <td>Optional</td>
+            <td>Canonical source URL. If blank, sets <code>empty-source</code> label on PR.</td>
+          </tr>
+          <tr>
+            <td><code>description</code></td>
+            <td>Optional</td>
+            <td>Initial summary note; never overwrites an existing transcribed Markdown body.</td>
+          </tr>
+          <tr>
+            <td><code>assignee</code></td>
+            <td>Ledger</td>
+            <td>Moderator assigned to review the PR (surfaced in PR ledger table and Discord/email notification).</td>
+          </tr>
+          <tr>
+            <td><code>priority</code></td>
+            <td>Ledger</td>
+            <td>Editorial priority (e.g. <code>high</code>, <code>normal</code>, <code>low</code>).</td>
+          </tr>
+          <tr>
+            <td><code>notes</code></td>
+            <td>Ledger</td>
+            <td>Internal editorial notes for reviewers — <strong>never written to public markdown files</strong>.</td>
+          </tr>
+          <tr>
+            <td><code>status</code></td>
+            <td>Required</td>
+            <td>Lifecycle state: <code>new</code> &rarr; <code>pending</code> (or <code>draft</code>) &rarr; <code>published</code> (on PR merge) | <code>error: ...</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // ----------------------------------------------------
-    // PASSCODE AUTHENTICATION & HIERARCHY ENGINE
-    // ----------------------------------------------------
-    const DEFAULT_ADMIN_PASS = 'lead-admin-1917';
-    const DEFAULT_MOD_PASS = 'mod-desk-1921';
-    const DEFAULT_CENTER_PASS = 'center-desk-1926';
+    const container = document.getElementById('open-prs-container');
+    const refreshBtn = document.getElementById('btn-refresh-prs');
 
-    function getAdminPasscode() {
-      return localStorage.getItem('lib_admin_passcode') || DEFAULT_ADMIN_PASS;
-    }
-
-    function getModPasscode() {
-      return localStorage.getItem('lib_mod_passcode') || DEFAULT_MOD_PASS;
-    }
-
-    function getCenterPasscode() {
-      return localStorage.getItem('lib_center_passcode') || DEFAULT_CENTER_PASS;
-    }
-
-    const authModal = document.getElementById('auth-gate-modal');
-    const adminPanel = document.getElementById('admin-main-panel');
-    const passInput = document.getElementById('passcode-input');
-    const authError = document.getElementById('auth-error-msg');
-    const btnTogglePass = document.getElementById('btn-toggle-passcode');
-    const roleBadge = document.getElementById('role-display-badge');
-    const roleDescText = document.getElementById('role-desc-text');
-    const modNoticeBanner = document.getElementById('mod-notice-banner');
-    const btnSubmitApproval = document.getElementById('btn-submit-for-approval');
-    const btnDownloadBook = document.getElementById('btn-download-book');
-    const btnCopyBook = document.getElementById('btn-copy-book');
-
-    let currentRole = sessionStorage.getItem('lib_auth_role') || null;
-
-    // Toggle password masking
-    btnTogglePass.addEventListener('click', () => {
-      if (passInput.type === 'password') {
-        passInput.type = 'text';
-        btnTogglePass.textContent = 'Hide';
-      } else {
-        passInput.type = 'password';
-        btnTogglePass.textContent = 'Show';
-      }
-    });
-
-function applyRolePermissions(role) {
-  currentRole = role;
-  sessionStorage.setItem('lib_auth_role', role);
-
-  authModal.style.display = 'none';
-  adminPanel.style.display = 'block';
-  
-  // Update data attribute for CSS targeting
-  adminPanel.setAttribute('data-role', role);
-
-
-      if (role === 'lead_admin') {
-        // Full Lead Admin Access
-        roleBadge.className = 'role-badge lead-admin';
-        roleBadge.textContent = 'Lead Administrator';
-        roleDescText.textContent = 'Full archival control, text approval authority, and catalog configuration enabled.';
-        
-        // Show all tabs
-        document.querySelectorAll('.role-lead-only').forEach(el => el.style.display = '');
-        
-        // Form buttons
-        btnDownloadBook.style.display = 'inline-flex';
-        btnCopyBook.style.display = 'inline-flex';
-        btnSubmitApproval.style.display = 'none';
-        modNoticeBanner.style.display = 'none';
-
-        renderSubmissionsQueue();
-      } else if (role === 'moderator') {
-        // Restricted Moderator Access
-        roleBadge.className = 'role-badge moderator';
-        roleBadge.textContent = 'Editorial Moderator (Restricted)';
-        roleDescText.textContent = 'Draft submission mode. All works require Lead Administrator approval prior to publication.';
-        
-        // Hide admin-only tabs
-document.querySelectorAll('.role-lead-only').forEach(el => el.style.display = 'none');
-
-// Show the approvals tab for Center
-const approvalTabBtn = document.querySelector('[data-tab="tab-approvals"]');
-if (approvalTabBtn) approvalTabBtn.style.display = '';
-const approvalTabContent = document.getElementById('tab-approvals');
-if (approvalTabContent) approvalTabContent.style.display = 'block';
-
-document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-
-if (approvalTabBtn) approvalTabBtn.classList.add('active');
-if (approvalTabContent) approvalTabContent.classList.add('active');
-
-// Hide "Add Book" tab button explicitly
-const addBtn = document.getElementById('tab-btn-add');
-if (addBtn) addBtn.style.display = 'none';
-
-
-  if (btnDownloadBook) btnDownloadBook.style.display = 'none';
-  if (btnCopyBook) btnCopyBook.style.display = 'none';
-  if (btnSubmitApproval) btnSubmitApproval.style.display = 'none';
-  if (modNoticeBanner) modNoticeBanner.style.display = 'none';
-
-  renderSubmissionsQueue();
-  
-  // Hide edit/dismiss buttons in queue
-  setTimeout(() => {
-    document.querySelectorAll('.btn-sm').forEach(b => {
-       if (b.textContent.includes('Dismiss') || b.textContent.includes('Approve') || b.textContent.includes('Load into Editor')) {
-         b.style.display = 'none';
-       }
-    });
-  }, 50);
-}
-
-    }
-
-    // Check existing session
-    // Check existing session
-if (currentRole === 'lead_admin' || currentRole === 'moderator' || currentRole === 'center') {
-
-      applyRolePermissions(currentRole);
-    } else {
-      authModal.style.display = 'flex';
-      adminPanel.style.display = 'none';
-    }
-
-    // Authenticate Form Submit
-    document.getElementById('auth-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const entered = passInput.value.trim();
-      const adminPass = getAdminPasscode();
-const modPass = getModPasscode();
-const centerPass = getCenterPasscode();
-
-if (entered === adminPass) {
-  authError.style.display = 'none';
-  passInput.value = '';
-  applyRolePermissions('lead_admin');
-} else if (entered === modPass) {
-  authError.style.display = 'none';
-  passInput.value = '';
-  applyRolePermissions('moderator');
-} else if (entered === centerPass) {
-  authError.style.display = 'none';
-  passInput.value = '';
-  applyRolePermissions('center');
-} else {
-
-        authError.style.display = 'block';
-      }
-    });
-
-    // Lock session
-    document.getElementById('btn-lock-session').addEventListener('click', () => {
-      sessionStorage.removeItem('lib_auth_role');
-      currentRole = null;
-      adminPanel.style.display = 'none';
-      authModal.style.display = 'flex';
-      passInput.value = '';
-      authError.style.display = 'none';
-    });
-
-    // ----------------------------------------------------
-    // TAB NAVIGATION
-    // ----------------------------------------------------
-    const tabButtons = document.querySelectorAll('.admin-tab-btn');
-    const tabContents = document.querySelectorAll('.admin-tab-content');
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-tab');
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        const targetContent = document.getElementById(targetId);
-        if (targetContent) targetContent.classList.add('active');
-      });
-    });
-
-    // ----------------------------------------------------
-    // SUBMISSIONS QUEUE ENGINE (LEAD ADMIN APPROVAL SYSTEM)
-    // ----------------------------------------------------
-    function getPendingSubmissions() {
+    async function loadOpenIngestPRs() {
+      if (!container) return;
+      container.innerHTML = '<p style="color: var(--text-dim); font-style: italic; margin: 0;">Fetching open PRs from GitHub...</p>';
       try {
-        return JSON.parse(localStorage.getItem('lib_pending_submissions')) || [];
-      } catch (e) {
-        return [];
-      }
-    }
+        const res = await fetch('https://api.github.com/repos/denverintern/IntComLibrary/pulls?state=open&per_page=25', {
+          headers: { 'Accept': 'application/vnd.github+json' }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const prs = await res.json();
 
-    function savePendingSubmissions(list) {
-      localStorage.setItem('lib_pending_submissions', JSON.stringify(list));
-      updateQueueCounters();
-    }
-
-    function updateQueueCounters() {
-      const list = getPendingSubmissions();
-      const count = list.length;
-      const queueText = document.getElementById('queue-status-text');
-      const tabBadge = document.getElementById('tab-pending-badge');
-
-      if (queueText) {
-        queueText.textContent = `${count} submission${count === 1 ? '' : 's'} pending review`;
-      }
-      if (tabBadge) {
-        if (count > 0) {
-          tabBadge.textContent = count;
-          tabBadge.style.display = 'inline-block';
-        } else {
-          tabBadge.style.display = 'none';
-        }
-      }
-    }
-    updateQueueCounters();
-
-    function renderSubmissionsQueue() {
-      const queueContainer = document.getElementById('queue-container');
-      if (!queueContainer) return;
-
-      const list = getPendingSubmissions();
-      if (list.length === 0) {
-        queueContainer.innerHTML = `
-          <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2.5rem; text-align: center; border-radius: 2px;">
-            <p style="font-family: var(--font-serif); font-size: 1.05rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-              No pending moderator submissions.
-            </p>
-            <p style="font-size: 0.82rem; color: var(--text-dim);">
-              When moderators submit new works, they will appear here for inspection and verification.
-            </p>
-          </div>
-        `;
-        return;
-      }
-
-      queueContainer.innerHTML = list.map((item, idx) => `
-        <div class="pending-queue-card" id="queue-item-${idx}">
-          <div class="pending-meta">
-            <span>[${item.language.toUpperCase()}]</span>
-            <span>${item.section_title || item.section_id}</span>
-            ${item.category ? `<span>/ ${item.category}</span>` : ''}
-            <span style="margin-left: auto; color: var(--text-dim); text-transform: none;">Submitted: ${item.date || 'Recent'}</span>
-          </div>
-
-          <div style="margin-bottom: 0.75rem;">
-            <h4 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.2rem;">
-              ${item.title}
-            </h4>
-            <div style="font-family: var(--font-serif); font-style: italic; color: var(--accent-gold); font-size: 0.9rem;">
-              ${item.author}
+        if (!Array.isArray(prs) || prs.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 1rem 0; color: var(--text-muted);">
+              No open ingest Pull Requests at this moment.
+              <a href="https://github.com/denverintern/IntComLibrary/pulls" target="_blank" rel="noopener" style="color: var(--accent-gold); margin-left: 0.4rem;">View closed/merged PRs &rarr;</a>
             </div>
-          </div>
+          `;
+          return;
+        }
 
-          <p style="font-family: var(--font-serif); font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1rem;">
-            ${item.description}
+        const rows = prs.map(pr => {
+          const labels = (pr.labels || []).map(l =>
+            `<code style="margin-right: 0.35rem; padding: 0.1rem 0.35rem; border: 1px solid var(--border-color); font-size: 0.75rem;">${l.name}</code>`
+          ).join('');
+          const updated = pr.updated_at ? pr.updated_at.slice(0, 10) : '';
+          const branch = (pr.head && pr.head.ref) ? pr.head.ref : '';
+          return `
+            <tr>
+              <td style="font-family: monospace; width: 4.5rem;"><a href="${pr.html_url}" target="_blank" rel="noopener">#${pr.number}</a></td>
+              <td class="col-work-title">
+                <a href="${pr.html_url}" target="_blank" rel="noopener">${pr.title}</a>
+                <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.2rem;">Branch: <code>${branch}</code></div>
+              </td>
+              <td>${labels || '<span style="color: var(--text-dim);">—</span>'}</td>
+              <td style="font-size: 0.82rem; color: var(--text-dim); text-align: right;">${updated}</td>
+              <td style="text-align: right; width: 6rem;">
+                <a href="${pr.html_url}" target="_blank" rel="noopener" class="pdf-tag">Review PR</a>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <table class="catalog-table" style="margin: 0;">
+            <thead>
+              <tr>
+                <th>PR</th>
+                <th>Title &amp; Standing Branch</th>
+                <th>Labels</th>
+                <th style="text-align: right;">Updated</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+      } catch (err) {
+        container.innerHTML = `
+          <p style="color: var(--text-muted); margin: 0;">
+            Unable to load live PR list directly (${err.message}).
+            <a href="https://github.com/denverintern/IntComLibrary/pulls" target="_blank" rel="noopener" style="color: var(--accent-gold);">Open GitHub Pull Requests directly &rarr;</a>
           </p>
-
-          <div style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 2px; font-family: monospace; font-size: 0.75rem; color: var(--text-dim); max-height: 120px; overflow-y: auto; margin-bottom: 1.25rem;">
-            ${item.markdown.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
-          </div>
-
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <button type="button" class="btn btn-primary btn-sm btn-approve" data-index="${idx}">
-              Approve & Download .md
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm btn-copy-submission" data-index="${idx}">
-              Copy Markdown
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm btn-edit-submission" data-index="${idx}">
-              Edit Before Approving
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm btn-reject" data-index="${idx}" style="color: #ff6b6b !important;">
-              Reject & Dismiss
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      // Wire queue item action buttons
-      queueContainer.querySelectorAll('.btn-approve').forEach(b => {
-        b.addEventListener('click', () => {
-          const idx = parseInt(b.getAttribute('data-index'));
-          approveSubmission(idx);
-        });
-      });
-
-      queueContainer.querySelectorAll('.btn-copy-submission').forEach(b => {
-        b.addEventListener('click', () => {
-          const idx = parseInt(b.getAttribute('data-index'));
-          const item = getPendingSubmissions()[idx];
-          if (item) {
-            navigator.clipboard.writeText(item.markdown).then(() => {
-              alert(`Markdown for "${item.title}" copied to clipboard!`);
-            });
-          }
-        });
-      });
-
-      queueContainer.querySelectorAll('.btn-edit-submission').forEach(b => {
-        b.addEventListener('click', () => {
-          const idx = parseInt(b.getAttribute('data-index'));
-          loadSubmissionIntoEditor(idx);
-        });
-      });
-
-      queueContainer.querySelectorAll('.btn-reject').forEach(b => {
-        b.addEventListener('click', () => {
-          const idx = parseInt(b.getAttribute('data-index'));
-          if (confirm('Are you sure you want to dismiss this submission from the queue?')) {
-            const list = getPendingSubmissions();
-            list.splice(idx, 1);
-            savePendingSubmissions(list);
-            renderSubmissionsQueue();
-          }
-        });
-      });
+        `;
+      }
     }
 
-    function approveSubmission(idx) {
-      const list = getPendingSubmissions();
-      const item = list[idx];
-      if (!item) return;
-
-      const filename = `${item.language}-${slugify(item.title)}.md`;
-      const blob = new Blob([item.markdown], { type: 'text/markdown;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-
-      // Remove from queue
-      list.splice(idx, 1);
-      savePendingSubmissions(list);
-      renderSubmissionsQueue();
-      alert(`Work "${item.title}" approved! Markdown file downloaded for _texts/${filename}.`);
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', loadOpenIngestPRs);
     }
-
-    function loadSubmissionIntoEditor(idx) {
-      const item = getPendingSubmissions()[idx];
-      if (!item) return;
-
-      document.getElementById('add-title').value = item.title || '';
-      document.getElementById('add-author').value = item.author || '';
-      document.getElementById('add-lang').value = item.language || 'en';
-      document.getElementById('add-section').value = item.section_id || 'critique-political-economy';
-      document.getElementById('add-category').value = item.category || '';
-      document.getElementById('add-subcategory').value = item.subcategory || '';
-      document.getElementById('add-pdf').value = item.pdf || '';
-      document.getElementById('add-desc').value = item.description || '';
-      document.getElementById('add-content').value = item.content || '';
-
-      updateLivePreview();
-
-      // Switch to Add/Edit tab
-      tabButtons.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-      document.getElementById('tab-btn-add').classList.add('active');
-      document.getElementById('tab-add-book').classList.add('active');
-    }
-
-    document.getElementById('btn-refresh-queue').addEventListener('click', () => {
-      renderSubmissionsQueue();
-      updateQueueCounters();
-    });
-
-    // ----------------------------------------------------
-    // LIVE PREVIEW & MARKDOWN GENERATION
-    // ----------------------------------------------------
-    const titleInput = document.getElementById('add-title');
-    const authorInput = document.getElementById('add-author');
-    const langSelect = document.getElementById('add-lang');
-    const secSelect = document.getElementById('add-section');
-    const catInput = document.getElementById('add-category');
-    const subcatInput = document.getElementById('add-subcategory');
-    const pdfInput = document.getElementById('add-pdf');
-    const descInput = document.getElementById('add-desc');
-    const contentInput = document.getElementById('add-content');
-
-    const prevTitle = document.getElementById('prev-title');
-    const prevAuthor = document.getElementById('prev-author');
-    const prevDesc = document.getElementById('prev-desc');
-    const prevSectionBadge = document.getElementById('prev-section-badge');
-    const prevCatBadge = document.getElementById('prev-cat-badge');
-    const prevLangTag = document.getElementById('prev-lang-tag');
-    const codePreview = document.getElementById('code-preview');
-
-    function slugify(text) {
-      return text.toString().toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-+|-+$/g, '');
-    }
-
-    function generateFrontmatter(title, author, lang, secId, secTitle, cat, subcat, pdf, desc) {
-      let fm = '---\n';
-      if (secId) fm += `section_id: "${secId}"\n`;
-      if (cat) fm += `category: "${cat.replace(/"/g, '\\"')}"\n`;
-      if (subcat) fm += `subcategory: "${subcat.replace(/"/g, '\\"')}"\n`;
-      fm += `layout: text\n`;
-      fm += `title: "${title.replace(/"/g, '\\"')}"\n`;
-      fm += `author: "${author.replace(/"/g, '\\"')}"\n`;
-      fm += `language: "${lang}"\n`;
-      if (secTitle) fm += `section_title: "${secTitle.replace(/"/g, '\\"')}"\n`;
-      if (secId) fm += `section_url: "sections/${lang}-${secId}.html"\n`;
-      fm += `description: "${desc.replace(/"/g, '\\"')}"\n`;
-      if (pdf) fm += `pdf: "${pdf.trim()}"\n`;
-      fm += '---\n';
-      return fm;
-    }
-
-    function updateLivePreview() {
-      const title = titleInput.value.trim() || 'Value, Price and Profit';
-      const author = authorInput.value.trim() || 'Karl Marx';
-      const lang = langSelect.value;
-      const langName = langSelect.options[langSelect.selectedIndex].text;
-      const secId = secSelect.value;
-      const secTitle = secSelect.options[secSelect.selectedIndex].getAttribute('data-title') || secSelect.options[secSelect.selectedIndex].text;
-      const cat = catInput.value.trim() || 'Value, Surplus Value & Capital';
-      const subcat = subcatInput.value.trim();
-      const pdf = pdfInput.value.trim();
-      const desc = descInput.value.trim() || 'Concise summary of theoretical and historical significance...';
-      const bodyContent = contentInput.value.trim();
-
-      prevTitle.textContent = title;
-      prevAuthor.textContent = author;
-      prevDesc.textContent = desc;
-      prevSectionBadge.textContent = secTitle;
-      prevCatBadge.textContent = cat;
-      prevLangTag.textContent = langName;
-
-      const fullMarkdown = generateFrontmatter(title, author, lang, secId, secTitle, cat, subcat, pdf, desc) + '\n' + (bodyContent || '### Theoretical Overview\n\n...');
-      codePreview.textContent = fullMarkdown;
-
-      return { title, author, lang, secId, secTitle, cat, subcat, pdf, desc, bodyContent, fullMarkdown };
-    }
-
-    [titleInput, authorInput, langSelect, secSelect, catInput, subcatInput, pdfInput, descInput, contentInput].forEach(el => {
-      el.addEventListener('input', updateLivePreview);
-      el.addEventListener('change', updateLivePreview);
-    });
-    updateLivePreview();
-
-    // Lead Admin: Download .md Directly
-    btnDownloadBook.addEventListener('click', () => {
-      const data = updateLivePreview();
-      if (!titleInput.value.trim()) {
-        alert('Please enter a work title.');
-        return;
-      }
-      const filename = `${data.lang}-${slugify(data.title)}.md`;
-      const blob = new Blob([data.fullMarkdown], { type: 'text/markdown;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-    });
-
-    // Lead Admin: Copy Markdown
-    btnCopyBook.addEventListener('click', () => {
-      const data = updateLivePreview();
-      navigator.clipboard.writeText(data.fullMarkdown).then(() => {
-        alert('Markdown frontmatter copied to clipboard!');
-      });
-    });
-
-    // Moderator: Submit for Approval
-    btnSubmitApproval.addEventListener('click', () => {
-      if (!titleInput.value.trim()) {
-        alert('Please enter a work title.');
-        titleInput.focus();
-        return;
-      }
-      if (!authorInput.value.trim()) {
-        alert('Please enter an author.');
-        authorInput.focus();
-        return;
-      }
-      if (!descInput.value.trim()) {
-        alert('Please enter a summary description.');
-        descInput.focus();
-        return;
-      }
-
-      const data = updateLivePreview();
-      const list = getPendingSubmissions();
-
-      list.push({
-        title: data.title,
-        author: data.author,
-        language: data.lang,
-        section_id: data.secId,
-        section_title: data.secTitle,
-        category: data.cat,
-        subcategory: data.subcat,
-        pdf: data.pdf,
-        description: data.desc,
-        content: data.bodyContent,
-        markdown: data.fullMarkdown,
-        date: new Date().toLocaleDateString()
-      });
-
-      savePendingSubmissions(list);
-
-      // Reset form
-      titleInput.value = '';
-      authorInput.value = '';
-      descInput.value = '';
-      contentInput.value = '';
-      pdfInput.value = '';
-      updateLivePreview();
-
-      // Show confirmation
-      document.getElementById('submission-success-modal').style.display = 'flex';
-    });
-
-    document.getElementById('btn-close-sub-modal').addEventListener('click', () => {
-      document.getElementById('submission-success-modal').style.display = 'none';
-    });
-
-    // ----------------------------------------------------
-    // EDIT EXISTING BOOK (LEAD ADMIN ONLY)
-    // ----------------------------------------------------
-    const selectEdit = document.getElementById('select-edit-book');
-    const editFormWrap = document.getElementById('edit-form-wrapper');
-    const editTitle = document.getElementById('edit-title');
-    const editAuthor = document.getElementById('edit-author');
-    const editCategory = document.getElementById('edit-category');
-    const editSubcategory = document.getElementById('edit-subcategory');
-    const editDesc = document.getElementById('edit-desc');
-
-    let currentEditData = {};
-
-    selectEdit.addEventListener('change', () => {
-      const selected = selectEdit.options[selectEdit.selectedIndex];
-      if (!selected.value) {
-        editFormWrap.style.display = 'none';
-        return;
-      }
-
-      currentEditData = {
-        title: selected.getAttribute('data-title'),
-        author: selected.getAttribute('data-author'),
-        lang: selected.getAttribute('data-lang'),
-        section_id: selected.getAttribute('data-secid'),
-        section_title: selected.getAttribute('data-sectitle'),
-        category: selected.getAttribute('data-cat'),
-        subcategory: selected.getAttribute('data-subcat'),
-        pdf: selected.getAttribute('data-pdf'),
-        desc: selected.getAttribute('data-desc')
-      };
-
-      editTitle.value = currentEditData.title || '';
-      editAuthor.value = currentEditData.author || '';
-      editCategory.value = currentEditData.category || '';
-      editSubcategory.value = currentEditData.subcategory || '';
-      editDesc.value = currentEditData.desc || '';
-      editFormWrap.style.display = 'block';
-    });
-
-    function getEditedMarkdown() {
-      const title = editTitle.value.trim();
-      const author = editAuthor.value.trim();
-      const cat = editCategory.value.trim();
-      const subcat = editSubcategory.value.trim();
-      const desc = editDesc.value.trim();
-      const pdfLine = currentEditData.pdf ? `pdf: "${currentEditData.pdf}"\n` : '';
-
-      return `---
-section_id: "${currentEditData.section_id}"
-category: "${cat}"
-subcategory: "${subcat}"
-layout: text
-title: "${title.replace(/"/g, '\\"')}"
-author: "${author.replace(/"/g, '\\"')}"
-language: "${currentEditData.lang}"
-section_title: "${currentEditData.section_title}"
-section_url: "sections/${currentEditData.lang}-${currentEditData.section_id}.html"
-description: "${desc.replace(/"/g, '\\"')}"
-${pdfLine}---
-
-### Theoretical Overview
-`;
-    }
-
-    document.getElementById('btn-download-edited').addEventListener('click', () => {
-      const md = getEditedMarkdown();
-      const filename = `${currentEditData.lang}-${slugify(editTitle.value)}.md`;
-      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-    });
-
-    document.getElementById('btn-copy-edited').addEventListener('click', () => {
-      const md = getEditedMarkdown();
-      navigator.clipboard.writeText(md).then(() => {
-        alert('Updated book markdown copied to clipboard!');
-      });
-    });
-
-    // ----------------------------------------------------
-    // TAXONOMY DISPLAY & EXPORT (LEAD ADMIN ONLY)
-    // ----------------------------------------------------
-    let currentTaxonomy = {
-      "sections": [
-        {
-          "id": "critique-political-economy",
-          "slug": "critique-political-economy",
-          "numeral": "I",
-          "title": "Critique of Political Economy",
-          "categories": [
-            { "name": "Value, Surplus Value & Capital", "subcategories": ["Labour Theory of Value", "Wages & Exploitation", "Capital Accumulation"] },
-            { "name": "Imperialism & Monopoly Capitalism", "subcategories": ["Finance Capital", "Inter-Imperialist War", "Global Cartels"] }
-          ]
-        },
-        {
-          "id": "party-state-revolution",
-          "slug": "party-state-revolution",
-          "numeral": "II",
-          "title": "Party, State & Revolution",
-          "categories": [
-            { "name": "State & Proletarian Dictatorship", "subcategories": ["Smashing Bourgeois State", "Commune & Soviet State"] },
-            { "name": "Vanguard Party & Organic Centralism", "subcategories": ["Party & Class", "Critique of Democratic Principle"] }
-          ]
-        },
-        {
-          "id": "historical-materialism",
-          "slug": "historical-materialism",
-          "numeral": "III",
-          "title": "Historical Materialism & Method",
-          "categories": [
-            { "name": "Marxist Epistemology & Dialectics", "subcategories": ["Materialist Method", "Ideology Critique"] }
-          ]
-        },
-        {
-          "id": "history-communist-left",
-          "slug": "history-communist-left",
-          "numeral": "IV",
-          "title": "Tactics & History of Communist Left",
-          "categories": [
-            { "name": "Struggle Against Degeneration", "subcategories": ["Lyon Theses (1926)", "Critique of Popular Fronts"] }
-          ]
-        }
-      ]
-    };
-
-    const taxDisplay = document.getElementById('taxonomy-json-display');
-    function renderTaxJson() {
-      if (taxDisplay) taxDisplay.textContent = JSON.stringify(currentTaxonomy, null, 2);
-    }
-    renderTaxJson();
-
-    document.getElementById('btn-add-taxonomy').addEventListener('click', () => {
-      const type = document.getElementById('tax-type').value;
-      const name = document.getElementById('tax-name').value.trim();
-      const parent = document.getElementById('tax-parent').value;
-
-      if (!name) {
-        alert('Please enter a name.');
-        return;
-      }
-
-      if (type === 'section') {
-        currentTaxonomy.sections.push({
-          id: slugify(name),
-          slug: slugify(name),
-          title: name,
-          categories: []
-        });
-      } else {
-        const sec = currentTaxonomy.sections.find(s => s.id === parent);
-        if (sec) {
-          if (type === 'category') {
-            sec.categories.push({ name: name, subcategories: [] });
-          } else {
-            if (sec.categories.length === 0) sec.categories.push({ name: "General", subcategories: [] });
-            sec.categories[0].subcategories.push(name);
-          }
-        }
-      }
-
-      renderTaxJson();
-      alert(`Added "${name}" to taxonomy structure! Download taxonomy.json below.`);
-      document.getElementById('tax-name').value = '';
-    });
-
-    document.getElementById('btn-download-tax').addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify(currentTaxonomy, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'taxonomy.json';
-      a.click();
-    });
-
-    // ----------------------------------------------------
-    // CSV TEMPLATE DOWNLOAD
-    // ----------------------------------------------------
-    document.getElementById('btn-download-csv-template').addEventListener('click', () => {
-      const csvContent = `ID,Title,Author,Year,Language,Section_ID,Category,Subcategory,PDF_Link,Source_URL,Description,Status
-,Wage Labour and Capital,Karl Marx,1847,en,critique-political-economy,Value Surplus Value & Capital,Wages & Exploitation,wage-labour-and-capital.pdf,https://marxists.org/...,"Lectures detailing the anatomy of capitalist wage labour and surplus value.",pending
-,The State and Revolution,V. I. Lenin,1917,en,party-state-revolution,State & Proletarian Dictatorship,Smashing Bourgeois State,the-state-and-revolution.pdf,,"Marxist doctrine on the nature of the state...",pending
-`;
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'library_ingestion_template.csv';
-      a.click();
-    });
-
-    // ----------------------------------------------------
-    // PASSCODE MANAGEMENT (LEAD ADMIN ONLY)
-    // ----------------------------------------------------
-const cfgAdminPass = document.getElementById('cfg-admin-pass');
-const cfgModPass = document.getElementById('cfg-mod-pass');
-const cfgCenterPass = document.getElementById('cfg-center-pass');
-
-cfgAdminPass.value = getAdminPasscode();
-cfgModPass.value = getModPasscode();
-cfgCenterPass.value = getCenterPasscode();
-
-document.getElementById('btn-save-passcodes').addEventListener('click', () => {
-  const newAdmin = cfgAdminPass.value.trim();
-  const newMod = cfgModPass.value.trim();
-  const newCenter = cfgCenterPass.value.trim();
-
-  if (!newAdmin || !newMod || !newCenter) {
-    alert('Passcodes cannot be empty.');
-    return;
-  }
-
-  localStorage.setItem('lib_admin_passcode', newAdmin);
-  localStorage.setItem('lib_mod_passcode', newMod);
-  localStorage.setItem('lib_center_passcode', newCenter);
-  alert('Editorial passcodes updated successfully!');
-});
-
-document.getElementById('btn-reset-passcodes').addEventListener('click', () => {
-  if (confirm('Reset passcodes to initial factory defaults?')) {
-    localStorage.removeItem('lib_admin_passcode');
-    localStorage.removeItem('lib_mod_passcode');
-    localStorage.removeItem('lib_center_passcode');
-    cfgAdminPass.value = DEFAULT_ADMIN_PASS;
-    cfgModPass.value = DEFAULT_MOD_PASS;
-    cfgCenterPass.value = DEFAULT_CENTER_PASS;
-    alert(`Passcodes reset:\nLead Admin: ${DEFAULT_ADMIN_PASS}\nModerator: ${DEFAULT_MOD_PASS}\nCenter: ${DEFAULT_CENTER_PASS}`);
-  }
-});
-    document.getElementById('btn-reset-passcodes').addEventListener('click', () => {
-      if (confirm('Reset passcodes to initial factory defaults?')) {
-        localStorage.removeItem('lib_admin_passcode');
-        localStorage.removeItem('lib_mod_passcode');
-        cfgAdminPass.value = DEFAULT_ADMIN_PASS;
-        cfgModPass.value = DEFAULT_MOD_PASS;
-        alert(`Passcodes reset:\nLead Admin: ${DEFAULT_ADMIN_PASS}\nModerator: ${DEFAULT_MOD_PASS}`);
-      }
-    });
-
+    loadOpenIngestPRs();
   });
 </script>

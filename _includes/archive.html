@@ -226,7 +226,13 @@
 {% endcase %}
 
 {% assign current_lang = page.language | default: 'en' %}
-{% assign lang_texts = site.texts | where: "language", current_lang | sort: "title" %}
+{% assign raw_lang_texts = site.texts | where: "language", current_lang | sort: "title" %}
+{% assign lang_texts = "" | split: "," %}
+{% for item in raw_lang_texts %}
+  {% if item.status != 'draft' %}
+    {% assign lang_texts = lang_texts | push: item %}
+  {% endif %}
+{% endfor %}
 
 <!-- Archive Top Bar with Scope & Quiet View Toggles -->
 <div class="archive-topbar">
@@ -237,10 +243,7 @@
   <div class="archive-views-control">
     <span class="view-label">{{ view_label_text }}</span>
     <button type="button" class="view-btn active" id="view-btn-index" title="Dense Party Organ Column">{{ t.view_index_label | default: 'Index' }}</button>
-    
     <button type="button" class="view-btn" id="view-btn-catalog" title="Catalog Reading Room Spread">{{ t.view_catalog_label | default: 'Catalog' }}</button>
-    
-    
   </div>
 </div>
 
@@ -263,17 +266,26 @@
 
       {% if s_texts.size > 0 %}
         {% assign s_title = s_texts[0].section_title %}
+        {% if s_title == nil or s_title == "" %}
+          {% for sec_def in site.data.taxonomy.sections %}
+            {% if sec_def.slug == s_slug %}
+              {% assign s_title = sec_def.title[current_lang] | default: sec_def.title['en'] %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
         <section class="index-section-group" data-section-group="{{ s_slug }}">
-          <h3 class="index-section-title" data-section-group="{{ s_slug }}"> <a href="{{ site.baseurl }}/{{ home_path }}?section={{ s_slug }}" style="color: inherit; text-decoration: none;">
-    <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
-    {{ s_title }}
-  </a>
-</h3>
+          <h3 class="index-section-title" data-section-group="{{ s_slug }}">
+            <a href="{{ site.baseurl }}/{{ home_path }}?section={{ s_slug }}" style="color: inherit; text-decoration: none;">
+              <span class="sidebar-roman">{% case forloop.index %}{% when 1 %}I.{% when 2 %}II.{% when 3 %}III.{% when 4 %}IV.{% endcase %}</span>
+              {{ s_title }}
+            </a>
+          </h3>
           <ul class="index-list">
             {% for text in s_texts %}
               <li class="index-item" data-section="{{ text.section_id }}" 
                 data-title="{{ text.title | downcase | escape }}" 
-                data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
+                data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}"
+                data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
                 <div class="index-item-main">
                   <span class="index-num">{{ forloop.index }}.</span>
                   <a href="{{ site.baseurl }}{{ text.url }}" class="index-item-title">{{ text.title }}</a>
@@ -299,18 +311,18 @@
   <div class="catalog-table-wrap" id="view-catalog" style="display: none;">
     <table class="catalog-table">
       <thead>
-  <tr>
-    <th style="cursor: pointer; user-select: none;" id="sort-title">{{ col_title_label }} <span class="sort-indicator"></span></th>
-    <th style="cursor: pointer; user-select: none;" id="sort-author">{{ col_author_label }} <span class="sort-indicator"></span></th>
-    <th style="cursor: pointer; user-select: none; text-align: right;" id="sort-year">{{ col_year_label }} <span class="sort-indicator"></span></th>
-    <th style="cursor: pointer; user-select: none; text-align: right; width: 4rem;" id="sort-pdf" title="Toggle PDF only">{{ col_format_label }} <span class="sort-indicator"></span></th>
-  </tr>
-</thead>
+        <tr>
+          <th style="cursor: pointer; user-select: none;" id="sort-title">{{ col_title_label }} <span class="sort-indicator"></span></th>
+          <th style="cursor: pointer; user-select: none;" id="sort-author">{{ col_author_label }} <span class="sort-indicator"></span></th>
+          <th style="cursor: pointer; user-select: none; text-align: right;" id="sort-year">{{ col_year_label }} <span class="sort-indicator"></span></th>
+          <th style="cursor: pointer; user-select: none; text-align: right; width: 4rem;" id="sort-pdf" title="Toggle PDF only">{{ col_format_label }} <span class="sort-indicator"></span></th>
+        </tr>
+      </thead>
       <tbody>
         {% for text in lang_texts %}
           <tr class="catalog-row" data-section="{{ text.section_id }}" 
             data-title="{{ text.title | downcase | escape }}" 
-            data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}" 
+            data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" 
             data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
             <td class="col-work-title">
               <a href="{{ site.baseurl }}{{ text.url }}">{{ text.title }}</a>
@@ -326,32 +338,6 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
-
-  <!-- VIEW 3: SINGLE-COLUMN BULLETIN (No cards, no blurbs, no red bars, no truncation) -->
-  <div class="bulletin-list" id="view-shelf" style="display: none;">
-    {% for text in lang_texts %}
-      <article class="bulletin-item" 
-        data-title="{{ text.title | downcase | escape }}" 
-        data-author="{% if text.author %}{{ text.author | downcase | escape }}{% endif %}" data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}" 
-        data-desc="{% if text.description %}{{ text.description | downcase | escape }}{% endif %}">
-        <div class="bulletin-main">
-          <a href="{{ site.baseurl }}{{ text.url }}" class="bulletin-title">{{ text.title }}</a>
-          {% if text.section_title %}
-            <span class="bulletin-section">{{ text.section_title }}</span>
-          {% endif %}
-        </div>
-        <div class="bulletin-author">
-          {% if text.author %}— {{ text.author }}{% endif %}
-        </div>
-        <div class="bulletin-meta">
-          {% if text.year %}<span style="font-variant-numeric: oldstyle-nums;">{{ text.year }}</span>{% endif %}
-          {% if text.pdf %}
-            <a href="{{ site.baseurl }}/assets/uploads/{{ text.pdf }}" class="pdf-tag" target="_blank" download>PDF</a>
-          {% endif %}
-        </div>
-      </article>
-    {% endfor %}
   </div>
 
 {% endif %}

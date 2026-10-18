@@ -95,25 +95,30 @@ title: Internationalist Communist Library
 </script>
 
 
-{% assign lang_counts = "" | split: "" %}
-{% assign ar_count = site.texts | where: "language", "ar" | size %}
-{% assign bn_count = site.texts | where: "language", "bn" | size %}
-{% assign de_count = site.texts | where: "language", "de" | size %}
-{% assign el_count = site.texts | where: "language", "el" | size %}
-{% assign en_count = site.texts | where: "language", "en" | size %}
-{% assign es_count = site.texts | where: "language", "es" | size %}
-{% assign fr_count = site.texts | where: "language", "fr" | size %}
-{% assign hi_count = site.texts | where: "language", "hi" | size %}
-{% assign id_count = site.texts | where: "language", "id" | size %}
-{% assign it_count = site.texts | where: "language", "it" | size %}
-{% assign ja_count = site.texts | where: "language", "ja" | size %}
-{% assign ko_count = site.texts | where: "language", "ko" | size %}
-{% assign nl_count = site.texts | where: "language", "nl" | size %}
-{% assign pl_count = site.texts | where: "language", "pl" | size %}
-{% assign pt_count = site.texts | where: "language", "pt" | size %}
-{% assign ru_count = site.texts | where: "language", "ru" | size %}
-{% assign tr_count = site.texts | where: "language", "tr" | size %}
-{% assign zh_count = site.texts | where: "language", "zh" | size %}
+{% assign public_texts = "" | split: "," %}
+{% for item in site.texts %}
+  {% if item.status != 'draft' %}
+    {% assign public_texts = public_texts | push: item %}
+  {% endif %}
+{% endfor %}
+{% assign ar_count = public_texts | where: "language", "ar" | size %}
+{% assign bn_count = public_texts | where: "language", "bn" | size %}
+{% assign de_count = public_texts | where: "language", "de" | size %}
+{% assign el_count = public_texts | where: "language", "el" | size %}
+{% assign en_count = public_texts | where: "language", "en" | size %}
+{% assign es_count = public_texts | where: "language", "es" | size %}
+{% assign fr_count = public_texts | where: "language", "fr" | size %}
+{% assign hi_count = public_texts | where: "language", "hi" | size %}
+{% assign id_count = public_texts | where: "language", "id" | size %}
+{% assign it_count = public_texts | where: "language", "it" | size %}
+{% assign ja_count = public_texts | where: "language", "ja" | size %}
+{% assign ko_count = public_texts | where: "language", "ko" | size %}
+{% assign nl_count = public_texts | where: "language", "nl" | size %}
+{% assign pl_count = public_texts | where: "language", "pl" | size %}
+{% assign pt_count = public_texts | where: "language", "pt" | size %}
+{% assign ru_count = public_texts | where: "language", "ru" | size %}
+{% assign tr_count = public_texts | where: "language", "tr" | size %}
+{% assign zh_count = public_texts | where: "language", "zh" | size %}
 
 <div class="lang-grid">
   <a href="en/index.html" class="lang-card">

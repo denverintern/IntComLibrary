@@ -1,0 +1,105 @@
+name: Sync from Google Drive
+
+on:
+  # Runs every 6 hours automatically
+  schedule:
+    - cron: "0 */6 * * *"
+
+  # Allows manual triggers anytime from the GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run mode (validate and print rows without writing files or opening a PR)"
+        required: false
+        default: false
+        type: boolean
+      as_draft:
+        description: "Ingest new texts with status: draft (excluded from public catalog until flipped)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Google Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Ensure Canonical Editorial Labels Exist
+        if: ${{ inputs.dry_run != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "ingest" --color "0E8A16" --description "Automated or manual text ingestion" --force || true
+          gh label create "needs-review" --color "FBCA04" --description "Requires moderator checklist verification" --force || true
+          gh label create "has-pdf" --color "1D76DB" --description "Includes local PDF in assets/uploads/" --force || true
+          gh label create "empty-source" --color "D93F0B" --description "Missing external source_url in frontmatter" --force || true
+
+      - name: Run Google Drive Sync
+        id: sync
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_SHEET_ID: ${{ secrets.GDRIVE_SHEET_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+          INGEST_AS_DRAFT: ${{ inputs.as_draft == true && 'true' || 'false' }}
+        run: |
+          python scripts/sync_gdrive.py
+
+      - name: Create or Update Standing Ingest Pull Request
+        id: cpr
+        if: ${{ inputs.dry_run != true && steps.sync.outputs.ingested_count != '0' }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Ingest new texts from Google Drive"
+          branch: "ingest/gdrive-sync"
+          delete-branch: true
+          title: ${{ steps.sync.outputs.pr_title || '📥 Ingest new texts from Google Drive' }}
+          body-path: /tmp/ingest_pr_body.md
+          labels: ${{ steps.sync.outputs.pr_labels || 'ingest,needs-review' }}
+
+      - name: Notify Content Team on PR Open / Update
+        if: ${{ steps.cpr.outputs.pull-request-url != '' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+        run: |
+          python scripts/sync_gdrive.py --notify-pr "${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Alert Loudly on Sync / Auth Failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+        run: |
+          python scripts/sync_gdrive.py --notify-error "Sync workflow failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
